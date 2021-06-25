@@ -14,6 +14,9 @@ class Country(models.Model):
     class Meta:
         verbose_name_plural='Страны'
 
+    def __str__(self):
+        return self.name
+
 
 class City(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
@@ -28,6 +31,9 @@ class City(models.Model):
     class Meta:
         verbose_name_plural='Города'
 
+    def __str__(self):
+        return self.name
+
 
 class Organization(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
@@ -36,7 +42,7 @@ class Organization(models.Model):
     city = models.ForeignKey(City, verbose_name='Город',
         on_delete=models.CASCADE)
     # projects
-    site = models.CharField(max_length=500, verbose_name='Название')
+    site = models.CharField(max_length=500, verbose_name='Сайт')
     activity_description = models.CharField(max_length=500,
         verbose_name='Краткое описание вида деятельности')
 
@@ -47,6 +53,9 @@ class Organization(models.Model):
 
     class Meta:
         verbose_name_plural='Организации'
+
+    def __str__(self):
+        return self.name
 
 
 class EmployeeRole(models.Model):
@@ -59,6 +68,9 @@ class EmployeeRole(models.Model):
 
     class Meta:
         verbose_name_plural='Должность'
+
+    def __str__(self):
+        return self.name
 
 
 class Employee(models.Model):
@@ -74,6 +86,9 @@ class Employee(models.Model):
     class Meta:
         verbose_name_plural='Сотрудники'
 
+    def __str__(self):
+        return self.name
+
 
 class ApplicationScope(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
@@ -85,6 +100,9 @@ class ApplicationScope(models.Model):
 
     class Meta:
         verbose_name_plural='Область применения'
+
+    def __str__(self):
+        return self.name
 
 
 class Project(models.Model):
@@ -107,3 +125,6 @@ class Project(models.Model):
 
     class Meta:
         verbose_name_plural='Проекты'
+
+    def __str__(self):
+        return self.name
