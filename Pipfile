@@ -9,6 +9,8 @@ psycopg2-binary = "*"
 
 [dev-packages]
 black = "*"
+pylint = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.9"
