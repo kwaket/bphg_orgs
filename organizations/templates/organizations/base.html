@@ -1,0 +1,89 @@
+{% load static %}
+
+{% load django_bootstrap5 %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+        .navbar>.container-fluid>div>form {
+            margin-block-end: 0;
+
+
+        }
+        #profile {
+            text-decoration: none;
+        }
+
+        /* for organization_list */
+        #search-box {
+            margin-top: 1em;
+        }
+        legend {
+            font-size: 1em;
+            margin-bottom: 0;
+        }
+        #filter-box>div>div {
+            margin-top: 0;
+        }
+        /* end organization_list */
+    </style>
+</head>
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light s" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://www.microgen.ru/local/templates/main_v2/images/logo.svg" alt="" width="90" height="24">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Организации</a>
+                    </li>
+                   <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Проекты</a>
+                    </li>
+                </ul>
+
+               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <div class="btn-group" role="group">
+                        <button id="profile" type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="bi bi-person-circle"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="btnGroupDrop1">
+                            <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                            <li><a class="dropdown-item" href="#">Dropdown link</a></li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid">
+
+    <div>
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    </div>
+
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</div>

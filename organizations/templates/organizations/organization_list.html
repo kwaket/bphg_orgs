@@ -1,1 +1,70 @@
-{{ organizations }}
+{% extends 'organizations/base.html' %}
+
+{% block content %}
+    {# Display a form #}
+    {% if not organizations %}
+        <p class="text-center" style="padding: 5em;">
+            В базе еще нет компаний. <a href='/add'>Добавить</a>
+        </p>
+    {% else %}
+
+    <div class="container-fluid">
+        <div class="input-group mb-3" id="search-box">
+            <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
+                aria-describedby="button-addon2">
+            <button id="search-btn" class="btn btn-outline-secondary" type="button">
+                <span class="bi bi-search"></span>
+                Найти
+            </button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <form action="" id="filter-box">
+            <legend>Фильтр</legend>
+            <div class="row g-3">
+                <div class="col">
+                    <input type="text" class="form-control form-control-sm" placeholder="First name" aria-label="First name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
+                </div>
+         </div>
+        </form>
+    </div>
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Страна</th>
+                <th scope="col">Город</th>
+                <th scope="col">Название организации</th>
+                <th scope="col">Основные проекты</th>
+                <th scope="col">Сайт</th>
+                <th scope="col">Краткое описание деятельности</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for org in organizations %}
+            <tr>
+                <td>{{ org.country }}</td>
+                <td>{{ org.city }}</td>
+                <td>{{ org.name }}</td>
+                <td></td>
+                <td>{{ org.site }}</td>
+                <td>{{ org.activity_description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}
