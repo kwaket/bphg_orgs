@@ -13,6 +13,7 @@ black = "*"
 pylint = "*"
 mypy = "*"
 pylint-django = "*"
+ipdb = "*"
 
 [requires]
 python_version = "3.9"
