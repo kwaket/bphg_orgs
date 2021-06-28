@@ -8,6 +8,7 @@
         </p>
     {% else %}
 
+{% comment  %}
     <div class="container-fluid">
         <div class="input-group mb-3" id="search-box">
             <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
@@ -18,7 +19,6 @@
             </button>
         </div>
     </div>
-
     <div class="container-fluid">
         <form action="" id="filter-box">
             <legend>Фильтр</legend>
@@ -41,8 +41,8 @@
          </div>
         </form>
     </div>
-
-    <table class="table table-sm">
+{% endcomment %}
+    <table class="table table-sm table-striped">
         <thead>
             <tr>
                 <th scope="col">Страна</th>
@@ -50,7 +50,6 @@
                 <th scope="col">Название организации</th>
                 <th scope="col">Основные проекты</th>
                 <th scope="col">Сайт</th>
-                <th scope="col">Краткое описание деятельности</th>
             </tr>
         </thead>
         <tbody>
@@ -60,8 +59,7 @@
                 <td>{{ org.city }}</td>
                 <td>{{ org.name }}</td>
                 <td></td>
-                <td>{{ org.site }}</td>
-                <td>{{ org.activity_description }}</td>
+                <td><a href="{{ org.site }}" title="{{ org.site }}">{{ org.site }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
