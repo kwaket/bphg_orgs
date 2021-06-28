@@ -1,7 +1,8 @@
 import organizations
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import Organization
+from .forms import OrganizationForm
 
 
 def organization_list(request):
@@ -17,6 +18,19 @@ def organization_detail(request, pk):
     org = get_object_or_404(Organization, pk=pk)
     return render(request, 'organizations/organization_detail.html',
         {'organization': org})
+
+
+def organization_new(request):
+    if request.method == "POST":
+        form = OrganizationForm(request.POST)
+        if form.is_valid():
+            org = form.save(commit=False)
+            org.inserted_by = request.user
+            org.save()
+            return redirect('organization_detail', pk=org.pk)
+    else:
+        form = OrganizationForm()
+    return render(request, 'organizations/organization_new.html', {'form': form})
 
 
 def project_list(request):

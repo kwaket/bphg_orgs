@@ -1,0 +1,25 @@
+{% extends 'organizations/base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    {% comment %} <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Главная</a></li> {% endcomment %}
+    <li class="breadcrumb-item"><a href="{% url 'organization_list' %}">Организации</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Добавление новой организации</li>
+  </ol>
+</nav>
+
+<div class="row">
+    <h1>Добавление новой организации</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {% bootstrap_form form %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        <button type="submit" class="save btn btn-success">Добавить</button>
+    </form>
+
+</div>
+
+{% endblock %}
