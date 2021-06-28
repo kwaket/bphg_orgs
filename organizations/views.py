@@ -11,3 +11,10 @@ def organization_list(request):
     orgs = paginator.get_page(page)
     return render(request, 'organizations/organization_list.html',
         {'organizations': orgs})
+
+
+def project_list(request):
+    pass
+
+def main_page(request):
+    pass

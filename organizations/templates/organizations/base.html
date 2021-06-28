@@ -1,6 +1,6 @@
 {% load static %}
-
 {% load django_bootstrap5 %}
+{% load startswith %}
 
 <head>
     <!-- Required meta tags -->
@@ -58,13 +58,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                        <a class="nav-link {% if request.path == '' %} active {% endif %}"
+                           href="">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Организации</a>
+                        <a class="nav-link {% if request.path|startswith:'/organizations' %} active {% endif %}"
+                           href="{% url 'organization_list' %}">Организации</a>
                     </li>
-                   <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Проекты</a>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path|startswith:'/projects' %} active {% endif %}"
+                           href="{% url 'organization_list' %}">Проекты</a>
                     </li>
                 </ul>
 
