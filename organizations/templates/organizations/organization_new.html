@@ -13,13 +13,14 @@
 </nav>
 
 <div class="row">
+  <div class="col col-md-8 col-lg-6">
     <h1>Добавление новой организации</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {% bootstrap_form form %}
         {% comment %} {{ form.as_p }} {% endcomment %}
         <button type="submit" class="save btn btn-success">Добавить</button>
     </form>
-
+  </div>
 </div>
 
 {% endblock %}
