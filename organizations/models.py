@@ -44,7 +44,7 @@ class Organization(models.Model):
     # projects
     site = models.CharField(max_length=500, verbose_name='Сайт')
     activity_description = models.CharField(max_length=500,
-        verbose_name='Краткое описание вида деятельности')
+        verbose_name='Краткое описание вида деятельности', blank=True, null=True)
 
     inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, verbose_name='Добавил')
@@ -53,6 +53,7 @@ class Organization(models.Model):
 
     class Meta:
         verbose_name_plural='Организации'
+        unique_together = (('country', 'name'),)
 
     def __str__(self):
         return self.name
