@@ -33,6 +33,19 @@ def organization_new(request):
     return render(request, 'organizations/organization_new.html', {'form': form})
 
 
+def organization_edit(request, pk):
+    org = get_object_or_404(Organization, pk=pk)
+    if request.method == "POST":
+        form = OrganizationForm(request.POST, instance=org)
+        if form.is_valid():
+            org = form.save(commit=False)
+            # org.updated_by = request.user
+            org.save()
+            return redirect('organization_detail', pk=org.pk)
+    else:
+        form = OrganizationForm(instance=org)
+    return render(request, 'organizations/organization_edit.html', {'form': form})
+
 def project_list(request):
     pass
 

@@ -11,9 +11,8 @@
 </nav>
 
 <div class="row">
-
+  <div class="col col-md-8 col-lg-6">
     <h1>{{ organization.name }}</h1>
-
     <dl class="row">
     <dt class="col-sm-3">Страна</dt>
     <dd class="col-sm-9">{{ organization.country }}</dd>
@@ -42,6 +41,12 @@
     <dd class="col-sm-9 text-muted">{{ organization.inserted_by }}</dd>
     </dl>
 
+    <a class="btn btn-outline-primary" href="{% url 'organization_edit' pk=organization.pk %}">
+      <span class="bi bi-pencil-fill"></span> Редактировать
+    </a>
+
+
+  </div>
 </div>
 
 {% endblock %}
