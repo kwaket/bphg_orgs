@@ -12,6 +12,12 @@
     {% bootstrap_javascript %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <style>
+        h1 {
+            margin-bottom: .5em;
+        }
+        .navbar {
+            margin-bottom: 1em;
+        }
         .navbar>.container-fluid>div>form {
             margin-block-end: 0;
         }
@@ -42,6 +48,14 @@
         }
         /* end organization_list */
 
+        /* for main page */
+        .card-body {
+            padding-bottom: 9em;
+        }
+        .card-meta-block {
+            position: absolute;
+            bottom: 16px;
+        }
     </style>
 </head>
 
@@ -59,7 +73,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '' %} active {% endif %}"
-                           href="">Главная</a>
+                           href="{% url 'main_page' %}">Главная</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path|startswith:'/organizations' %} active {% endif %}"

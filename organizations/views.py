@@ -17,4 +17,5 @@ def project_list(request):
     pass
 
 def main_page(request):
-    pass
+    newest = Organization.objects.order_by('-inserted_at')[:10]
+    return render(request, 'organizations/main.html', {'organizations': newest})

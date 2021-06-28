@@ -6,17 +6,27 @@
 В базе еще нет компаний. <a href='/add'>Добавить</a>
 {% endif %}
 
-{% for organization in organizations %}
-<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Light card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
+<h1>Последние добавленные организации</h1>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+{% for org in organizations %}
+    <div class="col">
+        <div class="card text-dark bg-light h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ org.name }}</h5>
+                <p class="card-text">{% firstof org.activity_description '' %}</p>
 
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+                <div class="card-meta-block">
+                    <p class="card-text">{{ org.country }}</p>
+
+                    <p class="card-text">
+                        <small class="text-muted">Добавлено: {{ org.inserted_at }},
+                            пользователем {{ org.inserted_by }}</small></p>
+                    <a href="#" class="card-link">Просмотреть</a>
+                </div>
+                {% comment %} <a href="#" class="card-link">Another link</a> {% endcomment %}
+            </div>
+        </div>
     </div>
-</div>
 {% endfor %}
+</div>
 {% endblock %}
