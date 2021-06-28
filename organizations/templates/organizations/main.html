@@ -21,7 +21,8 @@
                     <p class="card-text">
                         <small class="text-muted">Добавлено: {{ org.inserted_at }},
                             пользователем {{ org.inserted_by }}</small></p>
-                    <a href="#" class="card-link">Просмотреть</a>
+                    <a href="{% url 'organization_detail' pk=org.pk %}"
+                       class="card-link">Просмотреть</a>
                 </div>
                 {% comment %} <a href="#" class="card-link">Another link</a> {% endcomment %}
             </div>

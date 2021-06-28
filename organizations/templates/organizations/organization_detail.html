@@ -1,0 +1,47 @@
+{% extends 'organizations/base.html' %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    {% comment %} <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Главная</a></li> {% endcomment %}
+    <li class="breadcrumb-item"><a href="{% url 'organization_list' %}">Организации</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ organization.name }}</li>
+  </ol>
+</nav>
+
+<div class="row">
+
+    <h1>{{ organization.name }}</h1>
+
+    <dl class="row">
+    <dt class="col-sm-3">Страна</dt>
+    <dd class="col-sm-9">{{ organization.country }}</dd>
+
+    <dt class="col-sm-3">Город</dt>
+    <dd class="col-sm-9">{{ organization.city }}</dd>
+
+    <dt class="col-sm-3">Сайт</dt>
+    <dd class="col-sm-9"><a href="{{ organization.site }}">{{ organization.site }}</a></dd>
+
+    <dt class="col-sm-3 text-truncate">Описание деятельности</dt>
+    <dd class="col-sm-9">{% firstof organization.activity_description '' %}</dd>
+
+    <dt class="col-sm-3">Проекты</dt>
+    <dd class="col-sm-9">
+        <ul>
+            <li>Проект 1</li>
+            <li>Проект 2</li>
+        </ul>
+    </dd>
+
+    <dt class="col-sm-3 text-truncate text-muted">Время добавления</dt>
+    <dd class="col-sm-9 text-muted">{{ organization.inserted_at }}</dd>
+
+    <dt class="col-sm-3 text-truncate text-muted">Добавил пользователь</dt>
+    <dd class="col-sm-9 text-muted">{{ organization.inserted_by }}</dd>
+    </dl>
+
+</div>
+
+{% endblock %}

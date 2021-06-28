@@ -59,7 +59,8 @@
             <tr>
                 <td>{{ org.country }}</td>
                 <td>{{ org.city }}</td>
-                <td>{{ org.name }}</td>
+                <td><a href="{% url 'organization_detail' pk=org.pk %}"
+                       class="card-link">{{ org.name }}</a></td>
                 <td></td>
                 <td><a href="{{ org.site }}" title="{{ org.site }}">{{ org.site }}</a></td>
             </tr>

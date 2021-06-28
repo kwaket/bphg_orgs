@@ -1,6 +1,6 @@
 import organizations
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Organization
 
 
@@ -13,8 +13,15 @@ def organization_list(request):
         {'organizations': orgs})
 
 
+def organization_detail(request, pk):
+    org = get_object_or_404(Organization, pk=pk)
+    return render(request, 'organizations/organization_detail.html',
+        {'organization': org})
+
+
 def project_list(request):
     pass
+
 
 def main_page(request):
     newest = Organization.objects.order_by('-inserted_at')[:10]
