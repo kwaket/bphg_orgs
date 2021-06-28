@@ -3,9 +3,9 @@
 - [ ] Main page (Organizations)
     - [ ] with grouping organizations by country
 - [x] Page with news (last added organizations)
-- [ ] Organization page
-    - [ ] Edit
-    - [ ] Add
+- [x] Organization page
+    - [x] Edit
+    - [x] Add
 - [ ] Project page
     - [ ] Edit
     - [ ] Add
