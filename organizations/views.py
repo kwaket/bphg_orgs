@@ -4,6 +4,6 @@ from .models import Organization
 
 
 def organization_list(request):
-    organizations = Organization.objects.all()
+    organizations_list = Organization.objects.all().order_by('-id')[:100]
     return render(request, 'organizations/organization_list.html',
-        {'organizations': organizations})
+        {'organizations': organizations_list})
