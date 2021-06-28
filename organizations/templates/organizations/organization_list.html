@@ -47,22 +47,23 @@
     <table class="table table-sm table-striped">
         <thead>
             <tr>
+                <th scope="col">Название организации</th>
                 <th scope="col">Страна</th>
                 <th scope="col">Город</th>
-                <th scope="col">Название организации</th>
                 <th scope="col">Основные проекты</th>
-                <th scope="col">Сайт</th>
+                {% comment %} <th scope="col">Сайт</th> {% endcomment %}
             </tr>
         </thead>
         <tbody>
             {% for org in organizations %}
             <tr>
+                <td><a href="{% url 'organization_detail' pk=org.pk %}"
+                       class="card-link">{{ org.name }}</a>
+                </td>
                 <td>{{ org.country }}</td>
                 <td>{{ org.city }}</td>
-                <td><a href="{% url 'organization_detail' pk=org.pk %}"
-                       class="card-link">{{ org.name }}</a></td>
                 <td></td>
-                <td><a href="{{ org.site }}" title="{{ org.site }}">{{ org.site }}</a></td>
+                {% comment %} <td><a href="{{ org.site }}" title="{{ org.site }}">{{ org.site }}</a></td> {% endcomment %}
             </tr>
             {% endfor %}
         </tbody>
