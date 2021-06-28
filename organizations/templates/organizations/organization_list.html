@@ -1,11 +1,13 @@
 {% extends 'organizations/base.html' %}
 
+{% load django_bootstrap5 %}
+
 {% block content %}
     {# Display a form #}
     {% if not organizations %}
-        <p class="text-center" style="padding: 5em;">
-            В базе еще нет компаний. <a href='/add'>Добавить</a>
-        </p>
+    <p class="text-center" style="padding: 5em;">
+        В базе еще нет компаний. <a href='/add'>Добавить</a>
+    </p>
     {% else %}
 
 {% comment  %}
@@ -64,5 +66,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% bootstrap_pagination organizations size='sm' %}
     {% endif %}
+
 {% endblock %}
