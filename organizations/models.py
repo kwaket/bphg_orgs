@@ -118,6 +118,8 @@ class Project(models.Model):
         verbose_name='Область применения', on_delete=models.CASCADE)
     description = models.CharField(max_length=1000,
         verbose_name='Описание')
+    progress = models.CharField(max_length=100, verbose_name='Прогресс',
+        blank=True, null=True)
 
     inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, verbose_name='Добавил')
