@@ -3,47 +3,16 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    {# Display a form #}
     {% if not organizations %}
     <p class="text-center" style="padding: 5em;">
-        В базе еще нет компаний. <a href='/add'>Добавить</a>
+        В базе еще нет компаний.
+        <a href="{% url 'organization_new' %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Добавить
+        </a>
     </p>
     {% else %}
 
-{% comment  %}
-    <div class="container-fluid">
-        <div class="input-group mb-3" id="search-box">
-            <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
-                aria-describedby="button-addon2">
-            <button id="search-btn" class="btn btn-outline-secondary" type="button">
-                <span class="bi bi-search"></span>
-                Найти
-            </button>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <form action="" id="filter-box">
-            <legend>Фильтр</legend>
-            <div class="row g-3">
-                <div class="col">
-                    <input type="text" class="form-control form-control-sm" placeholder="First name" aria-label="First name">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control form-control-sm" placeholder="Last name" aria-label="Last name">
-                </div>
-         </div>
-        </form>
-    </div>
-{% endcomment %}
     <table class="table table-sm table-striped">
         <thead>
             <tr>
@@ -51,7 +20,6 @@
                 <th scope="col">Страна</th>
                 <th scope="col">Город</th>
                 <th scope="col">Основные проекты</th>
-                {% comment %} <th scope="col">Сайт</th> {% endcomment %}
             </tr>
         </thead>
         <tbody>
@@ -63,7 +31,6 @@
                 <td>{{ org.country }}</td>
                 <td>{{ org.city }}</td>
                 <td></td>
-                {% comment %} <td><a href="{{ org.site }}" title="{{ org.site }}">{{ org.site }}</a></td> {% endcomment %}
             </tr>
             {% endfor %}
         </tbody>
