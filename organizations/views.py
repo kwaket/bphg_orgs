@@ -1,7 +1,8 @@
+from django.core import paginator
 import organizations
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Organization
+from .models import Organization, Project
 from .forms import OrganizationForm
 
 
@@ -46,7 +47,20 @@ def organization_edit(request, pk):
         form = OrganizationForm(instance=org)
     return render(request, 'organizations/organization_edit.html', {'form': form})
 
+
 def project_list(request):
+    proj_list = Project.objects.all()
+    paginator = Paginator(proj_list, 25)
+    page = request.GET.get('page')
+    projs = paginator.get_page(page)
+    return render(request, 'organizations/projects_list.html', {'projects': projs})
+
+
+def project_new(request):
+    pass
+
+
+def project_edit(request, pk):
     pass
 
 
