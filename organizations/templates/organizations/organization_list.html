@@ -3,11 +3,23 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
+    <div class="row">
+        <div class="col">
+            <h1><span class="bi bi-building"></span> Организации</h1>
+        </div>
+        <div class="col text-end h1-group">
+            <a href="{% url 'organization_new' %}" class="btn btn-primary">
+                <span class="bi bi-plus-circle-fill"></span>
+                Добавить организацию
+            </a>
+        </div>
+    </div>
+
     {% if not organizations %}
     <p class="text-center" style="padding: 5em;">
         В базе данных еще нет компаний.
         <a href="{% url 'organization_new' %}">
-            <span class="glyphicon glyphicon-plus"></span>
+            <span class="bi bi-plus"></span>
             Добавить
         </a>
     </p>
