@@ -1,0 +1,45 @@
+{% extends 'organizations/base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+    {% if not projects %}
+    <p class="text-center" style="padding: 5em;">
+        В базе данных еще нет проектов.
+        <a href="{% url 'project_new' %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Добавить
+        </a>
+    </p>
+    {% else %}
+
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Название проекта</th>
+                <th scope="col">Организация</th>
+                <th scope="col">Ведущий научный сотрудник</th>
+                <th scope="col">Сфера применения</th>
+                <th scope="col">Уровень прогресса</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proj in projects %}
+            <tr>
+                <td>
+                    <a href="{% url 'project_detail' pk=proj.pk %}"
+                       class="card-link">{{ proj.name }}
+                    </a>
+                </td>
+                <td>{{ proj.organization }}</td>
+                <td>{{ proj.lead_scientist }}</td>
+                <td>{{ proj.activity_description }}</td>
+                <td>{{ proj.progress }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% bootstrap_pagination projects size='sm' %}
+    {% endif %}
+
+{% endblock %}
