@@ -72,7 +72,7 @@ def project_new(request):
             return redirect('project_detail', pk=proj.pk)
     else:
         form = ProjectForm()
-    return render(request, 'organizations/project.new.html', {'form': form})
+    return render(request, 'organizations/project_new.html', {'form': form})
 
 
 def project_edit(request, pk):
