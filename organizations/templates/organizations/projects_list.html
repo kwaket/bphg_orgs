@@ -3,11 +3,22 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>Проекты</h1>
+        </div>
+        <div class="col text-end h1-group">
+            <a href="{% url 'project_new' %}" class="btn btn-primary">
+                <span class="bi bi-plus-circle-fill"></span>
+                Добавить проект
+            </a>
+        </div>
+    </div>
     {% if not projects %}
     <p class="text-center" style="padding: 5em;">
         В базе данных еще нет проектов.
         <a href="{% url 'project_new' %}">
-            <span class="glyphicon glyphicon-plus"></span>
+            <span class="bi bi-plus"></span>
             Добавить
         </a>
     </p>

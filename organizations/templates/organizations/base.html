@@ -33,6 +33,25 @@
             margin-bottom: 1em;
         }
 
+        .h1-group {
+            padding-top: .5em;
+            {% comment %} background: red; {% endcomment %}
+        }
+
+        @media (max-width: 992px) {
+            .h1-group {
+                padding-top: .2em;
+                background: yellow;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .h1-group {
+                padding-top: 0;
+                background: green;
+            }
+        }
+
         /* for organization_list */
         #search-box {
             margin-top: 1em;

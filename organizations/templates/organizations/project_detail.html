@@ -1,0 +1,49 @@
+{% extends 'organizations/base.html' %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'project_list' %}">Проекты</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col col-md-8 col-lg-6">
+    <h1>{{ project.name }}</h1>
+    <dl class="row">
+    <dt class="col-sm-3">Страна</dt>
+    <dd class="col-sm-9">{{ project.organization.country }}</dd>
+
+    <dt class="col-sm-3">Организация</dt>
+    <dd class="col-sm-9">{{ project.organization.city }}</dd>
+
+    <dt class="col-sm-3">Ведущия научный сотрудник</dt>
+    <dd class="col-sm-9">{{ project.lead_scientist }}</dd>
+
+    <dt class="col-sm-3 text-truncate">Область применения</dt>
+    <dd class="col-sm-9">{{ project.application_scope }}</dd>
+
+    <dt class="col-sm-3">Описание</dt>
+    <dd class="col-sm-9">{{ project.description }}</dd>
+
+    <dt class="col-sm-3">Прогресс</dt>
+    <dd class="col-sm-9">{{ project.progress}}</dd>
+
+    <dt class="col-sm-3 text-truncate text-muted">Время добавления</dt>
+    <dd class="col-sm-9 text-muted">{{ project.inserted_at }}</dd>
+
+    <dt class="col-sm-3 text-truncate text-muted">Добавил пользователь</dt>
+    <dd class="col-sm-9 text-muted">{{ project.inserted_by }}</dd>
+    </dl>
+
+    <a class="btn btn-outline-primary" href="{% url 'project_edit' pk=project.pk %}">
+      <span class="bi bi-pencil-fill"></span> Редактировать
+    </a>
+
+
+  </div>
+</div>
+
+{% endblock %}
