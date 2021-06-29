@@ -3,7 +3,7 @@ import organizations
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Organization, Project
-from .forms import OrganizationForm
+from .forms import OrganizationForm, ProjectForm
 
 
 def organization_list(request):
@@ -56,12 +56,37 @@ def project_list(request):
     return render(request, 'organizations/projects_list.html', {'projects': projs})
 
 
+def project_detail(request, pk):
+    proj = get_object_or_404(Project, pk=pk)
+    return render(request, 'organizations/project_detail.html',
+        {'project': proj})
+
+
 def project_new(request):
-    pass
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            proj = form.save(commit=False)
+            proj.inserted_by = request.user
+            proj.save()
+            return redirect('project_detail', pk=proj.pk)
+    else:
+        form = ProjectForm()
+    return render(request, 'organizations/project.new.html', {'form': form})
 
 
 def project_edit(request, pk):
-    pass
+    proj = get_object_or_404(Project, pk=pk)
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=Project)
+        if form.is_valid():
+            proj = form.save(commit=False)
+            # org.updated_by = request.user
+            proj.save()
+            return redirect('organiztions/project_detail.html', pk=proj.pk)
+    else:
+        form = ProjectForm(instance=proj)
+    return render(request, 'organizations/project_edit.html', {'form': form})
 
 
 def main_page(request):
