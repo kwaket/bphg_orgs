@@ -17,7 +17,11 @@
     <dd class="col-sm-9">{{ project.organization.country }}</dd>
 
     <dt class="col-sm-3">Организация</dt>
-    <dd class="col-sm-9">{{ project.organization.city }}</dd>
+    <dd class="col-sm-9">
+      <a href="{% url 'organization_detail' pk=project.organization.pk %}"
+                       class="card-link">{{ project.organization.name }}</a>
+
+    </dd>
 
     <dt class="col-sm-3">Ведущия научный сотрудник</dt>
     <dd class="col-sm-9">{{ project.lead_scientist }}</dd>
