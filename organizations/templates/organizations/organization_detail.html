@@ -12,7 +12,7 @@
 
 <div class="row">
   <div class="col col-md-8 col-lg-6">
-    <h1>{{ organization.name }}</h1>
+    <h1><span class="bi bi-building"></span> {{ organization.name }}</h1>
     <dl class="row">
     <dt class="col-sm-3">Страна</dt>
     <dd class="col-sm-9">{{ organization.country }}</dd>
@@ -29,8 +29,13 @@
     <dt class="col-sm-3">Проекты</dt>
     <dd class="col-sm-9">
         <ul>
-            <li>Проект 1</li>
-            <li>Проект 2</li>
+            {% for project in organization.project_set.all %}
+            <li>
+              <a href="{% url 'project_detail' pk=project.pk %}"
+                 class="card-link">{{ project.name }}
+              </a>
+            </li>
+            {% endfor %}
         </ul>
     </dd>
 
