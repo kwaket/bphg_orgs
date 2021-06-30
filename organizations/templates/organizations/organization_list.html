@@ -15,16 +15,17 @@
         </div>
     </div>
 
-    {% if not organizations %}
+
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" class="btn btn-primary" value="Применить фильтр"/>
+    </form>
+
+    {% if not organizations_page.object_list %}
     <p class="text-center" style="padding: 5em;">
-        В базе данных еще нет компаний.
-        <a href="{% url 'organization_new' %}">
-            <span class="bi bi-plus"></span>
-            Добавить
-        </a>
+        Организаций с такими параметрами не найдено
     </p>
     {% else %}
-
     <table class="table table-sm table-striped">
         <thead>
             <tr>
@@ -35,7 +36,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for org in organizations %}
+            {% for org in organizations_page.object_list %}
             <tr>
                 <td><a href="{% url 'organization_detail' pk=org.pk %}"
                        class="card-link">{{ org.name }}</a>
@@ -47,7 +48,8 @@
             {% endfor %}
         </tbody>
     </table>
-    {% bootstrap_pagination organizations size='sm' %}
+    {% include 'organizations/snippets/pagination.html' with obj_page=organizations_page query_params=filter_fields %}
+
     {% endif %}
 
 {% endblock %}

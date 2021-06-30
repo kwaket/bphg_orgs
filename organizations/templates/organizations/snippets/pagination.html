@@ -1,0 +1,62 @@
+<nav aria-label="...">
+    {% if obj_page.has_other_pages %}
+        <ul class="pagination">
+            {% if obj_page.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ obj_page.previous_page_number }}&{{ query_params }}"
+                   class="page-link" tabindex="-1" aria-disabled="true">
+                   &laquo;
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link" tabindex="-1" aria-disabled="true">
+                   &laquo;
+                </a>
+            </li>
+            {% endif %}
+
+            {% if obj_page.number|add:'-4' > 1 %}
+            <li class="page-item">
+                <a href="?page={{ obj_page.number|add:'-5' }}&{{ query_params }}"
+                   class="page-link" tabindex="-1" aria-disabled="true">
+                   &hellip;
+                </a>
+            </li>
+            {% endif %}
+
+            {% for i in obj_page.paginator.page_range %}
+                {% if obj_page.number == i %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">{{ i }}</a>
+                </li>
+                {% elif i > obj_page.number|add:'-5' and i < obj_page.number|add:'5' %}
+                <li class="page-item" aria-current="page">
+                    <a class="page-link" href="?page={{ i }}&{{ query_params }}">{{ i }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if obj_page.paginator.num_pages > obj_page.number|add:'4' %}
+            <li class="page-item" aria-current="page">
+                <a class="page-link" href="?page={{ obj_page.number|add:'5' }}&{{ query_params }}">&hellip;</a>
+            </li>
+            {% endif %}
+
+            {% if obj_page.has_next %}
+            <li class="page-item">
+                <a href="?page={{ obj_page.next_page_number }}&{{ query_params }}"
+                   class="page-link" tabindex="-1" aria-disabled="true">
+                   &raquo;
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link" tabindex="-1" aria-disabled="true">
+                   &raquo;
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    </nav>

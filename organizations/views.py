@@ -1,18 +1,27 @@
-from django.core import paginator
-import organizations
+from urllib.parse import urlencode
+
+from django.http import request
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Organization, Project
-from .forms import OrganizationForm, ProjectForm
+from .forms import OrganizationForm, ProjectForm, OrganizationFilter
 
 
 def organization_list(request):
-    org_list = Organization.objects.all()
-    paginator = Paginator(org_list, 25)
     page = request.GET.get('page')
-    orgs = paginator.get_page(page)
-    return render(request, 'organizations/organization_list.html',
-        {'organizations': orgs})
+    filter_fields = request.GET
+    filter_orgs = OrganizationFilter(request.GET,
+                                     queryset=Organization.objects.all())
+    filter_fields = {k: v for k, v in filter_fields.items() if k in filter_orgs.filters}
+    paginator = Paginator(filter_orgs.qs, 25)
+    orgs_page = paginator.get_page(page)
+    args = {
+        'organizations_page': orgs_page,
+        'page': page,
+        'filter': filter_orgs,
+        'filter_fields': urlencode(filter_fields)
+    }
+    return render(request, 'organizations/organization_list.html', args)
 
 
 def organization_detail(request, pk):
