@@ -27,3 +27,6 @@
     4. [ ] Add project
         - application_scope
         - scientist as text_field
+
+### Edit Organization page
+![img](./images/organization_page.png)
