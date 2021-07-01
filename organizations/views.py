@@ -18,7 +18,6 @@ def organization_list(request):
     orgs_page = paginator.get_page(page)
     args = {
         'organizations_page': orgs_page,
-        'page': page,
         'filter': filter_orgs,
         'filter_fields': urlencode(filter_fields)
     }
