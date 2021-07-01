@@ -13,33 +13,33 @@
   <div class="col col-md-8 col-lg-6">
     <h1><span class="bi bi-box"></span> {{ project.name }}</h1>
     <dl class="row">
-    <dt class="col-sm-3">Страна</dt>
-    <dd class="col-sm-9">{{ project.organization.country }}</dd>
+    <dt class="col-sm-4">Страна</dt>
+    <dd class="col-sm-8">{{ project.organization.country }}</dd>
 
-    <dt class="col-sm-3">Организация</dt>
-    <dd class="col-sm-9">
+    <dt class="col-sm-4">Организация</dt>
+    <dd class="col-sm-8">
       <a href="{% url 'organization_detail' pk=project.organization.pk %}"
                        class="card-link">{{ project.organization.name }}</a>
 
     </dd>
 
-    <dt class="col-sm-3">Ведущия научный сотрудник</dt>
-    <dd class="col-sm-9">{{ project.lead_scientist }}</dd>
+    <dt class="col-sm-4">Ведущия научный сотрудник</dt>
+    <dd class="col-sm-8">{{ project.lead_scientist }}</dd>
 
-    <dt class="col-sm-3 text-truncate">Область применения</dt>
-    <dd class="col-sm-9">{{ project.application_scope }}</dd>
+    <dt class="col-sm-4 text-truncate">Область применения</dt>
+    <dd class="col-sm-8">{{ project.application_scope }}</dd>
 
-    <dt class="col-sm-3">Описание</dt>
-    <dd class="col-sm-9">{{ project.description }}</dd>
+    <dt class="col-sm-4">Описание</dt>
+    <dd class="col-sm-8">{{ project.description }}</dd>
 
-    <dt class="col-sm-3">Прогресс</dt>
-    <dd class="col-sm-9">{{ project.progress}}</dd>
+    <dt class="col-sm-4">Прогресс</dt>
+    <dd class="col-sm-8">{{ project.progress}}</dd>
 
-    <dt class="col-sm-3 text-truncate text-muted">Время добавления</dt>
-    <dd class="col-sm-9 text-muted">{{ project.inserted_at }}</dd>
+    <dt class="col-sm-4 text-truncate text-muted">Время добавления</dt>
+    <dd class="col-sm-8 text-muted">{{ project.inserted_at }}</dd>
 
-    <dt class="col-sm-3 text-truncate text-muted">Добавил пользователь</dt>
-    <dd class="col-sm-9 text-muted">{{ project.inserted_by }}</dd>
+    <dt class="col-sm-4 text-truncate text-muted">Добавил пользователь</dt>
+    <dd class="col-sm-8 text-muted">{{ project.inserted_by }}</dd>
     </dl>
 
     <a class="btn btn-outline-primary" href="{% url 'project_edit' pk=project.pk %}">
