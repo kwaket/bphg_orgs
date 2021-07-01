@@ -4,7 +4,8 @@ from django.http import request
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Organization, Project
-from .forms import OrganizationForm, ProjectForm, OrganizationFilter
+from .forms import (OrganizationForm, ProjectForm, OrganizationFilter,
+                    ProjectFilter)
 
 
 def organization_list(request):
@@ -58,11 +59,19 @@ def organization_edit(request, pk):
 
 
 def project_list(request):
-    proj_list = Project.objects.all()
-    paginator = Paginator(proj_list, 25)
     page = request.GET.get('page')
-    projs = paginator.get_page(page)
-    return render(request, 'organizations/projects_list.html', {'projects': projs})
+    filter_fields = request.GET
+    filter_projs = ProjectFilter(request.GET,
+                                 queryset=Project.objects.all())
+    filter_fields = {k: v for k, v in filter_fields.items() if k in filter_projs.filters}
+    paginator = Paginator(filter_projs.qs, 25)
+    projs_page = paginator.get_page(page)
+    args = {
+        'projects_page': projs_page,
+        'filter': filter_projs,
+        'filter_fields': urlencode(filter_fields)
+    }
+    return render(request, 'organizations/projects_list.html', args)
 
 
 def project_detail(request, pk):

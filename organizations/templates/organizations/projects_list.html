@@ -14,7 +14,24 @@
             </a>
         </div>
     </div>
-    {% if not projects %}
+
+    <div>
+      <h5>Фильтр</h5>
+      <form class="row g-3" method="get">
+        {% bootstrap_field filter.form.name show_label=False size='sm' wrapper_class='col-auto' %}
+        {% bootstrap_field filter.form.organization show_label=False size='sm' wrapper_class='col-md-4' %}
+        {% bootstrap_field filter.form.application_scope show_label=False size='sm' wrapper_class='col-auto' %}
+        {% bootstrap_field filter.form.progress show_label=False size='sm' wrapper_class='col-auto' %}
+        <div class="col-auto">
+         <button type="submit" class="btn btn-secondary btn-sm">
+            <span class="bi bi-funnel-fill"></span>
+            Применить фильтр
+          </button>
+        </div>
+      </form>
+    </div>
+
+    {% if not projects_page.object_list %}
     <p class="text-center" style="padding: 5em;">
         В базе данных еще нет проектов.
         <a href="{% url 'project_new' %}">
@@ -35,7 +52,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for proj in projects %}
+            {% for proj in projects_page.object_list %}
             <tr>
                 <td>
                     <a href="{% url 'project_detail' pk=proj.pk %}"
@@ -50,7 +67,8 @@
             {% endfor %}
         </tbody>
     </table>
-    {% bootstrap_pagination projects size='sm' %}
+    {% include 'organizations/snippets/pagination.html' with obj_page=projects_page query_params=filter_fields %}
+
     {% endif %}
 
 {% endblock %}
