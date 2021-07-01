@@ -4,7 +4,6 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    {% comment %} <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Главная</a></li> {% endcomment %}
     <li class="breadcrumb-item"><a href="{% url 'organization_list' %}">Организации</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{ organization.name }}</li>
   </ol>
@@ -37,6 +36,10 @@
             </li>
             {% endfor %}
         </ul>
+        <a href="{% url 'project_new' %}?organization={{organization.pk}}" class="btn btn-secondary btn-sm">
+            <span class="bi bi-plus-circle-fill"></span>
+            Добавить проект
+        </a>
     </dd>
 
     <dt class="col-sm-3 text-truncate text-muted">Время добавления</dt>

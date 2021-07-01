@@ -88,7 +88,7 @@ def project_new(request):
             proj.save()
             return redirect('project_detail', pk=proj.pk)
     else:
-        form = ProjectForm()
+        form = ProjectForm(initial={'organization':request.GET.get('organization')})
     return render(request, 'organizations/project_new.html', {'form': form})
 
 
