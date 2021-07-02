@@ -19,10 +19,8 @@ def organization_list(request):
     page = request.GET.get('page')
     order_by = request.GET.get('order_by') or 'inserted_at'
     queryset = Organization.objects.all().order_by(order_by)
-    filter_orgs = OrganizationFilter(request.GET,
-                                     queryset=queryset)
-    filter_fields = request.GET.copy()
-    filter_fields = _delete_params(filter_fields,
+    filter_orgs = OrganizationFilter(request.GET, queryset=queryset)
+    filter_fields = _delete_params(request.GET.copy(),
                                    exclude=['page', 'order_by'])
 
     paginator = Paginator(filter_orgs.qs, 25)
@@ -72,16 +70,19 @@ def organization_edit(request, pk):
 
 def project_list(request):
     page = request.GET.get('page')
-    filter_fields = request.GET
-    filter_projs = ProjectFilter(request.GET,
-                                 queryset=Project.objects.all())
-    filter_fields = {k: v for k, v in filter_fields.items() if k in filter_projs.filters}
+    order_by = request.GET.get('order_by') or 'inserted_at'
+    queryset = Project.objects.all().order_by(order_by)
+    filter_projs = ProjectFilter(request.GET, queryset=queryset)
+    filter_fields = _delete_params(request.GET.copy(),
+                                   exclude=['page', 'order_by'])
     paginator = Paginator(filter_projs.qs, 25)
     projs_page = paginator.get_page(page)
     args = {
         'projects_page': projs_page,
         'filter': filter_projs,
-        'filter_fields': urlencode(filter_fields)
+        'filter_fields': urlencode(filter_fields),
+        'current_page': page,
+        'current_order': order_by
     }
     return render(request, 'organizations/projects_list.html', args)
 

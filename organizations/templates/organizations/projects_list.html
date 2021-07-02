@@ -44,11 +44,26 @@
     <table class="table table-sm table-striped">
         <thead>
             <tr>
-                <th scope="col">Название проекта</th>
-                <th scope="col">Организация</th>
-                <th scope="col">Ведущий научный сотрудник</th>
-                <th scope="col">Сфера применения</th>
-                <th scope="col">Уровень прогресса</th>
+                <th scope="col">Название проекта
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
+                </th>
+                <th scope="col">Организация
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='organization' current_order=current_order %}
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-organization' current_order=current_order %}
+                </th>
+                <th scope="col">Ведущий научный сотрудник
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='lead_scientist' current_order=current_order %}
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-lead_scientist' current_order=current_order %}
+                </th>
+                <th scope="col">Сфера применения
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='application_scope' current_order=current_order %}
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-application_scope' current_order=current_order %}
+                </th>
+                <th scope="col">Уровень прогресса
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
+                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-progress' current_order=current_order %}
+                </th>
             </tr>
         </thead>
         <tbody>
