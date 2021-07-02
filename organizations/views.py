@@ -1,9 +1,10 @@
 from urllib.parse import urlencode
+from django.db.models.query import QuerySet
 
 from django.http import request
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Organization, Project
+from .models import Country, Organization, Project
 from .forms import (OrganizationForm, ProjectForm, OrganizationFilter,
                     ProjectFilter)
 
@@ -16,23 +17,31 @@ def _delete_params(params: dict, exclude: list) -> dict:
 
 
 def organization_list(request):
-    page = request.GET.get('page')
-    order_by = request.GET.get('order_by') or 'inserted_at'
-    queryset = Organization.objects.all().order_by(order_by)
-    filter_orgs = OrganizationFilter(request.GET, queryset=queryset)
-    filter_fields = _delete_params(request.GET.copy(),
-                                   exclude=['page', 'order_by'])
-
-    paginator = Paginator(filter_orgs.qs, 25)
-    orgs_page = paginator.get_page(page)
-    args = {
-        'organizations_page': orgs_page,
-        'filter': filter_orgs,
-        'filter_fields': urlencode(filter_fields),
-        'current_page': page,
-        'current_order': order_by
-    }
-    return render(request, 'organizations/organization_list.html', args)
+    mode = request.GET.get('mode', 'list')
+    if mode == 'by_country':
+        query = Country.objects.all().order_by('name').query
+        query.group_by = ['name']
+        queryset = QuerySet(query=query, model=Country)
+        args = {'countries': queryset, 'mode': mode}
+        return render(request, 'organizations/organization_list.html', args)
+    else:
+        page = request.GET.get('page')
+        order_by = request.GET.get('order_by') or 'inserted_at'
+        queryset = Organization.objects.all().order_by(order_by)
+        filter_orgs = OrganizationFilter(request.GET, queryset=queryset)
+        filter_fields = _delete_params(request.GET.copy(),
+                                    exclude=['page', 'order_by'])
+        paginator = Paginator(filter_orgs.qs, 25)
+        orgs_page = paginator.get_page(page)
+        args = {
+            'organizations_page': orgs_page,
+            'filter': filter_orgs,
+            'filter_fields': urlencode(filter_fields),
+            'current_page': page,
+            'current_order': order_by,
+            'mode': mode
+        }
+        return render(request, 'organizations/organization_list.html', args)
 
 
 def organization_detail(request, pk):

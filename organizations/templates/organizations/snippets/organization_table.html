@@ -1,0 +1,67 @@
+{% load django_bootstrap5 %}
+<div>
+  <div>
+    <h5>Фильтр</h5>
+    <form class="row g-4" method="get">
+        {% bootstrap_field filter.form.name show_label=False size='sm' wrapper_class='col-auto' %}
+        {% bootstrap_field filter.form.country show_label=False size='sm' wrapper_class='col-md-4' %}
+        {% bootstrap_field filter.form.city show_label=False size='sm' wrapper_class='col-auto' %}
+
+        <div class="col-auto">
+        <button type="submit" class="btn btn-secondary btn-sm">
+            <span class="bi bi-funnel-fill"></span>
+            Применить фильтр
+        </button>
+        </div>
+    </form>
+  </div>
+
+   {% if not organizations_page.object_list %}
+    <p class="text-center" style="padding: 5em;">
+        Организаций с такими параметрами не найдено
+    </p>
+    {% else %}
+    <table class="table table-md table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Название организации
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
+                </th>
+                <th scope="col">Страна
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='country' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-country' current_order=current_order %}
+                </th>
+                <th scope="col">Город
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='city' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-city' current_order=current_order %}
+                </th>
+                <th scope="col">Основные проекты</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for org in organizations_page.object_list %}
+            <tr>
+                <td><a href="{% url 'organization_detail' pk=org.pk %}"
+                    class="card-link">{{ org.name }}</a>
+                </td>
+                <td>{{ org.country }}</td>
+                <td>{{ org.city }}</td>
+                <td>
+                    <ul>
+                        {% for project in org.project_set.all %}
+                        <li>
+                        <a href="{% url 'project_detail' pk=project.pk %}"
+                            class="card-link">{{ project.name }}
+                        </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'organizations/snippets/pagination.html' with obj_page=organizations_page query_params=filter_fields %}
+</div>
+{% endif %}

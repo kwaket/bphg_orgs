@@ -1,11 +1,26 @@
 {% extends 'organizations/base.html' %}
 
-{% load django_bootstrap5 %}
 
 {% block content %}
     <div class="row">
         <div class="col">
             <h1><span class="bi bi-building"></span> Организации</h1>
+        </div>
+        <div class="col text-center h1-group">
+            <div class="btn-group">
+                <a href="{% url 'organization_list' %}?mode=list"
+                   class="btn btn-outline-secondary {% if mode == 'list' %}active{% endif %}"
+                   {% if mode == 'list' %}aria-current="page"{% endif %}>
+                    <span class="bi bi-list"></span>
+                    Список
+                </a>
+                <a href="{% url 'organization_list' %}?mode=by_country"
+                   class="btn btn-outline-secondary {% if mode == 'by_country' %}active{% endif %}"
+                   {% if mode == 'by_country' %}aria-current="page"{% endif %}>
+                    <span class="bi bi-diagram-2-fill"></span>
+                    По странам
+                </a>
+            </div>
         </div>
         <div class="col text-end h1-group">
             <a href="{% url 'organization_new' %}" class="btn btn-primary">
@@ -15,70 +30,10 @@
         </div>
     </div>
 
-    <div>
-      <h5>Фильтр</h5>
-      <form class="row g-4" method="get">
-        {% bootstrap_field filter.form.name show_label=False size='sm' wrapper_class='col-auto' %}
-        {% bootstrap_field filter.form.country show_label=False size='sm' wrapper_class='col-md-4' %}
-        {% bootstrap_field filter.form.city show_label=False size='sm' wrapper_class='col-auto' %}
-
-        <div class="col-auto">
-         <button type="submit" class="btn btn-secondary btn-sm">
-            <span class="bi bi-funnel-fill"></span>
-            Применить фильтр
-          </button>
-        </div>
-      </form>
-    </div>
-
-    {% if not organizations_page.object_list %}
-    <p class="text-center" style="padding: 5em;">
-        Организаций с такими параметрами не найдено
-    </p>
-    {% else %}
-    <table class="table table-md table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Название организации
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
-                </th>
-                <th scope="col">Страна
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='country' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-country' current_order=current_order %}
-                </th>
-                <th scope="col">Город
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='city' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-city' current_order=current_order %}
-                </th>
-                <th scope="col">Основные проекты</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for org in organizations_page.object_list %}
-            <tr>
-                <td><a href="{% url 'organization_detail' pk=org.pk %}"
-                       class="card-link">{{ org.name }}</a>
-                </td>
-                <td>{{ org.country }}</td>
-                <td>{{ org.city }}</td>
-                <td>
-                    <ul>
-                        {% for project in org.project_set.all %}
-                        <li>
-                        <a href="{% url 'project_detail' pk=project.pk %}"
-                            class="card-link">{{ project.name }}
-                        </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% include 'organizations/snippets/pagination.html' with obj_page=organizations_page query_params=filter_fields %}
-
+    {% if mode == 'list' %}
+    {% include 'organizations/snippets/organization_table.html' with organizations_page=organizations_page current_page=current_page current_order=current_order %}
+    {% elif mode == 'by_country' %}
+    {% include 'organizations/snippets/organization_country_list.html' with countries=countries%}
     {% endif %}
 
 {% endblock %}
