@@ -22,11 +22,6 @@ def organization_list(request):
     filter_orgs = OrganizationFilter(request.GET,
                                      queryset=queryset)
     filter_fields = request.GET.copy()
-    # if filter_fields.get('page'):
-    #     del filter_fields['page']
-    # if filter_fields.get('order_by'):
-    #     del filter_fields['order_by']
-
     filter_fields = _delete_params(filter_fields,
                                    exclude=['page', 'order_by'])
 
