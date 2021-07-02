@@ -62,7 +62,17 @@
                 </td>
                 <td>{{ org.country }}</td>
                 <td>{{ org.city }}</td>
-                <td></td>
+                <td>
+                    <ul>
+                        {% for project in org.project_set.all %}
+                        <li>
+                        <a href="{% url 'project_detail' pk=project.pk %}"
+                            class="card-link">{{ project.name }}
+                        </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
