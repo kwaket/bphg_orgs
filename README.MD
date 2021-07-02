@@ -2,7 +2,7 @@
 ## TODO
 - [x] Main page (Organizations)
     - [ ] with grouping organizations by country
-    - [ ] search
+    - [x] search
 - [x] Page with news (last added organizations)
 - [x] Organization page
     - [x] Edit
@@ -11,8 +11,8 @@
     - [x] Edit
     - [x] Add
 - [x] Page with all projects
-    - [ ] Filter
-    - [ ] Search
+    - [x] Filter
+    - [x] Search
 - [ ] Search
 - [ ] add fields. It need changing user models (add custom user model)
     - updated_at
