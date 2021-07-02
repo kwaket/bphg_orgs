@@ -8,18 +8,36 @@ from .forms import (OrganizationForm, ProjectForm, OrganizationFilter,
                     ProjectFilter)
 
 
+def _delete_params(params: dict, exclude: list) -> dict:
+    for key in exclude:
+        if key in params:
+            del params[key]
+    return params
+
+
 def organization_list(request):
     page = request.GET.get('page')
-    filter_fields = request.GET
+    order_by = request.GET.get('order_by') or 'inserted_at'
+    queryset = Organization.objects.all().order_by(order_by)
     filter_orgs = OrganizationFilter(request.GET,
-                                     queryset=Organization.objects.all())
-    filter_fields = {k: v for k, v in filter_fields.items() if k in filter_orgs.filters}
+                                     queryset=queryset)
+    filter_fields = request.GET.copy()
+    # if filter_fields.get('page'):
+    #     del filter_fields['page']
+    # if filter_fields.get('order_by'):
+    #     del filter_fields['order_by']
+
+    filter_fields = _delete_params(filter_fields,
+                                   exclude=['page', 'order_by'])
+
     paginator = Paginator(filter_orgs.qs, 25)
     orgs_page = paginator.get_page(page)
     args = {
         'organizations_page': orgs_page,
         'filter': filter_orgs,
-        'filter_fields': urlencode(filter_fields)
+        'filter_fields': urlencode(filter_fields),
+        'current_page': page,
+        'current_order': order_by
     }
     return render(request, 'organizations/organization_list.html', args)
 

@@ -1,0 +1,14 @@
+{% load startswith %}
+
+
+{% if order_by == current_order %}
+    {% if order_by|startswith:'-' %}
+    <span class="bi bi-caret-down-fill"></span>
+    {% else %}
+    <span class="bi bi-caret-up-fill"></span>
+    {% endif %}
+{% else %}
+<a href="?page={{ current_page }}&order_by={{ order_by }}&{{ filter_fields }}">{% if order_by|startswith:'-' %}
+<span class="bi bi-caret-down"></span>
+{% else %}<span class="bi bi-caret-up"></span>{% endif %}</a>
+{% endif %}

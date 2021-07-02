@@ -36,12 +36,21 @@
         Организаций с такими параметрами не найдено
     </p>
     {% else %}
-    <table class="table table-sm table-striped">
+    <table class="table table-md table-striped">
         <thead>
             <tr>
-                <th scope="col">Название организации</th>
-                <th scope="col">Страна</th>
-                <th scope="col">Город</th>
+                <th scope="col">Название организации
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
+                </th>
+                <th scope="col">Страна
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='country' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-country' current_order=current_order %}
+                </th>
+                <th scope="col">Город
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='city' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-city' current_order=current_order %}
+                </th>
                 <th scope="col">Основные проекты</th>
             </tr>
         </thead>
