@@ -1,5 +1,4 @@
 from django import forms
-from django.db import models
 
 import django_filters
 
@@ -36,4 +35,5 @@ class ProjectFilter(django_filters.FilterSet):
 
     class Meta:
         model = Project
-        fields = ['name', 'organization', 'lead_scientist', 'application_scope', 'progress']
+        fields = ['name', 'organization', 'lead_scientist', 'application_scope',
+                  'progress']
