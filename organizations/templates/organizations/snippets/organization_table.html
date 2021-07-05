@@ -37,6 +37,22 @@
                     {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-city' current_order=current_order %}
                 </th>
                 <th scope="col">Основные проекты</th>
+                <th scope="col">Добавлено
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_at' current_order=current_order %}
+                </th>
+                <th scope="col">Добавил
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_by' current_order=current_order %}
+                </th>
+                <th scope="col">Изменено
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_at' current_order=current_order %}
+                </th>
+                <th scope="col">Изменил
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_by' current_order=current_order %}
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -58,6 +74,10 @@
                         {% endfor %}
                     </ul>
                 </td>
+                <td>{{ org.inserted_at }}</td>
+                <td>{{ org.inserted_by }}</td>
+                <td>{{ org.updated_at }}</td>
+                <td>{{ org.updated_by }}</td>
             </tr>
             {% endfor %}
         </tbody>

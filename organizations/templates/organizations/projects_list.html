@@ -64,6 +64,22 @@
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-progress' current_order=current_order %}
                 </th>
+                <th scope="col">Добавлено
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_at' current_order=current_order %}
+                </th>
+                <th scope="col">Добавил
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_by' current_order=current_order %}
+                </th>
+                <th scope="col">Изменено
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_at' current_order=current_order %}
+                </th>
+                <th scope="col">Изменил
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_by' current_order=current_order %}
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -78,6 +94,10 @@
                 <td>{{ proj.lead_scientist }}</td>
                 <td>{{ proj.activity_description }}</td>
                 <td>{{ proj.progress }}</td>
+                <td>{{ proj.inserted_at }}</td>
+                <td>{{ proj.inserted_by }}</td>
+                <td>{{ proj.updated_at }}</td>
+                <td>{{ proj.updated_by }}</td>
             </tr>
             {% endfor %}
         </tbody>
