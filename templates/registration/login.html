@@ -1,0 +1,17 @@
+{% extends "organizations/base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col col-md-6 col-lg-4 align-self-center">
+    <h2>Авторизация</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
