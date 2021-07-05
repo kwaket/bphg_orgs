@@ -34,8 +34,8 @@
     {% if not projects_page.object_list %}
     <p class="text-center" style="padding: 5em;">
         В базе данных еще нет проектов.
-        <a href="{% url 'project_new' %}">
-            <span class="bi bi-plus"></span>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'project_new' %}">
+            <span class="bi bi-plus-lg"></span>
             Добавить
         </a>
     </p>
