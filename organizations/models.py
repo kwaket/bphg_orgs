@@ -84,6 +84,8 @@ class Employee(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
     role = models.ForeignKey(EmployeeRole, verbose_name='Должность',
         on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, verbose_name='Организация',
+        on_delete=models.CASCADE)
 
     inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, verbose_name='Добавил')
