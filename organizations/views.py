@@ -104,28 +104,31 @@ def project_detail(request, pk):
 
 def project_new(request):
     if request.method == "POST":
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.user, request.POST)
         if form.is_valid():
             proj = form.save(commit=False)
             proj.inserted_by = request.user
+            proj.updated_by = request.user
             proj.save()
             return redirect('project_detail', pk=proj.pk)
     else:
-        form = ProjectForm(initial={'organization':request.GET.get('organization')})
+        form = ProjectForm(request.user, initial={'organization':request.GET.get('organization')})
     return render(request, 'organizations/project_new.html', {'form': form})
 
 
 def project_edit(request, pk):
     proj = get_object_or_404(Project, pk=pk)
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=Project)
+        form = ProjectForm(request.user, request.POST, instance=proj)
         if form.is_valid():
             proj = form.save(commit=False)
-            # org.updated_by = request.user
+            proj.updated_by = request.user
             proj.save()
-            return redirect('organiztions/project_detail.html', pk=proj.pk)
+            return redirect('project_detail', pk=proj.pk)
     else:
-        form = ProjectForm(instance=proj)
+        form = ProjectForm(request.user, instance=proj,
+            initial={'lead_scientist': proj.lead_scientist.name,
+                     'application_scope': proj.application_scope.name})
     return render(request, 'organizations/project_edit.html', {'form': form})
 
 
