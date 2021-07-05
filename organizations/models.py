@@ -50,6 +50,12 @@ class Organization(models.Model):
         on_delete=models.CASCADE, verbose_name='Добавил')
     inserted_at = models.DateTimeField(default=timezone.now,
         verbose_name='Добавлено')
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE, verbose_name='обновил',
+        related_name='updated_organization')
+    updated_at = models.DateTimeField(default=timezone.now,
+        verbose_name='Добавлено')
+
 
     class Meta:
         verbose_name_plural='Организации'
@@ -125,6 +131,12 @@ class Project(models.Model):
         on_delete=models.CASCADE, verbose_name='Добавил')
     inserted_at = models.DateTimeField(default=timezone.now,
         verbose_name='Добавлено')
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE, verbose_name='обновил',
+        related_name='updated_project')
+    updated_at = models.DateTimeField(default=timezone.now,
+        verbose_name='Добавлено')
+
 
     class Meta:
         verbose_name_plural='Проекты'
