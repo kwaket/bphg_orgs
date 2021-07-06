@@ -10,23 +10,23 @@
 </nav>
 
 <div class="row">
-  <div class="col col-md-8 col-lg-6">
+  <div class="col col-md-12 col-lg-10">
     <h1><span class="bi bi-building"></span> {{ organization.name }}</h1>
     <dl class="row">
-    <dt class="col-sm-4">Страна</dt>
-    <dd class="col-sm-8">{{ organization.country }}</dd>
+    <dt class="col-sm-4 col-md-3">Страна</dt>
+    <dd class="col-sm-8 col-md-9">{{ organization.country }}</dd>
 
-    <dt class="col-sm-4">Город</dt>
-    <dd class="col-sm-8">{{ organization.city }}</dd>
+    <dt class="col-sm-4 col-md-3">Город</dt>
+    <dd class="col-sm-8 col-md-9">{{ organization.city }}</dd>
 
-    <dt class="col-sm-4">Сайт</dt>
-    <dd class="col-sm-8"><a href="{{ organization.site }}">{{ organization.site }}</a></dd>
+    <dt class="col-sm-4 col-md-3">Сайт</dt>
+    <dd class="col-sm-8 col-md-9"><a href="{{ organization.site }}">{{ organization.site }}</a></dd>
 
-    <dt class="col-sm-4 text-truncate">Описание деятельности</dt>
-    <dd class="col-sm-8">{% firstof organization.activity_description '' %}</dd>
+    <dt class="col-sm-4 col-md-3 text-truncate">Описание деятельности</dt>
+    <dd class="col-sm-8 col-md-9">{% firstof organization.activity_description '' %}</dd>
 
-    <dt class="col-sm-4">Проекты</dt>
-    <dd class="col-sm-8">
+    <dt class="col-sm-4 col-md-3">Проекты</dt>
+    <dd class="col-sm-8 col-md-9">
         <ul>
             {% for project in organization.project_set.all %}
             <li>
@@ -42,11 +42,11 @@
         </a>
     </dd>
 
-    <dt class="col-sm-4 text-truncate text-muted">Время добавления</dt>
-    <dd class="col-sm-8 text-muted">{{ organization.inserted_at }}</dd>
+    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Время добавления</dt>
+    <dd class="col-sm-8 col-md-9 text-muted">{{ organization.inserted_at }}</dd>
 
-    <dt class="col-sm-4 text-truncate text-muted">Добавил пользователь</dt>
-    <dd class="col-sm-8 text-muted">{{ organization.inserted_by }}</dd>
+    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил пользователь</dt>
+    <dd class="col-sm-8 col-md-9 text-muted">{{ organization.inserted_by }}</dd>
     </dl>
 
     <a class="btn btn-outline-primary" href="{% url 'organization_edit' pk=organization.pk %}">
