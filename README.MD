@@ -1,7 +1,7 @@
 
 ## TODO
 - [x] Main page (Organizations)
-    - [ ] with grouping organizations by country
+    - [x] with grouping organizations by country
     - [x] search
 - [x] Page with news (last added organizations)
 - [x] Organization page
@@ -14,7 +14,7 @@
     - [x] Filter
     - [x] Search
 - [ ] Search
-- [ ] add fields. It need changing user models (add custom user model)
+- [x] add fields. It need changing user models (add custom user model)
     - updated_at
     - updated_by
 - [x] Footer to bottom
