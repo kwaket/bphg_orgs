@@ -28,23 +28,25 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'lead_scientist', 'organization',
+        fields = ('name', 'organization', 'lead_scientist',
                   'application_scope', 'description', 'progress')
 
-    def clean(self):
-        data = self.cleaned_data.pop('lead_scientist')
+
+    def clean_lead_scientist(self):
+        raw = self.cleaned_data.pop('lead_scientist')
         org = self.cleaned_data.get('organization')
         role = EmployeeRole.objects.filter(
             name='Ведущий научный сотрудник').first()
         scientists = Employee.objects.filter(role_id=role.id,
                                             organization_id=org.id).all()
-        scientist = [s for s in scientists if s.name.lower() == data.lower()]
-        if scientist:
+        scientists = [s for s in scientists if s.name.lower() == raw.lower()]
+        if scientists:
             scientist = scientists[0]
         else:
-            scientist = Employee.objects.create(name=data, role=role,
+            scientist = Employee.objects.create(name=raw, role=role,
                 organization=org, inserted_by=self.user)
         self.cleaned_data.update({'lead_scientist': scientist})
+        return scientist
 
     def clean_application_scope(self):
         raw = self.cleaned_data.pop('application_scope')
