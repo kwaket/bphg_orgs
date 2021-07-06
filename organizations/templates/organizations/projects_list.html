@@ -90,7 +90,11 @@
                        class="card-link">{{ proj.name }}
                     </a>
                 </td>
-                <td>{{ proj.organization }}</td>
+                <td>
+                    <a href="{% url 'organization_detail' pk=proj.organization.pk %}"
+                       class="card-link">{{ proj.organization }}
+                    </a>
+                </td>
                 <td>{{ proj.lead_scientist }}</td>
                 <td>{{ proj.activity_description }}</td>
                 <td>{{ proj.progress }}</td>
