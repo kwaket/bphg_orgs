@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django_bootstrap5',
     'django_filters',
+    'haystack',
 
     'organizations',
 ]
@@ -139,3 +141,12 @@ LOGOUT_REDIRECT_URL = '/'
 
 FILTERS_EMPTY_CHOICE_LABEL = 'Не выбрано'
 FILTERS_NULL_CHOICE_LABEL = ''
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch7_backend.Elasticsearch7SearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
