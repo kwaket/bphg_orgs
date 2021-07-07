@@ -1,11 +1,6 @@
 {% extends 'organizations/base.html' %}
 
 {% block content %}
-{# Display a form #}
-{% if not organizations %}
-В базе еще нет компаний. <a href='/add'>Добавить</a>
-{% endif %}
-
 <h1>Последние добавленные организации</h1>
 <div class="row row-cols-1 row-cols-md-3 g-4">
 {% for org in organizations %}
@@ -24,9 +19,17 @@
                     <a href="{% url 'organization_detail' pk=org.pk %}"
                        class="card-link">Просмотреть</a>
                 </div>
-                {% comment %} <a href="#" class="card-link">Another link</a> {% endcomment %}
             </div>
         </div>
+    </div>
+
+{% empty %}
+    <div class="col">
+        В базе данных еще нет организаций.<br>
+        <a class="btn btn-primary" href="{% url 'organization_new' %}">
+            <span class="bi bi-plus-circle-fill"></span>
+            Добавить организацию
+        </a>
     </div>
 {% endfor %}
 </div>
