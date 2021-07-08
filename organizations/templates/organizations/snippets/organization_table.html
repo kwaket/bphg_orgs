@@ -3,14 +3,18 @@
   <div>
     <h5>Фильтр</h5>
     <form class="row g-4" method="get">
-        {% bootstrap_field filter.form.name show_label=False size='sm' wrapper_class='col-md-3' %}
-        {% bootstrap_field filter.form.country show_label=False size='sm' wrapper_class='col-md-3' %}
-        {% bootstrap_field filter.form.city show_label=False size='sm' wrapper_class='col-md-3' %}
+        {% bootstrap_field filter.form.name show_label=False size='sm' wrapper_class='col-md-3 col-lg-3' %}
+        {% bootstrap_field filter.form.country show_label=False size='sm' wrapper_class='col-md-3 col-lg-3' %}
+        {% bootstrap_field filter.form.city show_label=False size='sm' wrapper_class='col-md-3 col-lg-3' %}
 
         <div class="col-auto">
+        <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm">
+            <span class="bi bi-x-lg"></span>
+            Сбросить
+        </a>
         <button type="submit" class="btn btn-secondary btn-sm">
             <span class="bi bi-funnel-fill"></span>
-            Применить фильтр
+            Применить
         </button>
         </div>
     </form>
