@@ -56,6 +56,7 @@ def organization_new(request):
         if form.is_valid():
             org = form.save(commit=False)
             org.inserted_by = request.user
+            org.updated_by = request.user
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
@@ -69,7 +70,7 @@ def organization_edit(request, pk):
         form = OrganizationForm(request.POST, instance=org)
         if form.is_valid():
             org = form.save(commit=False)
-            # org.updated_by = request.user
+            org.updated_by = request.user
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
