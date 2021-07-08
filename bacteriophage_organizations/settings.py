@@ -139,3 +139,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 FILTERS_EMPTY_CHOICE_LABEL = 'Не выбрано'
 FILTERS_NULL_CHOICE_LABEL = ''
+
+STATIC_ROOT = BASE_DIR.joinpath('static')
+STATIC_URL = '/static/'
