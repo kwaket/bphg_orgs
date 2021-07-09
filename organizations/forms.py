@@ -89,7 +89,8 @@ class OrganizationFilter(django_filters.FilterSet):
 
 class ProjectFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
-    progress = django_filters.CharFilter(lookup_expr='icontains')
+    progress = django_filters.CharFilter(lookup_expr='icontains',
+        label='Прогресс содержит')
 
     class Meta:
         model = Project

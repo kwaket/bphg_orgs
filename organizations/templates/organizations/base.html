@@ -74,12 +74,33 @@
             font-size: 1em;
             margin-bottom: 0;
         }
-        #filter-box{
-            background: red;
+        .filter-box{
+            {% comment %} background: red; {% endcomment %}
+            margin-bottom: 1.2em;
         }
-        #filter-box>div>div {
+        {% comment %} #filter-box>div>div {
             margin-top: 0;
+        } {% endcomment %}
+
+        .filter-box-buttons {
+            margin-top: 1em;
         }
+
+        @media (min-width: 768px) {
+            .filter-box-buttons {
+                position: relative;
+            }
+            .filter-box-buttons>a,
+            .filter-box-buttons>button {
+                position: absolute;
+                bottom: 0;
+            }
+            .filter-box-buttons>button {
+                left: 9em;
+            }
+
+        }
+
         table {
             table-layout: fixed;
             font-size: 0.9em;
