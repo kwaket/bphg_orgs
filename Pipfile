@@ -8,7 +8,9 @@ django = "*"
 psycopg2-binary = "*"
 django-bootstrap5 = "*"
 django-filter = "*"
-django-haystack = {extras = ["elasticsearch"], version = "*"}
+install = "*"
+elasticsearch = "*"
+django-haystack = {git = "https://github.com/django-haystack/django-haystack"}
 
 [dev-packages]
 black = "*"
