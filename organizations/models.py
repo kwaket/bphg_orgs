@@ -115,6 +115,18 @@ class ApplicationScope(models.Model):
         return self.name
 
 
+class Progress(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Название')
+
+    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE, verbose_name='Добавил')
+    inserted_at = models.DateTimeField(default=timezone.now,
+        verbose_name='Добавлено')
+
+    def __str__(self):
+        return self.name
+
+
 class Project(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
     lead_scientist = models.ForeignKey(Employee,
@@ -127,8 +139,8 @@ class Project(models.Model):
         verbose_name='Область применения', on_delete=models.CASCADE)
     description = models.CharField(max_length=1000,
         verbose_name='Описание')
-    progress = models.CharField(max_length=100,
-        verbose_name='Уровень прогресса', blank=True, null=True)
+    progress = models.ForeignKey(Progress, verbose_name='Уровень прогресса',
+        on_delete=models.CASCADE, blank=True, null=True)
 
     inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, verbose_name='Добавил')
@@ -141,8 +153,8 @@ class Project(models.Model):
         verbose_name='Обновлено')
 
 
-    class Meta:
-        verbose_name_plural='Проекты'
+    class meta:
+        verbose_name_plural='проекты'
 
     def __str__(self):
         return self.name
