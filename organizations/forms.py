@@ -4,15 +4,34 @@ from django.db.models import Q
 
 import django_filters
 
-from .models import ApplicationScope, Employee, EmployeeRole, Organization, Project
+from .models import ApplicationScope, City, Employee, EmployeeRole, Organization, Project
 
 
 class OrganizationForm(forms.ModelForm):
+
+    city = forms.CharField()
 
     class Meta:
         model = Organization
         fields = ('name', 'country', 'city', 'site',
                   'activity_description')
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(OrganizationForm, self).__init__(*args, **kwargs)
+
+    def clean_city(self):
+        raw = self.cleaned_data.pop('city').strip()
+        country = self.cleaned_data.get('country')
+        cities = City.objects.all()
+        cities = [c for c in cities if c.name.lower() == raw.lower()]
+        if cities:
+            city = cities[0]
+        else:
+            city = City.objects.create(name=raw.title(), country=country,
+                                       inserted_by=self.user)
+        self.cleaned_data.update({'city': city})
+        return city
 
 
 class ProjectForm(forms.ModelForm):
@@ -70,7 +89,8 @@ class OrganizationFilter(django_filters.FilterSet):
 
 class ProjectFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
-    progress = django_filters.CharFilter(lookup_expr='icontains')
+    progress = django_filters.CharFilter(lookup_expr='icontains',
+        label='Прогресс содержит')
 
     class Meta:
         model = Project

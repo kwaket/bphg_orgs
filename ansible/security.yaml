@@ -1,0 +1,68 @@
+---
+- hosts: production
+  user: "{{ ansible_ssh_user }}"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  vars:
+    password: zelibobam21921
+    ssh_key_file: /Users/kwaket38/.ssh/id_rsa.pub
+
+  vars_files:
+    - external_vars.yaml
+
+  tasks:
+    # - group: name=sudo state=present
+
+
+    - name: Add {{ app_owner }} user
+      user: name="{{ app_owner }}"
+            createhome=yes
+            shell=/bin/bash
+            password="{{ password | password_hash('sha512') }}"
+            state=present
+
+    - name: and add it to sudo
+      user:
+        name: "{{ app_owner }}"
+        groups: sudo
+
+    - name: Set up authorized keys for the {{ app_owner }} user
+      authorized_key: user="{{ app_owner }}" key="{{item}}"
+      with_file:
+        - "{{ ssh_key_file }}"
+
+
+
+    - name: Update apt cache
+      apt: update_cache=yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - fail2ban
+
+    - name: Copy fail2ban config file
+      copy:
+        src: ./configs/fail2ban/jail.d/service.conf
+        dest: /etc/fail2ban/jail.d/service.conf
+      notify: Restart fail2ban
+
+    - name: Disable ssh password authentication
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '#\s?PasswordAuthentication yes'
+        line: PasswordAuthentication no
+      notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted
+
+    - name: Restart fail2ban
+      service:
+        name: fail2ban
+        state: restarted

@@ -17,15 +17,19 @@
 
     <div>
       <h5>Фильтр</h5>
-      <form class="row g-3" method="get">
-        {% bootstrap_field filter.form.name show_label=False size='sm' wrapper_class='col-auto' %}
-        {% bootstrap_field filter.form.organization show_label=False size='sm' wrapper_class='col-md-4' %}
-        {% bootstrap_field filter.form.application_scope show_label=False size='sm' wrapper_class='col-auto' %}
-        {% bootstrap_field filter.form.progress show_label=False size='sm' wrapper_class='col-auto' %}
-        <div class="col-auto">
-         <button type="submit" class="btn btn-secondary btn-sm">
+      <form class="row filter-box" method="get">
+        {% bootstrap_field filter.form.name show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+        {% bootstrap_field filter.form.organization show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+        {% bootstrap_field filter.form.application_scope show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+        {% bootstrap_field filter.form.progress show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+        <div class="col-md-3 col-lg-3 filter-box-buttons">
+          <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm">
+            <span class="bi bi-x-lg"></span>
+            Сбросить
+          </a>
+          <button type="submit" class="btn btn-secondary btn-sm text-nowrap">
             <span class="bi bi-funnel-fill"></span>
-            Применить фильтр
+            Применить
           </button>
         </div>
       </form>
@@ -33,11 +37,7 @@
 
     {% if not projects_page.object_list %}
     <p class="text-center" style="padding: 5em;">
-        В базе данных еще нет проектов.
-        <a class="btn btn-outline-primary btn-sm" href="{% url 'project_new' %}">
-            <span class="bi bi-plus-lg"></span>
-            Добавить
-        </a>
+        Проекты с указанными параметрами не найдены
     </p>
     {% else %}
 
@@ -96,7 +96,7 @@
                     </a>
                 </td>
                 <td>{{ proj.lead_scientist }}</td>
-                <td>{{ proj.activity_description }}</td>
+                <td>{{ proj.application_scope }}</td>
                 <td>{{ proj.progress }}</td>
                 <td>{{ proj.inserted_at }}</td>
                 <td>{{ proj.inserted_by }}</td>

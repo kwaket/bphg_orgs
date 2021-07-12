@@ -1,0 +1,13 @@
+app_name: bacteriophage_organizations
+app_owner: savva
+app_path: "/var/www/html/{{app_name}}"
+secret_key: $1FPHnhL0HBpM # TODO: fix it. Research the way to gen key
+db_name: "{{ app_name }}"
+db_password: "{{ app_name }}"
+ssh_key: /var/www/.ssh/deploy_key
+git_token: f882f6ab20da0452587cb010b133dcd7e4c51001
+git_repository: git@github.com:kwaket/bacteriophage_organizations.git
+git_repo_name: "{{ app_name }}"
+virtualenv_path: "{{ app_path }}/env"
+django_admin_name: "admin"
+django_admin_email: "kwaket@ya.ru"

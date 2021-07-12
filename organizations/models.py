@@ -54,7 +54,7 @@ class Organization(models.Model):
         on_delete=models.CASCADE, verbose_name='обновил',
         related_name='updated_organization')
     updated_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
+        verbose_name='Обновлено')
 
 
     class Meta:
@@ -126,8 +126,8 @@ class Project(models.Model):
         verbose_name='Область применения', on_delete=models.CASCADE)
     description = models.CharField(max_length=1000,
         verbose_name='Описание')
-    progress = models.CharField(max_length=100, verbose_name='Прогресс',
-        blank=True, null=True)
+    progress = models.CharField(max_length=100,
+        verbose_name='Уровень прогресса', blank=True, null=True)
 
     inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, verbose_name='Добавил')
@@ -137,7 +137,7 @@ class Project(models.Model):
         on_delete=models.CASCADE, verbose_name='обновил',
         related_name='updated_project')
     updated_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
+        verbose_name='Обновлено')
 
 
     class Meta:

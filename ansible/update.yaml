@@ -1,0 +1,42 @@
+---
+- hosts: production
+  user: "{{ ansible_ssh_user }}"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  vars_files:
+    - external_vars.yaml
+
+  tasks:
+    - name: Clone app from repository
+      git:
+        repo: "{{ git_repository }}"
+        dest: "{{ app_path }}"
+        accept_hostkey: yes
+        key_file: "{{ ssh_key }}"
+      notify: Restart gunicorn
+
+    - name: Initiate virtualenv
+      pip: virtualenv="{{ virtualenv_path }}"
+           virtualenv_python=python3.6
+           requirements={{ app_path }}/requirements.txt
+
+    - name: Initial migration
+      django_manage:
+        command: "migrate"
+        app_path: "{{ app_path }}"
+        virtualenv: "{{ virtualenv_path }}"
+
+    - name: Collect static
+      django_manage:
+        command: collectstatic
+        app_path: "{{ app_path }}"
+        virtualenv: "{{ virtualenv_path }}"
+
+  handlers:
+    - name: Restart gunicorn
+      systemd:
+        name: gunicorn
+        state: restarted
+

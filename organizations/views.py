@@ -52,28 +52,30 @@ def organization_detail(request, pk):
 
 def organization_new(request):
     if request.method == "POST":
-        form = OrganizationForm(request.POST)
+        form = OrganizationForm(request.user, request.POST)
         if form.is_valid():
             org = form.save(commit=False)
             org.inserted_by = request.user
+            org.updated_by = request.user
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
-        form = OrganizationForm()
+        form = OrganizationForm(request.user)
     return render(request, 'organizations/organization_new.html', {'form': form})
 
 
 def organization_edit(request, pk):
     org = get_object_or_404(Organization, pk=pk)
     if request.method == "POST":
-        form = OrganizationForm(request.POST, instance=org)
+        form = OrganizationForm(request.user, request.POST, instance=org)
         if form.is_valid():
             org = form.save(commit=False)
-            # org.updated_by = request.user
+            org.updated_by = request.user
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
-        form = OrganizationForm(instance=org)
+        form = OrganizationForm(request.user, instance=org,
+            initial={'city': org.city.name })
     return render(request, 'organizations/organization_edit.html', {'form': form})
 
 

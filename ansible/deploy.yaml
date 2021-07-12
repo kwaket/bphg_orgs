@@ -1,0 +1,206 @@
+---
+- hosts: test
+  user: "{{ ansible_ssh_user }}"
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  vars_files:
+    - external_vars.yaml
+
+  tasks:
+    - name: Set up environment variable for db
+      lineinfile:
+        dest: /etc/environment
+        line: "SAVPY_DB_PASSWORD={{ db_password }}"
+        state: present
+
+    - name: Set up environment variable django app
+      lineinfile:
+        dest: /etc/environment
+        line: "SECRET_KEY={{ secret_key }}"
+        state: present
+
+    - name: Set up environment variable django app
+      lineinfile:
+        dest: /etc/environment
+        line: "APP_HOST={{ inventory_hostname }}"
+        state: present
+
+    - name: Update apt cache
+      apt: update_cache=yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - python3-pip
+          - python3-dev
+          - libpq-dev
+          - postgresql
+          - postgresql-contrib
+          - nginx
+          - curl
+          - gunicorn
+          - acl
+          - git
+
+    # Creating the PostgreSQL Database and User
+    - name: Install required python packages (global)
+      pip:
+        name:
+          - psycopg2
+
+    - name: Create a new database with name {{ app_name }}
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: "{{ db_name }}"
+
+    - name: Connect to {{ app_name }} database, create {{ app_name }} user, and grant access to database
+      become: true
+      become_user: postgres
+      postgresql_user:
+        db: "{{ app_name }}"
+        name: "{{ app_name }}"
+        password: "{{ db_password }}"
+        priv: ALL
+        role_attr_flags: NOSUPERUSER
+
+      # setting for user recomended by django
+      # - ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+      # - ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+      # - ALTER ROLE myprojectuser SET timezone TO 'UTC';
+
+
+    # Cloning project
+    - name: Make dir for project
+      file:
+        path: "{{ app_path }}"
+        state: directory
+        owner: "{{ app_owner }}"
+        group: www-data
+        recurse: yes
+
+    - name: Make dir for ssh
+      file:
+        path: /var/www/.ssh
+        state: directory
+        owner: "{{ app_owner }}"
+        group: www-data
+        recurse: yes
+
+    ## Generate ssh key
+    - name: Generate /etc/ssh/ RSA host key
+      command : ssh-keygen -q -t rsa -f {{ ssh_key }} -C "" -N ""
+      args:
+        creates: "{{ ssh_key }}"
+
+    - name: Get ssh_key_pub content
+      shell: "cat {{ ssh_key }}.pub"
+      register: ssh_key_pub
+
+    - name: Add deploy key to repo
+      github_deploy_key:
+        owner: "kwaket"
+        repo: bacteriophage_organizations # TODO: chage to variable and check
+        name: "deploy-key"
+        key: "{{ ssh_key_pub.stdout }}"
+        force: no
+        token: "{{ git_token }}"
+        # read_only: yes
+
+    - name: Clone app from repository
+      git:
+        repo: git@github.com:kwaket/bacteriophage_organizations.git
+        dest: "{{ app_path }}"
+        accept_hostkey: yes
+        key_file: "{{ ssh_key }}"
+        version: "{{ git_branch }}"
+
+    # Creating a Python Virtual Environment for your Project
+    - name: Install required python packages venv (global)
+      pip:
+        name:
+          - virtualenv
+
+    - name: Initiate virtualenv
+      pip: virtualenv="{{ virtualenv_path }}"
+           virtualenv_python=python3.8
+           requirements={{ app_path }}/requirements.txt
+
+    # Setting up Django
+    - name: Initial migration
+      django_manage:
+        command: "migrate"
+        app_path: "{{ app_path }}"
+        virtualenv: "{{ virtualenv_path }}"
+      notify: Create a superuser
+
+    - name: Collect static
+      django_manage:
+        command: collectstatic
+        app_path: "{{ app_path }}"
+        virtualenv: "{{ virtualenv_path }}"
+
+
+
+    # Setting up Gunicorn and NGINX
+    - name: Copy systemd socket file
+      copy:
+        src: ./configs/etc/systemd/system/gunicorn.socket
+        dest: /etc/systemd/system/gunicorn.socket
+      notify: Enable and start gunicorn
+
+    - name: Copy systemd service file
+      template:
+        src: ./configs/etc/systemd/system/gunicorn.service.j2
+        dest: /etc/systemd/system/gunicorn.service
+      notify: Enable and start gunicorn
+
+    - name: Copy nginx config file
+      copy:
+        src: ./configs/etc/nginx/nginx.conf
+        dest: /etc/nginx/nginx.conf
+
+    - name: Copy nginx site config file
+      template:
+        src: "./configs/etc/nginx/sites-available/{{ app_name }}.j2"
+        dest: "/etc/nginx/sites-available/{{ app_name }}"
+
+    - name: Create a symbolic link
+      file:
+        src: "/etc/nginx/sites-available/{{ app_name }}"
+        dest: "/etc/nginx/sites-enabled/{{ app_name }}"
+        owner: "{{ app_owner }}"
+        group: www-data
+        state: link
+      notify: Restart nginx
+
+    - name: Allow all access to 'Nginx Full'
+      ufw:
+        rule: allow
+        name: 'Nginx Full'
+
+  handlers:
+    - name: Restart postgres
+      service: name=postgresql state=restarted
+
+    - name: Create a superuser
+      django_manage:
+        command: "createsuperuser --noinput --username={{django_admin_name}} --email={{django_admin_email}}"
+        app_path: "{{ app_path }}"
+        virtualenv: "{{ virtualenv_path }}"
+      # python manage.py changepassword <user_name>
+
+    - name: Enable and start gunicorn
+      systemd:
+        name: gunicorn
+        state: started
+        enabled: yes
+
+    - name: Restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+
+
