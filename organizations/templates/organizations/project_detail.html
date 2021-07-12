@@ -33,7 +33,7 @@
     <dd class="col-sm-8 col-md-9">{{ project.description }}</dd>
 
     <dt class="col-sm-4 col-md-3">Прогресс</dt>
-    <dd class="col-sm-8 col-md-9">{{ project.progress}}</dd>
+    <dd class="col-sm-8 col-md-9">{% firstof project.progress '' %}</dd>
 
     <dt class="col-sm-4 col-md-3 text-truncate text-muted">Время добавления</dt>
     <dd class="col-sm-8 col-md-9 text-muted">{{ project.inserted_at }}</dd>
