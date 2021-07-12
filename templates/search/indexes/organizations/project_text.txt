@@ -1,0 +1,5 @@
+{{ object.name }}
+{{ object.application_scope.name }}
+{{ object.lead_scientist.name }}
+{{ object.description }}
+{{ object.organization.name }}
