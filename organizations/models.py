@@ -109,7 +109,7 @@ class ApplicationScope(models.Model):
         verbose_name='Добавлено')
 
     class Meta:
-        verbose_name_plural='Область применения'
+        verbose_name_plural='область применения'
 
     def __str__(self):
         return self.name
@@ -122,6 +122,9 @@ class Progress(models.Model):
         on_delete=models.CASCADE, verbose_name='Добавил')
     inserted_at = models.DateTimeField(default=timezone.now,
         verbose_name='Добавлено')
+
+    class Meta:
+        verbose_name_plural='Уровень прогресса'
 
     def __str__(self):
         return self.name
@@ -153,7 +156,7 @@ class Project(models.Model):
         verbose_name='Обновлено')
 
 
-    class meta:
+    class Meta:
         verbose_name_plural='проекты'
 
     def __str__(self):
