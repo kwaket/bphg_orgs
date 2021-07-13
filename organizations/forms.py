@@ -14,9 +14,9 @@ class OrganizationForm(forms.ModelForm):
         fields = ('name', 'country', 'address', 'site',
                   'activity_description')
 
-    # def __init__(self, user, *args, **kwargs):
-    #     self.user = user
-    #     super(OrganizationForm, self).__init__(*args, **kwargs)
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(OrganizationForm, self).__init__(*args, **kwargs)
 
 
 class ProjectForm(forms.ModelForm):

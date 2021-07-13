@@ -6,7 +6,6 @@
         {% comment %} <div class="col-auto"> {% endcomment %}
         {% bootstrap_field filter.form.name show_label=True layout='bootstrap_form' size='sm' wrapper_class='col-md-3 col-lg-3' %}
         {% bootstrap_field filter.form.country show_label=True layout='floating' size='sm' wrapper_class='col-md-3 col-lg-3' %}
-        {% bootstrap_field filter.form.city show_label=True layout='floating' size='sm' wrapper_class='col-md-3 col-lg-3' %}
         {% comment %} </div> {% endcomment %}
 
         <div class="col-md-3 col-lg-3 filter-box-buttons">
@@ -38,9 +37,9 @@
                     {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='country' current_order=current_order %}
                     {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-country' current_order=current_order %}
                 </th>
-                <th scope="col">Город
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='city' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-city' current_order=current_order %}
+                <th scope="col">Адрес
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='address' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-address' current_order=current_order %}
                 </th>
                 <th scope="col">Проекты</th>
                 <th scope="col">Добавлено
@@ -68,7 +67,7 @@
                     class="card-link">{{ org.name }}</a>
                 </td>
                 <td>{{ org.country }}</td>
-                <td>{{ org.city }}</td>
+                <td>{{ org.address }}</td>
                 <td>
                     <ul>
                         {% for project in org.project_set.all %}
@@ -81,9 +80,9 @@
                     </ul>
                 </td>
                 <td>{{ org.inserted_at }}</td>
-                <td>{{ org.inserted_by }}</td>
+                <td>{{ org.inserted_by.get_full_name }}</td>
                 <td>{{ org.updated_at }}</td>
-                <td>{{ org.updated_by }}</td>
+                <td>{{ org.updated_by.get_full_name  }}</td>
             </tr>
             {% endfor %}
         </tbody>

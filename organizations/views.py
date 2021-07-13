@@ -74,8 +74,7 @@ def organization_edit(request, pk):
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
-        form = OrganizationForm(request.user, instance=org,
-            initial={'city': org.city.name })
+        form = OrganizationForm(request.user, instance=org)
     return render(request, 'organizations/organization_edit.html', {'form': form})
 
 
