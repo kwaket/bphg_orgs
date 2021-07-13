@@ -19,30 +19,11 @@ class Country(models.Model):
         return self.name
 
 
-class City(models.Model):
-    name = models.CharField(max_length=500, verbose_name='Название')
-    country = models.ForeignKey(Country, verbose_name='Страна',
-        on_delete=models.CASCADE)
-
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
-
-    class Meta:
-        verbose_name_plural='Города'
-
-    def __str__(self):
-        return self.name
-
-
 class Organization(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
     country = models.ForeignKey(Country, verbose_name='Страна',
         on_delete=models.CASCADE)
-    city = models.ForeignKey(City, verbose_name='Город',
-        on_delete=models.CASCADE)
-    # projects
+    address = models.CharField(max_length=500, verbose_name='Адрес')
     site = models.CharField(max_length=500, verbose_name='Сайт')
     activity_description = models.CharField(max_length=500,
         verbose_name='Краткое описание вида деятельности', blank=True, null=True)
