@@ -63,7 +63,11 @@ class EmployeeRole(models.Model):
 
 
 class Employee(models.Model):
-    name = models.CharField(max_length=500, verbose_name='Название')
+    first_name = models.CharField(max_length=200, verbose_name='Имя')
+    last_name = models.CharField(max_length=200, verbose_name='Фамилия')
+    middle_name = models.CharField(max_length=200, verbose_name='Отчество',
+        null=True, blank=True)
+    degree = models.CharField(max_length=500, verbose_name='Ученная степень')
     role = models.ForeignKey(EmployeeRole, verbose_name='Должность',
         on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, verbose_name='Организация',
@@ -78,7 +82,12 @@ class Employee(models.Model):
         verbose_name_plural='Сотрудники'
 
     def __str__(self):
-        return self.name
+        return self.get_full_name()
+
+    def get_full_name(self):
+        middle_name = self.middle_name or ''
+        return '{} {} {}'.format(self.last_name, self.first_name,
+                                 middle_name).strip()
 
 
 class ApplicationScope(models.Model):
@@ -142,3 +151,4 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
