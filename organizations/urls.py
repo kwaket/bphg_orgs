@@ -21,4 +21,12 @@ urlpatterns = [
          name='project_new'),
     path('projects/<int:pk>/edit', login_required(views.project_edit),
          name='project_edit'),
+    path('employees', login_required(views.employee_list),
+         name='employee_list'),
+    path('employees/<int:pk>/', login_required(views.employee_detail),
+         name='project_detail'),
+    path('employees/new/', login_required(views.employee_new),
+         name='project_new'),
+    path('employees/<int:pk>/edit', login_required(views.employee_edit),
+         name='project_edit'),
 ]

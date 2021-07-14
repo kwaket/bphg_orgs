@@ -146,6 +146,10 @@
                         <a class="nav-link {% if request.path|startswith:'/projects' %} active {% endif %}"
                            href="{% url 'project_list' %}">Проекты</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path|startswith:'/employees' %} active {% endif %}"
+                           href="{% url 'employee_list' %}">Сотрудники</a>
+                    </li>
                 {% endif %}
                 </ul>
 
