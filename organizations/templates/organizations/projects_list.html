@@ -44,7 +44,7 @@
     <table class="table table-md table-striped">
         <thead>
             <tr>
-                <th scope="col">Название проекта
+                <th scope="col">Название
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
                 </th>
@@ -60,7 +60,7 @@
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='application_scope' current_order=current_order %}
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-application_scope' current_order=current_order %}
                 </th>
-                <th scope="col">Уровень прогресса
+                <th scope="col">Прогресс
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
                 {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-progress' current_order=current_order %}
                 </th>
