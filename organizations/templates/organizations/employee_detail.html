@@ -2,7 +2,12 @@
 
 {% block content %}
 
-breadcrumb<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'organization_list' %}">Организации</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Редактироваение организации</li>
+  </ol>
+</nav>
 
 {% include 'snippets/page_header.html' with name=page_name url_new=url_new icon_name='bi-person-fill' button_name='Редактировать' %}
 
