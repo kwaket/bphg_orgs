@@ -76,7 +76,9 @@ class Employee(UpdatingMixit):
         on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural='Сотрудники'
+        verbose_name = 'Сотрудник'
+        verbose_name_plural = 'Сотрудники'
+        unique_together = (('first_name', 'last_name', 'degree'),)
 
     def __str__(self):
         return self.get_full_name()
