@@ -26,7 +26,7 @@ breadcrumb<br>
       <dd class="col-sm-8 col-md-9 text-muted">{{ obj.inserted_at }}</dd>
 
       <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировал</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.updated_by }}</dd>
+      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.updated_by.get_full_name }}</dd>
       <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировано</dt>
       <dd class="col-sm-8 col-md-9 text-muted">{{ obj.updated_at }}</dd>
     </dl>
