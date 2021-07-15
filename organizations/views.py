@@ -4,7 +4,7 @@ from django.db.models.query import QuerySet
 from django.http import request
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Country, Organization, Project
+from .models import Country, Employee, Organization, Project
 from .forms import (OrganizationForm, ProjectForm, OrganizationFilter,
                     ProjectFilter)
 
@@ -131,6 +131,22 @@ def project_edit(request, pk):
             initial={'lead_scientist': proj.lead_scientist.name,
                      'application_scope': proj.application_scope.name})
     return render(request, 'organizations/project_edit.html', {'form': form})
+
+
+def employee_list(request):
+    pass
+
+
+def employee_detail(request):
+    pass
+
+
+def employee_new(request):
+    pass
+
+
+def employee_edit(request):
+    pass
 
 
 def main_page(request):
