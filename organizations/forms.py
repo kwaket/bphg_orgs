@@ -64,6 +64,14 @@ class ProjectForm(forms.ModelForm):
         return scope
 
 
+class EmployeeForm(forms.ModelForm):
+
+    class Meta:
+        model = Employee
+        fields = ['first_name', 'last_name', 'middle_name', 'degree', 'role',
+                  'organization']
+
+
 class OrganizationFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
 

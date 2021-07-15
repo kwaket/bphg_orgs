@@ -1,13 +1,18 @@
-<div class="row">
-    <div class="col">
+<div class="row page-header">
+    <div class="col col-md-8">
         <h1><span class="bi {{ icon_name }}"></span> {{ name }}</h1>
     </div>
 
     {{ middle_elements }}
 
-    <div class="col text-end h1-group">
+    <div class="col col-md-4 text-end h1-group">
         <a href="{{ button_url }}" class="btn btn-outline-primary">
-            <span class="bi bi-plus-lg"></span>
+            <span class="bi {% if button_name == 'Добавить' %}
+            bi-plus-lg
+            {% elif button_name == 'Редактировать' %}
+            bi-pencil-fill
+            {% endif %}">
+            </span>
             {{ button_name }}
         </a>
     </div>
