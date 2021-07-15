@@ -183,7 +183,7 @@ def employee_edit(request, pk):
             emp = form.save(commit=False)
             emp.updated_by = request.user
             emp.save()
-            return redirect('employee_edit', pk=emp.pk)
+            return redirect('employee_detail', pk=emp.pk)
     else:
         form = EmployeeForm(instance=emp)
     return render(request, 'organizations/employee_edit.html', {'form': form})
