@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import indexes
+from django.db.models import fields, indexes
 from django.utils import timezone
 
 from computed_property import ComputedTextField
@@ -16,13 +16,9 @@ class InsertingMixin(models.Model):
         abstract = True
 
 class UpdatingMixit(InsertingMixin):
-    updated_by = ComputedTextField(compute_from='_updated_by')
-    @property
-    def _updated_by(self):
-        fieldname = self.__class__.__name__.lower()
-        return models.ForeignKey(settings.AUTH_USER_MODEL,
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
             on_delete=models.CASCADE, verbose_name='Обновил',
-            related_name=fieldname)
+            related_name="%(app_label)s_%(class)s_related")
 
     updated_at = models.DateTimeField(default=timezone.now,
         verbose_name='Обновлено')
