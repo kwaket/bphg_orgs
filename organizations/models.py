@@ -3,14 +3,36 @@ from django.db import models
 from django.db.models import indexes
 from django.utils import timezone
 
+from computed_property import ComputedTextField
 
-class Country(models.Model):
-    name = models.CharField(max_length=500, verbose_name='Название')
 
+class InsertingMixin(models.Model):
     inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE, verbose_name='Добавил')
     inserted_at = models.DateTimeField(default=timezone.now,
         verbose_name='Добавлено')
+
+    class Meta:
+        abstract = True
+
+class UpdatingMixit(InsertingMixin):
+    updated_by = ComputedTextField(compute_from='_updated_by')
+    @property
+    def _updated_by(self):
+        fieldname = self.__class__.__name__.lower()
+        return models.ForeignKey(settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE, verbose_name='Обновил',
+            related_name=fieldname)
+
+    updated_at = models.DateTimeField(default=timezone.now,
+        verbose_name='Обновлено')
+
+    class Meta:
+        abstract = True
+
+
+class Country(InsertingMixin):
+    name = models.CharField(max_length=500, verbose_name='Название')
 
     class Meta:
         verbose_name_plural='Страны'
@@ -19,7 +41,7 @@ class Country(models.Model):
         return self.name
 
 
-class Organization(models.Model):
+class Organization(UpdatingMixit):
     name = models.CharField(max_length=500, verbose_name='Название')
     country = models.ForeignKey(Country, verbose_name='Страна',
         on_delete=models.CASCADE)
@@ -27,17 +49,6 @@ class Organization(models.Model):
     site = models.CharField(max_length=500, verbose_name='Сайт')
     activity_description = models.CharField(max_length=500,
         verbose_name='Краткое описание вида деятельности', blank=True, null=True)
-
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
-    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='обновил',
-        related_name='updated_organization')
-    updated_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Обновлено')
-
 
     class Meta:
         verbose_name_plural='Организации'
@@ -47,13 +58,8 @@ class Organization(models.Model):
         return self.name
 
 
-class EmployeeRole(models.Model):
+class EmployeeRole(UpdatingMixit):
     name = models.CharField(max_length=500, verbose_name='Название')
-
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
 
     class Meta:
         verbose_name_plural='Должность'
@@ -62,7 +68,7 @@ class EmployeeRole(models.Model):
         return self.name
 
 
-class Employee(models.Model):
+class Employee(UpdatingMixit):
     first_name = models.CharField(max_length=200, verbose_name='Имя')
     last_name = models.CharField(max_length=200, verbose_name='Фамилия')
     middle_name = models.CharField(max_length=200, verbose_name='Отчество',
@@ -72,11 +78,6 @@ class Employee(models.Model):
         on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, verbose_name='Организация',
         on_delete=models.CASCADE)
-
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
 
     class Meta:
         verbose_name_plural='Сотрудники'
@@ -90,28 +91,18 @@ class Employee(models.Model):
                                  middle_name).strip()
 
 
-class ApplicationScope(models.Model):
+class ApplicationScope(UpdatingMixit):
     name = models.CharField(max_length=500, verbose_name='Название')
 
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
-
     class Meta:
-        verbose_name_plural='область применения'
+        verbose_name_plural='Область применения'
 
     def __str__(self):
         return self.name
 
 
-class Progress(models.Model):
+class Progress(UpdatingMixit):
     name = models.CharField(max_length=200, verbose_name='Название')
-
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
 
     class Meta:
         verbose_name_plural='Уровень прогресса'
@@ -120,7 +111,7 @@ class Progress(models.Model):
         return self.name
 
 
-class Project(models.Model):
+class Project(UpdatingMixit):
     name = models.CharField(max_length=500, verbose_name='Название')
     lead_scientist = models.ForeignKey(Employee,
         verbose_name='Ведущий научный сотрудник',
@@ -135,20 +126,8 @@ class Project(models.Model):
     progress = models.ForeignKey(Progress, verbose_name='Уровень прогресса',
         on_delete=models.CASCADE, blank=True, null=True)
 
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
-    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='обновил',
-        related_name='updated_project')
-    updated_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Обновлено')
-
-
     class Meta:
         verbose_name_plural='проекты'
 
     def __str__(self):
         return self.name
-
