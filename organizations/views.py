@@ -1,5 +1,6 @@
 from urllib.parse import urlencode
 from django.db.models.query import QuerySet
+from django.urls import reverse
 
 from django.http import request
 from django.core.paginator import Paginator
@@ -134,18 +135,30 @@ def project_edit(request, pk):
 
 
 def employee_list(request):
-    pass
-
-
-def employee_detail(request):
-    pass
+    page = request.GET.get('page')
+    order_by = request.GET.get('order_by') or 'inserted_at'
+    queryset = Employee.objects.all().order_by(order_by)
+    paginator = Paginator(queryset, 25)
+    emps_page = paginator.get_page(page)
+    url_new = reverse('employee_new', args=[], kwargs={})
+    args = {
+        'page': emps_page,
+        'current_page': page,
+        'current_order': order_by,
+        'url_new': url_new,
+    }
+    return render(request, 'organizations/employee_list.html', args)
 
 
 def employee_new(request):
     pass
 
 
-def employee_edit(request):
+def employee_detail(request, pk):
+    pass
+
+
+def employee_edit(request, pk):
     pass
 
 

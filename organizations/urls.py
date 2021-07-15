@@ -24,9 +24,9 @@ urlpatterns = [
     path('employees', login_required(views.employee_list),
          name='employee_list'),
     path('employees/<int:pk>/', login_required(views.employee_detail),
-         name='project_detail'),
+         name='employee_detail'),
     path('employees/new/', login_required(views.employee_new),
-         name='project_new'),
+         name='employee_new'),
     path('employees/<int:pk>/edit', login_required(views.employee_edit),
-         name='project_edit'),
+         name='employee_edit'),
 ]
