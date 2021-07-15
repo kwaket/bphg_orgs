@@ -6,8 +6,8 @@ from django.http import request
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Country, Employee, Organization, Project
-from .forms import (OrganizationForm, ProjectForm, OrganizationFilter,
-                    ProjectFilter)
+from .forms import (OrganizationForm, ProjectForm, EmployeeForm,
+                    OrganizationFilter, ProjectFilter)
 
 
 def _delete_params(params: dict, exclude: list) -> dict:
@@ -145,21 +145,49 @@ def employee_list(request):
         'page': emps_page,
         'current_page': page,
         'current_order': order_by,
-        'url_new': url_new,
+        'button_url': url_new,
     }
     return render(request, 'organizations/employee_list.html', args)
 
 
 def employee_new(request):
-    pass
+    if request.method == "POST":
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            emp = form.save(commit=False)
+            emp.inserted_by = request.user
+            emp.updated_by = request.user
+            emp.save()
+            return redirect('employee_detail', pk=emp.pk)
+    else:
+        form = EmployeeForm()
+    return render(request, 'organizations/employee_new.html', {'form': form})
 
 
 def employee_detail(request, pk):
-    pass
+    emp = get_object_or_404(Employee, pk=pk)
+    url = reverse('employee_edit', args=[], kwargs={'pk': emp.pk})
+    args = {
+        'obj': emp,
+        'page_name': emp.get_full_name(),
+        'button_url': url
+    }
+    return render(request, 'organizations/employee_detail.html', args)
 
 
 def employee_edit(request, pk):
-    pass
+    emp = get_object_or_404(Employee, pk=pk)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=emp)
+        if form.is_valid():
+            emp = form.save(commit=False)
+            emp.updated_by = request.user
+            emp.save()
+            return redirect('employee_edit', pk=emp.pk)
+    else:
+        form = EmployeeForm(instance=emp)
+    return render(request, 'organizations/employee_edit.html', {'form': form})
+
 
 
 def main_page(request):
