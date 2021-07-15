@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'django_filters',
     'haystack',
+    'computed_property',
 
     'organizations',
 ]
