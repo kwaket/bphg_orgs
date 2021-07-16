@@ -5,8 +5,8 @@ from django.urls import reverse
 from django.http import request
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Country, Employee, Organization, Project
-from .forms import (OrganizationForm, ProjectForm, EmployeeForm,
+from .models import Country, Employee, EmployeeRole, Organization, Project
+from .forms import (LeadscientistForm, OrganizationForm, ProjectForm, EmployeeForm,
                     OrganizationFilter, ProjectFilter)
 
 
@@ -104,18 +104,41 @@ def project_detail(request, pk):
         {'project': proj})
 
 
+def _get_leadscientist(fields: dict) -> Employee:
+    emp, created = Employee.objects.get_or_create(**fields)
+    emp.save()
+    return emp
+
+
 def project_new(request):
     if request.method == "POST":
-        form = ProjectForm(request.user, request.POST)
-        if form.is_valid():
-            proj = form.save(commit=False)
+        proj_form = ProjectForm(request.user, request.POST)
+        emp_form = LeadscientistForm(request.POST)
+        emp_role = EmployeeRole.objects.filter(
+            name='Ведущий научный сотрудник').first()
+        duplicate_error = 'Сотрудник с такими значениями полей Имя, Фамилия и Ученная степень уже существует.'
+        if proj_form.is_valid() and (emp_form.is_valid() or duplicate_error in emp_form.errors['__all__']):
+            proj = proj_form.save(commit=False)
+            emp_fields = emp_form.cleaned_data
+            emp_fields.update({
+                'updated_by': request.user,
+                'inserted_by': request.user,
+                'organization': proj.organization,
+                'role': emp_role
+            })
+            emp = _get_leadscientist(emp_fields)
+            proj.lead_scientist = emp
             proj.inserted_by = request.user
             proj.updated_by = request.user
             proj.save()
+
             return redirect('project_detail', pk=proj.pk)
     else:
-        form = ProjectForm(request.user, initial={'organization':request.GET.get('organization')})
-    return render(request, 'organizations/project_new.html', {'form': form})
+        proj_form = ProjectForm(request.user,
+            initial={'organization':request.GET.get('organization')})
+        emp_form = LeadscientistForm()
+    return render(request, 'organizations/project_new.html',
+                  {'project_form': proj_form, 'scientist_form': emp_form})
 
 
 def project_edit(request, pk):
@@ -187,7 +210,6 @@ def employee_edit(request, pk):
     else:
         form = EmployeeForm(instance=emp)
     return render(request, 'organizations/employee_edit.html', {'form': form})
-
 
 
 def main_page(request):

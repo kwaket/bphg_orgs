@@ -15,10 +15,14 @@
   <div class="col col-md-8 col-lg-6">
     <h1><span class="bi bi-box"></span> Новый проект</h1>
     <form method="POST" class="post-form">{% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="save btn btn-success">
-            <span class="bi bi-check-circle"></span> Сохранить
-        </button>
+      {% bootstrap_form project_form %}
+      <fieldset>
+        <legend>Ведущий научный сотрудник</legend>
+        {% bootstrap_form scientist_form %}
+      </fieldset>
+      <button type="submit" class="save btn btn-success">
+        <span class="bi bi-check-circle"></span> Сохранить
+      </button>
     </form>
   </div>
 </div>
