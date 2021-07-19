@@ -14,7 +14,7 @@
     <h1><span class="bi bi-building"></span> {{ organization.name }}</h1>
     <dl class="row">
     <dt class="col-sm-4 col-md-3">Страна</dt>
-    <dd class="col-sm-8 col-md-9">{{ organization.country }}</dd>
+    <dd class="col-sm-8 col-md-9">{{ organization.countries.all |join:", " }}</dd>
 
     <dt class="col-sm-4 col-md-3">Адрес</dt>
     <dd class="col-sm-8 col-md-9">{{ organization.address }}</dd>

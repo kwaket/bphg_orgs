@@ -5,7 +5,7 @@
     <form class="row filter-box" method="get">
         {% comment %} <div class="col-auto"> {% endcomment %}
         {% bootstrap_field filter.form.name show_label=True layout='bootstrap_form' size='sm' wrapper_class='col-md-3 col-lg-3' %}
-        {% bootstrap_field filter.form.country show_label=True layout='floating' size='sm' wrapper_class='col-md-3 col-lg-3' %}
+        {% bootstrap_field filter.form.countries show_label=True layout='floating' size='sm' wrapper_class='col-md-3 col-lg-3' %}
         {% comment %} </div> {% endcomment %}
 
         <div class="col-md-3 col-lg-3 filter-box-buttons">
@@ -34,8 +34,8 @@
                     {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
                 </th>
                 <th scope="col">Страна
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='country' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-country' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='countries' current_order=current_order %}
+                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-countries' current_order=current_order %}
                 </th>
                 <th scope="col">Адрес
                     {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='address' current_order=current_order %}
@@ -66,7 +66,7 @@
                 <td><a href="{% url 'organization_detail' pk=org.pk %}"
                     class="card-link">{{ org.name }}</a>
                 </td>
-                <td>{{ org.country }}</td>
+                <td>{{ org.countries.all|join:", " }}</td>
                 <td>{{ org.address }}</td>
                 <td>
                     <ul>
