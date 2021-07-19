@@ -51,6 +51,11 @@ def organization_detail(request, pk):
         {'organization': org})
 
 
+def _extract_countries(form):
+    ids = dict(form.data)['countries']
+    return [int(id) for id in ids]
+
+
 def organization_new(request):
     if request.method == "POST":
         form = OrganizationForm(request.user, request.POST)
@@ -58,6 +63,9 @@ def organization_new(request):
             org = form.save(commit=False)
             org.inserted_by = request.user
             org.updated_by = request.user
+            org.save()
+            countries = _extract_countries(form)
+            org.countries.add(*countries)
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
@@ -72,6 +80,8 @@ def organization_edit(request, pk):
         if form.is_valid():
             org = form.save(commit=False)
             org.updated_by = request.user
+            countries = _extract_countries(form)
+            org.countries.add(*countries)
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:

@@ -11,12 +11,15 @@ class OrganizationForm(forms.ModelForm):
 
     class Meta:
         model = Organization
-        fields = ('name', 'country', 'address', 'site', 'activity_description')
+        fields = ('name', 'countries', 'address', 'site', 'activity_description')
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
         super(OrganizationForm, self).__init__(*args, **kwargs)
 
+    def clean_countries(self):
+        countries= self.cleaned_data['countries']
+        return countries
 
 class ProjectForm(forms.ModelForm):
 
@@ -64,7 +67,7 @@ class OrganizationFilter(django_filters.FilterSet):
 
     class Meta:
         model = Organization
-        fields = ['name', 'country']
+        fields = ['name', 'countries']
 
 
 class ProjectFilter(django_filters.FilterSet):
