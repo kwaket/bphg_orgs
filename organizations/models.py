@@ -39,8 +39,7 @@ class Country(InsertingMixin):
 
 class Organization(UpdatingMixit):
     name = models.CharField(max_length=500, verbose_name='Название')
-    country = models.ForeignKey(Country, verbose_name='Страна',
-        on_delete=models.CASCADE)
+    countries = models.ManyToManyField(Country, verbose_name='Страна')
     address = models.CharField(max_length=500, verbose_name='Адрес')
     site = models.CharField(max_length=500, verbose_name='Сайт')
     activity_description = models.CharField(max_length=500,
@@ -48,7 +47,7 @@ class Organization(UpdatingMixit):
 
     class Meta:
         verbose_name_plural='Организации'
-        unique_together = (('country', 'name'),)
+        unique_together = (('name', 'address'),)
 
     def __str__(self):
         return self.name
