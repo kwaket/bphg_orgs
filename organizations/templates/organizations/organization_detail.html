@@ -41,12 +41,16 @@
             Добавить проект
         </a>
     </dd>
-
-    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Время добавления</dt>
+    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил</dt>
+    <dd class="col-sm-8 col-md-9 text-muted">{{ organization.inserted_by.get_full_name }}</dd>
+    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавлено</dt>
     <dd class="col-sm-8 col-md-9 text-muted">{{ organization.inserted_at }}</dd>
 
-    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил пользователь</dt>
-    <dd class="col-sm-8 col-md-9 text-muted">{{ organization.inserted_by }}</dd>
+    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировал</dt>
+    <dd class="col-sm-8 col-md-9 text-muted">{{ organization.updated_by.get_full_name }}</dd>
+    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировано</dt>
+    <dd class="col-sm-8 col-md-9 text-muted">{{ organization.updated_at }}</dd>
+
     </dl>
 
     <a class="btn btn-outline-primary" href="{% url 'organization_edit' pk=organization.pk %}">
