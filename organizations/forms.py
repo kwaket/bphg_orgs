@@ -4,7 +4,7 @@ from django.db.models import Q
 
 import django_filters
 
-from .models import ApplicationScope, Employee, Organization, Project
+from .models import ApplicationScope, Country, Employee, Organization, Project
 
 
 class OrganizationForm(forms.ModelForm):
@@ -65,6 +65,8 @@ class LeadscientistForm(forms.ModelForm):
 
 class OrganizationFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
+    countries = django_filters.ModelChoiceFilter(
+        queryset=Country.objects.all())
 
     class Meta:
         model = Organization
