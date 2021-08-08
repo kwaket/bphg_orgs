@@ -75,14 +75,27 @@
             font-size: 1em;
             margin-bottom: 0;
         }
-        .filter-box{
-            {% comment %} background: red; {% endcomment %}
-            margin-bottom: 1.2em;
+        .filter-box-wrapper {
+            padding: .3em .7em .7em;
+            background: #efefef;
+            border-radius: .5em;
+            margin-bottom: 1em;
         }
-        {% comment %} #filter-box>div>div {
-            margin-top: 0;
-        } {% endcomment %}
-
+        form.filter-box {
+            margin-bottom:0 !important;
+        }
+        form.filter-box #filter-logo {
+            position: absolute;
+            left: 0em;
+            top: .3em;
+            font-size: 2.5em;
+            opacity: .5;
+        }
+        form.filter-box .form-label {
+            font-size: .9em;
+            margin-bottom: .2rem;
+            opacity: .8;
+        }
         .filter-box-buttons {
             margin-top: 1em;
         }
