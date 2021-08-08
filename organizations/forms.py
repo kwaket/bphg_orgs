@@ -21,6 +21,7 @@ class OrganizationForm(forms.ModelForm):
         countries= self.cleaned_data['countries']
         return countries
 
+
 class ProjectForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
