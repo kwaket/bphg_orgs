@@ -215,11 +215,6 @@
         rule: allow
         name: 'Nginx Full'
 
-    - name: Restart gunicorn
-      systemd:
-        name: gunicorn
-        state: restarted
-
   handlers:
     - name: Restart postgres
       service: name=postgresql state=restarted
@@ -244,3 +239,9 @@
       systemd:
         name: nginx
         state: restarted
+
+    - name: Restart gunicorn
+      systemd:
+        name: gunicorn
+        state: restarted
+
