@@ -1,4 +1,4 @@
-from users.forms import UserCreateFrom
+from users.forms import UserCreateForm
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
@@ -25,20 +25,43 @@ def user_list(request):
 
 def user_new(request):
     if request.method == "POST":
-        form = UserCreateFrom(request.POST)
+        form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
+            group = get_object_or_404(Group, pk=int(form.data['group']))
+            user.groups.add(group)
+            user.save()
             return redirect('user_detail', pk=user.pk)
     else:
-        form = UserCreateFrom()
+        form = UserCreateForm()
     return render(request, 'users/user_new.html', {'form': form})
 
 
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
-    return render(request, 'users/user_detail.html', {'user': user})
+    url_new = reverse('user_edit', args=[], kwargs={'pk': user.pk})
+    args = {
+        'obj': user,
+        'url_new': url_new,
+        'page_name': 'Пользователь'
+        }
+    return render(request, 'users/user_detail.html', args)
 
 
 def user_edit(request, pk):
     user = get_object_or_404(User, pk=pk)
-    return render(request, 'users/user_edit.html', {'user': user})
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save()
+            group = get_object_or_404(Group, pk=int(form.data['group']))
+            user.groups.add(group)
+            user.save()
+            return redirect('user_detail', pk=user.pk)
+    else:
+        form = UserCreateForm(instance=user)
+    args = {
+        'user': user,
+        'form': form
+    }
+    return render(request, 'users/user_edit.html', args)
