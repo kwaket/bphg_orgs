@@ -3,7 +3,6 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    {{ url_new }}
     {% include 'snippets/page_header.html' with name='Пользователи' button_url=url_new icon_name='bi-gear' button_name='Добавить' %}
 
     {% if not page.object_list %}
@@ -15,21 +14,19 @@
     <table class="table table-striped">
       <thead>
         <tr>
+            <th scope="col">Логин</th>
             <th scope="col">ФИО</th>
-            <th scope="col">Ученая степень</th>
-            <th scope="col">Должность</th>
-            <th scope="col">Организация</th>
+            <th scope="col">Группы</th>
         </tr>
       </thead>
       <tbody>
-        {% for emp in page.object_list %}
+        {% for user in page.object_list %}
         <tr>
             <th scope="row">
-                <a href="{% url 'employee_detail' pk=emp.pk %}">{{ emp.get_full_name }}</a>
+                <a href="{% url 'user_detail' pk=user.pk %}">{{ user.username }}</a>
             </th>
-            <td>{{ emp.degree }}</td>
-            <td>{{ emp.role }}</td>
-            <td>{{ emp.organization }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.groups.all|join:", " }}</td>
         </tr>
         {% endfor %}
       </tbody>

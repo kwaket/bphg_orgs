@@ -3,15 +3,24 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group, User
+from django.core.paginator import Paginator
 
 
 def user_list(request):
-    if not request.user.groups.filter(name="Модераторы").exists():
-        redirect
-    users = User.objects.all()
+    page_num = request.GET.get('page')
+    order_by = request.GET.get('order_by') or 'username'
+    queryset = User.objects.all().order_by(order_by)
+
+    paginator = Paginator(queryset, 25)
+    page = paginator.get_page(page_num)
     url_new = reverse('user_new', args=[], kwargs={})
-    return render(request, 'users/user_list.html',
-        {'users': users, 'url_new': url_new})
+    args = {
+        'page': page,
+        'current_page': page_num,
+        'current_order': order_by,
+        'url_new': url_new
+    }
+    return render(request, 'users/user_list.html', args)
 
 
 def user_new(request):
