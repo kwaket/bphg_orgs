@@ -6,14 +6,14 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'employee_list' %}">Сотрудники</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Новый сотрудник<li>
+    <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Новый пользователь<li>
   </ol>
 </nav>
 
 <div class="row">
   <div class="col col-md-8 col-lg-6">
-    <h1><span class="bi bi-user-fill"></span> Новый сотрудник</h1>
+    <h1><span class="bi bi-user-fill"></span> Новый пользователь</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {% bootstrap_form form %}
         <button type="submit" class="save btn btn-success">

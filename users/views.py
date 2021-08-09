@@ -1,3 +1,4 @@
+from users.forms import UserCreateFrom
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
@@ -14,7 +15,14 @@ def user_list(request):
 
 
 def user_new(request):
-    return render(request, 'users/user_new.html')
+    if request.method == "POST":
+        form = UserCreateFrom(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('user_detail', pk=user.pk)
+    else:
+        form = UserCreateFrom()
+    return render(request, 'users/user_new.html', {'form': form})
 
 
 def user_detail(request, pk):
