@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+    {{ url_new }}
+    {% include 'snippets/page_header.html' with name='Пользователи' button_url=url_new icon_name='bi-gear' button_name='Добавить' %}
+
+    {% if not page.object_list %}
+    <p class="text-center" style="padding: 5em;">
+      Данные отсутствуют
+    </p>
+    {% else %}
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th scope="col">ФИО</th>
+            <th scope="col">Ученая степень</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Организация</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for emp in page.object_list %}
+        <tr>
+            <th scope="row">
+                <a href="{% url 'employee_detail' pk=emp.pk %}">{{ emp.get_full_name }}</a>
+            </th>
+            <td>{{ emp.degree }}</td>
+            <td>{{ emp.role }}</td>
+            <td>{{ emp.organization }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% include 'organizations/snippets/pagination.html' with obj_page=page query_params=filter_fields %}
+
+    {% endif %}
+
+{% endblock %}
