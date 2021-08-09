@@ -83,6 +83,8 @@ def organization_edit(request, pk):
         if form.is_valid():
             org = form.save(commit=False)
             org.updated_by = request.user
+            for country in org.countries.all():
+                org.countries.remove(country)
             countries = _extract_countries(form)
             org.countries.add(*countries)
             org.save()

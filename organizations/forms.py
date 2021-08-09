@@ -19,8 +19,6 @@ class OrganizationForm(forms.ModelForm):
 
     def clean_countries(self):
         countries= self.cleaned_data['countries']
-        for country in self.instance.countries.all():
-            self.instance.countries.remove(country)
         return countries
 
 
