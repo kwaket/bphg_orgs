@@ -4,8 +4,10 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group, User
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import permission_required
 
 
+@permission_required('users.edit_user', raise_exception=True)
 def user_list(request):
     page_num = request.GET.get('page')
     order_by = request.GET.get('order_by') or 'username'
@@ -23,6 +25,7 @@ def user_list(request):
     return render(request, 'users/user_list.html', args)
 
 
+@permission_required('users.add_user', raise_exception=True)
 def user_new(request):
     if request.method == "POST":
         form = UserCreateForm(request.POST)
@@ -37,6 +40,7 @@ def user_new(request):
     return render(request, 'users/user_new.html', {'form': form})
 
 
+@permission_required('users.view_user', raise_exception=True)
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     url_new = reverse('user_edit', args=[], kwargs={'pk': user.pk})
@@ -48,6 +52,7 @@ def user_detail(request, pk):
     return render(request, 'users/user_detail.html', args)
 
 
+@permission_required('users.edit_user', raise_exception=True)
 def user_edit(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
