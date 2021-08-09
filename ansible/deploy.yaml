@@ -172,6 +172,11 @@
         deb: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.14.0-amd64.deb
       notify: Start Elasticsearch
 
+    - name: Creates a cron file under /etc/cron.d
+      ansible.builtin.cron:
+        name: update elasticsearch index
+        minute: "*/1"
+        job: "{{ virtualenv_path }}/bin/python {{ app_path }}/manage.py update_index"
 
     # Setting up Gunicorn and NGINX
     - name: Copy systemd socket file
