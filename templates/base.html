@@ -200,10 +200,12 @@
                         <a class="nav-link {% if request.path|startswith:'/employees' %} active {% endif %}"
                            href="{% url 'employee_list' %}">Сотрудники</a>
                     </li>
+                    {% if perms.users.add_user %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path|startswith:'/users' %} active {% endif %}"
                            href="{% url 'user_list' %}">Администрирование</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path|startswith:'/search' %} active {% endif %}"
                            href="/search">Поиск</a>
