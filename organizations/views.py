@@ -57,7 +57,7 @@ def _extract_countries(form):
     return [int(id) for id in ids]
 
 
-@permission_required('organizations.add_organization')
+@permission_required('organizations.add_organization', raise_exception=True)
 def organization_new(request):
     if request.method == "POST":
         form = OrganizationForm(request.user, request.POST)
@@ -75,7 +75,7 @@ def organization_new(request):
     return render(request, 'organizations/organization_new.html', {'form': form})
 
 
-@permission_required('organizations.edit_organization')
+@permission_required('organizations.edit_organization', raise_exception=True)
 def organization_edit(request, pk):
     org = get_object_or_404(Organization, pk=pk)
     if request.method == "POST":
@@ -122,7 +122,7 @@ def _get_leadscientist(fields: dict) -> Employee:
     emp.save()
     return emp
 
-@permission_required('organizations.add_project')
+@permission_required('organizations.add_project', raise_exception=True)
 def project_new(request):
     if request.method == "POST":
         proj_form = ProjectForm(request.user, request.POST)
@@ -154,7 +154,7 @@ def project_new(request):
                   {'project_form': proj_form, 'scientist_form': emp_form})
 
 
-@permission_required('organizations.edit_project')
+@permission_required('organizations.edit_project', raise_exception=True)
 def project_edit(request, pk):
     proj = get_object_or_404(Project, pk=pk)
     if request.method == 'POST':
@@ -187,7 +187,7 @@ def employee_list(request):
     return render(request, 'organizations/employee_list.html', args)
 
 
-@permission_required('organizations.add_employee')
+@permission_required('organizations.add_employee', raise_exception=True)
 def employee_new(request):
     if request.method == "POST":
         form = EmployeeForm(request.POST)
@@ -213,7 +213,7 @@ def employee_detail(request, pk):
     return render(request, 'organizations/employee_detail.html', args)
 
 
-@permission_required('organizations.edit_employee')
+@permission_required('organizations.edit_employee', raise_exception=True)
 def employee_edit(request, pk):
     emp = get_object_or_404(Employee, pk=pk)
     if request.method == 'POST':
