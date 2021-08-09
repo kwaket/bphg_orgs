@@ -19,7 +19,21 @@ class OrganizationForm(forms.ModelForm):
 
     def clean_countries(self):
         countries= self.cleaned_data['countries']
+        for country in self.instance.countries.all():
+            self.instance.countries.remove(country)
         return countries
+    # def clean_countries(self):
+    #     raw = self.cleaned_data.pop('countries')
+    #     import ipdb; ipdb.set_trace()
+    #     # scopes = ApplicationScope.objects.all()
+    #     # scopes = [s for s in scopes if s.name.lower() == raw.lower()]
+    #     # if scopes:
+    #     #     scope = scopes[0]
+    #     # else:
+    #     #     scope = ApplicationScope.objects.create(name=raw,
+    #     #         inserted_by=self.user, updated_by=self.user)
+    #     return scope
+
 
 
 class ProjectForm(forms.ModelForm):
@@ -71,7 +85,6 @@ class OrganizationFilter(django_filters.FilterSet):
     class Meta:
         model = Organization
         fields = ['name', 'countries']
-
 
 class ProjectFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
