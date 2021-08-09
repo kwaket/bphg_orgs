@@ -201,6 +201,10 @@
                            href="{% url 'employee_list' %}">Сотрудники</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% if request.path|startswith:'/users' %} active {% endif %}"
+                           href="{% url 'user_list' %}">Администрирование</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if request.path|startswith:'/search' %} active {% endif %}"
                            href="/search">Поиск</a>
                     </li>
