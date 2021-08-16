@@ -1,0 +1,48 @@
+.page-header .navbar {
+    /* padding: .8em 0; */
+    border-bottom: 1px solid #eee;
+}
+#navigation {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+#navbar-brand-description {
+    border-left: 1px solid #ddd;
+    font-size: small;
+    font-weight: bolder;
+    line-height: 1.2em;;
+    padding-left: 1em;
+}
+
+.nav-link.active {
+    background: #666;
+    color: white !important;
+    border-radius: .7em;
+}
+#navigation .nav-link {
+    padding: .2em 1em;
+    margin-top: .3em;
+    margin-bottom: .3em;
+}
+#search-form {
+    z-index: 1000;
+}
+#search-form .input-group {
+    width: 400px !important;
+}
+#search-popup-result {
+    z-index: 999;
+    background-color: rgba(255, 255, 255, .95);
+    position: absolute;
+    right: 0; left:0; top:0 ; bottom: 0;
+    display: none;
+}
+
+#search-popup-result>div {
+    z-index: 1000;
+    /* bar */
+    /* background: red; */
+    margin: 7em auto;
+    width: 50%;
+    text-align: center;
+}
