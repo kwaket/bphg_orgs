@@ -15,14 +15,10 @@
 }
 
 .nav-link.active {
-    background: #666;
-    color: white !important;
-    border-radius: .7em;
+    border-bottom: 2px solid #05b471;
 }
 #navigation .nav-link {
-    padding: .2em 1em;
-    margin-top: .3em;
-    margin-bottom: .3em;
+    padding: .5em 1.5em;
 }
 #search-form {
     z-index: 1000;

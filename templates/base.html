@@ -1,4 +1,7 @@
 {% load static %}
+{% load django_bootstrap5 %}
+{% load startswith %}
+
 <!doctype html>
 <html lang="ru">
   <head>
@@ -42,16 +45,41 @@
               </div>
             </form>
             <ul class="navbar-nav me-0 ms-auto">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button"
+                  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Добавить <span class="bi bi-plus-lg"><span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="{% url 'organization_new' %}">Организацию</a></li>
+                  <li><a class="dropdown-item" href="{% url 'project_new' %}">Проект</a></li>
                 </ul>
+              </div>
+              </li>
+              <li>
+              <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                {% if user.is_authenticated %}
+                    <div class="btn-group" role="group">
+                        <button id="profile" type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false"><span class="bi bi-person-circle"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="btnGroupDrop1">
+                            <li><a href="#" class="dropdown-item disabled">{{ user.username }}</li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">
+                                Выйти
+                                <span class="bi bi-box-arrow-right"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                  {% comment %} <li> {% endcomment %}
+                  <a class="btn" href="{% url 'login' %}">Войти</a>
+                  {% comment %} </li> {% endcomment %}
+                {% endif %}
+                </div>
               </li>
             </ul>
           </div>
@@ -62,7 +90,7 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a class="nav-link" href="#">Последние добавленные</a>
             </li>
             <li class="nav-item">
@@ -75,12 +103,44 @@
             </li>
             <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li> {% endcomment %}
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/' %} active {% endif %}"
+                    href="{% url 'main_page' %}">Главная</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path|startswith:'/organizations' %} active {% endif %}"
+                    href="{% url 'organization_list' %}">Организации</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path|startswith:'/projects' %} active {% endif %}"
+                    href="{% url 'project_list' %}">Проекты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path|startswith:'/employees' %} active {% endif %}"
+                    href="{% url 'employee_list' %}">Сотрудники</a>
+            </li>
+          {% endif %}
           </ul>
         </div>
       </div>
     </nav>
-    <h2><span class="bi bi-building"></span>Организации</h2>
+
+
+    <div class="container-fluid content">
+      <div>
+          {% bootstrap_messages %}
+      </div>
+      <div class="container-fluid">
+          {% block content %}
+          {% endblock %}
+      </div>
+    </div>
+
+
+
     <div id="search-popup-result">
       <div>
         <h1>Результаты поиска</h1>
