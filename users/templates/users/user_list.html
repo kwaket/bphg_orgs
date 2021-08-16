@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+    {% include 'snippets/page_header.html' with name='Пользователи' button_url=url_new icon_name='bi-gear' button_name='Добавить' %}
+
+    {% if not page.object_list %}
+    <p class="text-center" style="padding: 5em;">
+      Данные отсутствуют
+    </p>
+    {% else %}
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th scope="col">Логин</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Группы</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in page.object_list %}
+        <tr>
+            <th scope="row">
+                <a href="{% url 'user_detail' pk=user.pk %}">{{ user.username }}</a>
+            </th>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.groups.all|join:", " }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% include 'organizations/snippets/pagination.html' with obj_page=page query_params=filter_fields %}
+
+    {% endif %}
+
+{% endblock %}

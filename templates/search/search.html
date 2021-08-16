@@ -1,29 +1,82 @@
 {% extends 'base.html' %}
 
+{% load django_bootstrap5 %}
+
 {% block content %}
-    <h2>Search</h2>
+        <div class="container-fluid">
+    <h1>Поиск</h1>
+    </div>
 
     <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Search">
-                </td>
-            </tr>
-        </table>
+      <div class="container-fluid search-form">
+        {% comment %} {% bootstrap_form form layout='inline' %} {% endcomment %}
+        <div class="row">
+          <div class="col-md-6">
+            {% bootstrap_field form.q show_label=False %}
+          </div>
+
+          <div class="col-md-2">
+            <button type="submit" class="save btn btn-success">
+                <span class="bi bi-search"></span> Найти
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="search-form-model">
+            {% bootstrap_field form.models show_label=False %}
+          </div>
+        </div>
+      </div>
 
         {% if query %}
-            <h3>Results</h3>
-
+            <div class="container-fluid">
+            <h3>Результаты поиска</h3>
             {% for result in page.object_list %}
-                <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a>
-                </p>
+            <div class="row">
+              <div class="col">
+                {% if result.content_type == 'organizations.organization' %}
+                <div class="search-item">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <span class="bi bi-building"></span>
+                      <a href="{% url 'organization_detail' pk=result.object.pk %}">
+                      {{ result.object.name }}</a>
+                      <small class="text-muted">(Организация)</small>
+                    </h5>
+                    <p class="card-text">
+                        <small class="text-muted">{{ result.object.countries.all|join:", " }}</small>
+                    </p>
+                    {% comment %} <p class="card-text">{{ result.object.activity_description }}</p> {% endcomment %}
+                  </div>
+                </div>
+                {% endif %}
+
+                {% if result.content_type == 'organizations.project' %}
+                <div class="search-item">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <span class="bi bi-box"></span>
+                      <a href="{% url 'project_detail' pk=result.object.pk %}">
+                      {{ result.object.name }}</a>
+                      <small class="text-muted">(Проект)</small>
+                    </h5>
+                    <p class="card-text">
+                      <small class="text-muted">
+                      <span class="bi bi-building"></span>
+                      <a href="{% url 'organization_detail' pk=result.object.organization.pk %}">
+                        {{ result.object.organization }}
+                        </a>
+                        </small>
+                    </p>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
             {% empty %}
-                <p>No results found.</p>
+                <p>Не найдено.</p>
             {% endfor %}
+            </div>
 
             {% if page.has_previous or page.has_next %}
                 <div>

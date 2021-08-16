@@ -26,9 +26,22 @@ class UpdatingMixit(InsertingMixin):
     class Meta:
         abstract = True
 
-
 class Country(InsertingMixin):
-    name = models.CharField(max_length=500, verbose_name='Название')
+    name = models.CharField(max_length=500, verbose_name='Название',
+        unique=True)
+    fullname = models.CharField(max_length=500,
+        verbose_name='Полное наименование', null=True, blank=True)
+    english	 = models.CharField(max_length=500, verbose_name='На английском',
+        unique=True)
+    alpha2 = models.CharField(max_length=2, verbose_name='Alpha2',
+        null=True, blank=True, unique=True)
+    alpha3 = models.CharField(max_length=3, verbose_name='Alpha3',
+        unique=True)
+    iso	 = models.IntegerField(verbose_name='ISO', unique=True)
+    location = models.CharField(max_length=500, verbose_name='Часть света',
+        null=True, blank=True)
+    location_precise = models.CharField(max_length=500,
+        verbose_name='Расположение')
 
     class Meta:
         verbose_name_plural='Страны'

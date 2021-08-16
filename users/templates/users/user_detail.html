@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ obj.username }}<li>
+  </ol>
+</nav>
+
+{% include 'snippets/page_header.html' with name=page_name button_url=url_new icon_name='bi-person-fill' button_name='Редактировать' %}
+
+<div class="row">
+  <div class="col col-md-12 col-lg-10">
+    <dl class="row">
+      <dt class="col-sm-4 col-md-3 text-truncate">Фамилия</dt>
+      <dd class="col-sm-8 col-md-9">{{ obj.last_name }}</dd>
+      <dt class="col-sm-4 col-md-3 text-truncate">Имя</dt>
+      <dd class="col-sm-8 col-md-9">{{ obj.first_name }}</dd>
+      <dt class="col-sm-4 col-md-3 text-truncate">Логин</dt>
+      <dd class="col-sm-8 col-md-9">{{ obj.username }}</dd>
+      <dt class="col-sm-4 col-md-3 text-truncate">Группы</dt>
+      <dd class="col-sm-8 col-md-9">{{ obj.groups.all|join:", " }}</dd>
+
+      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Последний вход</dt>
+      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.last_login }}</dd>
+      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Создан</dt>
+      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.date_joined }}</dd>
+    </dl>
+  </div>
+</div>
+
+{% endblock %}

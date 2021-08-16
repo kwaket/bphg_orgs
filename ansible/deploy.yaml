@@ -72,6 +72,23 @@
       # - ALTER ROLE myprojectuser SET timezone TO 'UTC';
 
 
+    # Installing python3.8 for ubuntu 18.04
+    - name: install software-properties-common
+      apt:
+        name: software-properties-common
+
+    - name: Add repository
+      apt_repository:
+        repo:  ppa:deadsnakes/ppa
+
+    - name: Install python3.8
+      apt:
+        name: python3.8
+        update_cache: yes
+
+
+
+
     # Cloning project
     - name: Make dir for project
       file:
@@ -116,6 +133,7 @@
         accept_hostkey: yes
         key_file: "{{ ssh_key }}"
         version: "{{ git_branch }}"
+      notify: Restart gunicorn
 
     # Creating a Python Virtual Environment for your Project
     - name: Install required python packages venv (global)
@@ -143,6 +161,22 @@
         virtualenv: "{{ virtualenv_path }}"
 
 
+    # Elastic search
+    # - name: Download elasticsearch
+    #   get_url:
+    #     url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.14.0-amd64.deb
+    #     dest: /tmp/
+
+    - name: Install Elastic search from the internet
+      apt:
+        deb: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.14.0-amd64.deb
+      notify: Start Elasticsearch
+
+    - name: Creates a cron file under /etc/cron.d
+      ansible.builtin.cron:
+        name: update elasticsearch index
+        minute: "*/1"
+        job: "{{ virtualenv_path }}/bin/python {{ app_path }}/manage.py update_index"
 
     # Setting up Gunicorn and NGINX
     - name: Copy systemd socket file
@@ -192,6 +226,9 @@
         virtualenv: "{{ virtualenv_path }}"
       # python manage.py changepassword <user_name>
 
+    - name: Start Elasticsearch
+      shell: /etc/init.d/elasticsearch start
+
     - name: Enable and start gunicorn
       systemd:
         name: gunicorn
@@ -203,4 +240,8 @@
         name: nginx
         state: restarted
 
+    - name: Restart gunicorn
+      systemd:
+        name: gunicorn
+        state: restarted
 

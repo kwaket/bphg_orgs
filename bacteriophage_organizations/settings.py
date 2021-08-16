@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'computed_property',
 
     'organizations',
+    'users',
 ]
 
 MIDDLEWARE = [
