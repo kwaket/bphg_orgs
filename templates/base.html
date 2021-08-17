@@ -109,19 +109,23 @@
           {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link {% if request.path == '/' %} active {% endif %}"
-                    href="{% url 'main_page' %}">Главная</a>
+                    href="{% url 'main_page' %}">
+                    <span class="bi bi-collection"></span> Главная</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.path|startswith:'/organizations' %} active {% endif %}"
-                    href="{% url 'organization_list' %}">Организации</a>
+                    href="{% url 'organization_list' %}">
+                    <span class="bi bi-building"></span> Организации</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.path|startswith:'/projects' %} active {% endif %}"
-                    href="{% url 'project_list' %}">Проекты</a>
+                    href="{% url 'project_list' %}">
+                    <span class="bi bi-box"></span> Проекты</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.path|startswith:'/employees' %} active {% endif %}"
-                    href="{% url 'employee_list' %}">Сотрудники</a>
+                    href="{% url 'employee_list' %}">
+                    <span class="bi bi-people"></span> Сотрудники</a>
             </li>
           {% endif %}
           </ul>
