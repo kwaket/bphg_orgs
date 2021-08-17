@@ -49,8 +49,14 @@ class Country(InsertingMixin):
     def __str__(self):
         return self.name
 
-
 class Organization(UpdatingMixit):
+
+    class FieldOfActivity(models.TextChoices):
+        VETERINARY_MEDICINE = 'VM', 'Ветеринария'
+        RESEARCH = 'RS', 'Исследования'
+        PRODUCTION_OF_DRUGS = 'PD', 'Производство препаратов'
+        INNOVATIVE_PRODUCTS = 'IP', 'Инновационные продукты на основе бактериофагов'
+
     name = models.CharField(max_length=500, verbose_name='Название')
     countries = models.ManyToManyField(Country, verbose_name='Страна')
     address = models.CharField(max_length=500, verbose_name='Адрес')
@@ -58,6 +64,9 @@ class Organization(UpdatingMixit):
     activity_description = models.TextField(max_length=2048,
         verbose_name='Краткое описание вида деятельности', blank=True,
         null=True)
+    field_of_activity = models.CharField(max_length=2,
+        choices=FieldOfActivity.choices, blank=True, null=True,
+        verbose_name='Сфера деятельности')
 
     class Meta:
         verbose_name_plural='Организации'
