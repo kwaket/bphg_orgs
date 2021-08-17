@@ -9,9 +9,8 @@
 .navbar .dropdown .btn-warning.btn-link {
     color: #212529;
 }
-
-#settings-global-btn {
-    margin-left: 1.5em;
+#create-object-global-btn {
+    margin-right: 1.5em;
 }
 
 #navigation {
