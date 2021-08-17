@@ -75,3 +75,29 @@
     color: #444;
 }
 
+
+body {
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+    padding-bottom: 80px; /*height of the footer*/
+    box-sizing: border-box;
+    }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #6c757d46;
+    opacity: .8;
+    text-align: center;
+}
+
+footer small:first-child {
+    border-right: 1px solid #6c757d46;
+    margin-right: .5em ;
+}
+
