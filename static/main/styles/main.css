@@ -1,11 +1,21 @@
 .page-header .navbar {
-    /* padding: .8em 0; */
     border-bottom: 1px solid #eee;
 }
+
+.navbar .btn-link {
+    text-decoration: none;
+    color: #6c757d ;
+}
+
+#settings-global-btn {
+    margin-left: 1.5em;
+}
+
 #navigation {
     padding-top: 0;
     padding-bottom: 0;
 }
+
 #navbar-brand-description {
     border-left: 1px solid #ddd;
     font-size: small;
@@ -17,16 +27,20 @@
 .nav-link.active {
     border-bottom: 2px solid #05b471;
 }
+
 #navigation .nav-link {
     padding: .5em 1.5em;
 }
+
 #search-form {
     z-index: 1000;
 }
+
 #search-form .input-group {
     width: 400px !important;
 }
-#search-popup-result {
+
+/* #search-popup-result {
     z-index: 999;
     background-color: rgba(255, 255, 255, .95);
     position: absolute;
@@ -36,17 +50,16 @@
 
 #search-popup-result>div {
     z-index: 1000;
-    /* bar */
-    /* background: red; */
     margin: 7em auto;
     width: 50%;
     text-align: center;
-}
+} */
 
 .breadcrumb {
-    margin-top: .6em;
+    margin-top: 1em;
     margin-left: .2em;
-    font-size: .9em;
+    font-size: .8em;
     margin-bottom: .1em;
+    color: #444;
 }
 
