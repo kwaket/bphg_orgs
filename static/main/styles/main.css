@@ -6,6 +6,9 @@
     text-decoration: none;
     color: #6c757d ;
 }
+.navbar .dropdown .btn-warning.btn-link {
+    color: #212529;
+}
 
 #settings-global-btn {
     margin-left: 1.5em;

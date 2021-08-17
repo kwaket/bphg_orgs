@@ -59,9 +59,9 @@
               </li>
               <li>
                 <div class="dropdown">
-                  <button class="btn btn-link dropdown-toggle" type="button"
-                    id="settings-global-btn" data-bs-toggle="dropdown"
-                    aria-expanded="false" alt="Настройки">
+                  <button class="btn btn-link {% if request.path|startswith:'/users' %} btn-warning {% endif %} dropdown-toggle"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    id="settings-global-btn" alt="Настройки">
                     <span class="bi bi-gear"><span>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
