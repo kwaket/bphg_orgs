@@ -46,19 +46,31 @@
             </form>
             <ul class="navbar-nav me-0 ms-auto">
               <li>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button"
-                  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  Добавить <span class="bi bi-plus-lg"><span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="{% url 'organization_new' %}">Организацию</a></li>
-                  <li><a class="dropdown-item" href="{% url 'project_new' %}">Проект</a></li>
-                </ul>
-              </div>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button"
+                    id="create-object-global-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                    Добавить <span class="bi bi-plus-lg"><span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{% url 'organization_new' %}">Организацию</a></li>
+                    <li><a class="dropdown-item" href="{% url 'project_new' %}">Проект</a></li>
+                  </ul>
+                </div>
               </li>
               <li>
-              <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <div class="dropdown">
+                  <button class="btn btn-link dropdown-toggle" type="button"
+                    id="settings-global-btn" data-bs-toggle="dropdown"
+                    aria-expanded="false" alt="Настройки">
+                    <span class="bi bi-gear"><span>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{% url 'user_list' %}">Пользователи и группы</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 {% if user.is_authenticated %}
                     <div class="btn-group" role="group">
                         <button id="profile" type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -75,9 +87,7 @@
                         </ul>
                     </div>
                 {% else %}
-                  {% comment %} <li> {% endcomment %}
                   <a class="btn" href="{% url 'login' %}">Войти</a>
-                  {% comment %} </li> {% endcomment %}
                 {% endif %}
                 </div>
               </li>
@@ -141,7 +151,7 @@
 
 
 
-    <div id="search-popup-result">
+    {% comment %} <div id="search-popup-result">
       <div>
         <h1>Результаты поиска</h1>
         <ul>
@@ -159,7 +169,8 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div> {% endcomment %}
+
     <!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
