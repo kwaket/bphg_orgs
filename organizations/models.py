@@ -55,8 +55,9 @@ class Organization(UpdatingMixit):
     countries = models.ManyToManyField(Country, verbose_name='Страна')
     address = models.CharField(max_length=500, verbose_name='Адрес')
     site = models.CharField(max_length=500, verbose_name='Сайт')
-    activity_description = models.CharField(max_length=500,
-        verbose_name='Краткое описание вида деятельности', blank=True, null=True)
+    activity_description = models.TextField(max_length=2048,
+        verbose_name='Краткое описание вида деятельности', blank=True,
+        null=True)
 
     class Meta:
         verbose_name_plural='Организации'
