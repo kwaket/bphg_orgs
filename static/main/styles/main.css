@@ -18,12 +18,22 @@
     padding-bottom: 0;
 }
 
-#navbar-brand-description {
+#navbar-subbrand {
     border-left: 1px solid #ddd;
     font-size: small;
     font-weight: bolder;
     line-height: 1.2em;;
-    padding-left: 1em;
+    padding-left: 3rem;
+    position: relative;
+}
+
+#navbar-subbrand>img {
+    position: absolute;
+    left: .8em;
+    top: -.1rem;
+    height: auto;
+    width: 2rem;
+    opacity: .6;
 }
 
 .nav-link.active {
