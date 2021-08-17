@@ -1,27 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Главная</li>
+                <li class="breadcrumb-item active">Последние добавленные организации</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
 <h1>Последние добавленные организации</h1>
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
 {% for org in organizations %}
     <div class="col">
-         {% comment %} <div class="card text-dark bg-light h-100">
-            <div class="card-body">
-                <h5 class="card-title">{{ org.name }}</h5>
-                <p class="card-text">{% firstof org.activity_description '' %}</p>
-
-                <div class="card-meta-block">
-                    <p class="card-text">{{ org.country }}</p>
-
-                    <p class="card-text">
-                        <small class="text-muted">Добавлено: {{ org.inserted_at }},
-                            пользователем {{ org.inserted_by }}</small></p>
-                    <a href="{% url 'organization_detail' pk=org.pk %}"
-                       class="card-link">Просмотреть</a>
-                </div>
-            </div>
-        </div> {% endcomment %}
-
         <div class="card bg-light">
             <div class="card-body">
                 <h5 class="card-title">{{ org.name }}</h5>
