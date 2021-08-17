@@ -67,6 +67,8 @@ class Organization(UpdatingMixit):
     field_of_activity = models.CharField(max_length=2,
         choices=FieldOfActivity.choices, blank=True, null=True,
         verbose_name='Сфера деятельности')
+    products = models.TextField(max_length=2048, verbose_name='Продукция',
+        null=True, blank=True)
 
     class Meta:
         verbose_name_plural='Организации'
