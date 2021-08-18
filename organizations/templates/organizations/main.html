@@ -11,8 +11,19 @@
         </nav>
     </div>
 </div>
-
-<h1>Последние добавленные организации</h1>
+<div class="header-group">
+    <div class="row">
+       <div class="col">
+            <h1>Последние добавленные организации</h1>
+        </div>
+        {% comment %} <div class="col col-md-auto">
+            <button class="btn btn-outline-primary btn-sm btn-lisnk">
+                <span class="bi bi-pencil"></span>
+                Редактировать
+            </button>
+        </div> {% endcomment %}
+    </div>
+</div>
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
 {% for org in organizations %}
     <div class="col">

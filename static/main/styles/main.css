@@ -75,6 +75,28 @@
     color: #444;
 }
 
+.header-group {
+    border-bottom: 1px solid rgba(133, 133, 133, 0.438);
+    margin-bottom: 1em;
+}
+
+.header-group h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: .1em;
+}
+
+.header-group .col:last-child {
+    text-align: right;
+}
+
+.header-group .col button {
+    margin-top: .4em;
+}
+
+.header-group .col:first-child {
+    text-align: left;
+}
 
 body {
     min-height: 100vh;
