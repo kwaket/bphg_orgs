@@ -30,13 +30,14 @@
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex me-5 ms-auto pe-5" id="search-form">
+            <form class="d-flex me-5 ms-auto pe-5" id="search-form" method="get" action="/search">
               <div class="input-group w-100">
                 <input type="search" class="form-control" placeholder="Название организации или проекта"
+                  name="q"
                   aria-label="Название порганизации или роекта"
                   aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary"
-                  type="button"
+                  type="submit"
                   id="global-search-btn">
                 <span class="bi bi-search"></span>
                 Найти
