@@ -18,6 +18,9 @@ class OrganizationIndex(indexes.SearchIndex, indexes.Indexable):
         return self.get_model().objects.filter(
             inserted_at__lte=datetime.datetime.now())
 
+    def prepare_countries(self, obj):
+        return [c.name for c in obj.countries_set.all()]
+
 
 class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
