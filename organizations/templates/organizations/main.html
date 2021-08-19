@@ -2,66 +2,65 @@
 
 {% block content %}
 <div class="row">
-    <div class="col">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">Главная</li>
-                <li class="breadcrumb-item active">Последние добавленные организации</li>
-            </ol>
-        </nav>
-    </div>
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Главная</li>
+        <li class="breadcrumb-item active">Последние добавленные организации</li>
+      </ol>
+    </nav>
+  </div>
 </div>
 <div class="header-group">
-    <div class="row">
-       <div class="col">
-            <h1>Последние добавленные организации</h1>
-        </div>
-        {% comment %} <div class="col col-md-auto">
-            <button class="btn btn-outline-primary btn-sm btn-lisnk">
-                <span class="bi bi-pencil"></span>
-                Редактировать
-            </button>
-        </div> {% endcomment %}
+  <div class="row">
+    <div class="col">
+      <h1>Последние добавленные организации</h1>
     </div>
+    {% comment %} <div class="col col-md-auto">
+      <button class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-pencil"></span>
+        Редактировать
+      </button>
+    </div> {% endcomment %}
+  </div>
 </div>
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-{% for org in organizations %}
-    <div class="col">
-        <div class="card bg-light">
-            <div class="card-body">
-                <h5 class="card-title">{{ org.name }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ org.country }}</h6>
-                <p class="card-text">
-                    {% firstof org.activity_description '' %}
-                </p>
-                <p class="card-text">
-                    <small>
-                        <span class="text-muted">Сайт: </span>
-                        <a href="{{ org.site }}" target="_blank" class="card-link">
-                            {{ org.site }}
-                        </a>
-                    </small>
-                </p>
-                <div class="card-meta-block">
-                    <p class="card-text text-muted">
-                        <small>{{ org.inserted_at }}</small><br>
-                        <small>{{ org.inserted_by.get_full_name}}</small>
-                    </p>
-                    <a href="{% url 'organization_detail' pk=org.pk %}"
-                       class="card-link">Подробнее</a>
-                </div>
-            </div>
+  {% for org in organizations %}
+  <div class="col">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h5 class="card-title">{{ org.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ org.country }}</h6>
+        <p class="card-text">
+          {% firstof org.activity_description '' %}
+        </p>
+        <p class="card-text">
+          <small>
+            <span class="text-muted">Сайт: </span>
+            <a href="{{ org.site }}" target="_blank" class="card-link">
+              {{ org.site }}
+            </a>
+          </small>
+        </p>
+        <div class="card-meta-block">
+          <p class="card-text text-muted">
+            <small>{{ org.inserted_at }}</small><br>
+            <small>{{ org.inserted_by.get_full_name}}</small>
+          </p>
+          <a href="{% url 'organization_detail' pk=org.pk %}" class="card-link">Подробнее</a>
         </div>
+      </div>
     </div>
+  </div>
 
-{% empty %}
-    <div class="col">
-        В базе данных еще нет организаций.<br>
-        <a class="btn btn-primary" href="{% url 'organization_new' %}">
-            <span class="bi bi-plus-circle-fill"></span>
-            Добавить организацию
-        </a>
-    </div>
-{% endfor %}
+  {% empty %}
+  <div class="col">
+    В базе данных еще нет организаций.<br>
+    <a class="btn btn-primary" href="{% url 'organization_new' %}">
+      <span class="bi bi-plus-circle-fill"></span>
+      Добавить организацию
+    </a>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
