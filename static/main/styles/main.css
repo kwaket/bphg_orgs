@@ -130,3 +130,30 @@ footer small:first-child {
     margin-right: .5em;
     padding-right: .3em;
 }
+
+.filter-box-buttons {
+    margin-top: 1em;
+}
+
+@media (min-width: 768px) {
+    .filter-box-wrapper {
+        background: #6c757d1f;
+        border: 1px solid #6c757d1e;
+        padding: 1.8em .7em .7em;
+        border-radius: .5em;
+        position: relative;
+        margin-bottom: .5em;
+    }
+
+    .filter-box-buttons {
+        margin-top: 0;
+    }
+
+    .filter-box-wrapper label {
+        margin-bottom: 0;
+        opacity: .7;
+        font-size: .9em;
+        position: absolute;
+        top: .3em;
+    }
+}
