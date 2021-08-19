@@ -3,110 +3,121 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h1><span class="bi bi-box"></span> Проекты</h1>
-        </div>
-        <div class="col text-end h1-group">
-            <a href="{% url 'project_new' %}" class="btn btn-primary">
-                <span class="bi bi-plus-circle-fill"></span>
-                Добавить проект
-            </a>
-        </div>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Проекты</li>
+        <li class="breadcrumb-item active">Все проекты</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Все проекты</h1>
     </div>
-
-    <div class="filter-box-wrapper texts-white bgs-secondary">
-      <form class="row filter-box" method="get">
-        {% bootstrap_field filter.form.name show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
-        {% bootstrap_field filter.form.organization show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
-        {% bootstrap_field filter.form.application_scope show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
-        {% bootstrap_field filter.form.progress show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
-        <div class="col-md-3 col-lg-3 filter-box-buttons">
-          <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm">
-            <span class="bi bi-x-lg"></span>
-            Сбросить
-          </a>
-          <button type="submit" class="btn btn-secondary btn-sm text-nowrap">
-            <span class="bi bi-funnel-fill"></span>
-            Применить фильтр
-          </button>
-        </div>
-      </form>
+    <div class="col col-md-auto">
+      <a href="{% url 'project_new' %}" class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-plus-lg"></span>
+        Добавить проект
+      </a>
     </div>
+  </div>
+</div>
 
-    {% if not projects_page.object_list %}
-    <p class="text-center" style="padding: 5em;">
-        Проекты с указанными параметрами не найдены
-    </p>
-    {% else %}
+<div class="filter-box-wrapper texts-white bgs-secondary">
+  <form class="row filter-box" method="get">
+    {% bootstrap_field filter.form.name show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+    {% bootstrap_field filter.form.organization show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+    {% bootstrap_field filter.form.application_scope show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+    {% bootstrap_field filter.form.progress show_label=True size='sm' wrapper_class='col-md-3 col-lg-2' %}
+    <div class="col-md-3 col-lg-3 filter-box-buttons">
+      <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm">
+        <span class="bi bi-x-lg"></span>
+        Сбросить
+      </a>
+      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">
+        <span class="bi bi-funnel-fill"></span>
+        Применить фильтр
+      </button>
+    </div>
+  </form>
+</div>
 
-    <table class="table table-md">
-        <thead>
-            <tr>
-                <th scope="col">Название
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
-                </th>
-                <th scope="col">Организация
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='organization' current_order=current_order %}
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-organization' current_order=current_order %}
-                </th>
-                <th scope="col">Ведущий научный сотрудник
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='lead_scientist' current_order=current_order %}
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-lead_scientist' current_order=current_order %}
-                </th>
-                <th scope="col">Сфера применения
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='application_scope' current_order=current_order %}
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-application_scope' current_order=current_order %}
-                </th>
-                <th scope="col">Прогресс
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
-                {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-progress' current_order=current_order %}
-                </th>
-                <th scope="col">Добавлено
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_at' current_order=current_order %}
-                </th>
-                <th scope="col">Добавил
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_by' current_order=current_order %}
-                </th>
-                <th scope="col">Изменено
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_at' current_order=current_order %}
-                </th>
-                <th scope="col">Изменил
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_by' current_order=current_order %}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for proj in projects_page.object_list %}
-            <tr>
-                <td>
-                    <a href="{% url 'project_detail' pk=proj.pk %}"
-                       class="card-link">{{ proj.name }}
-                    </a>
-                </td>
-                <td>
-                    <a href="{% url 'organization_detail' pk=proj.organization.pk %}"
-                       class="card-link">{{ proj.organization }}
-                    </a>
-                </td>
-                <td>{{ proj.lead_scientist }}</td>
-                <td>{{ proj.application_scope }}</td>
-                <td>{{ proj.progress }}</td>
-                <td>{{ proj.inserted_at }}</td>
-                <td>{{ proj.inserted_by.get_full_name }}</td>
-                <td>{{ proj.updated_at }}</td>
-                <td>{{ proj.updated_by.get_full_name }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% include 'organizations/snippets/pagination.html' with obj_page=projects_page query_params=filter_fields %}
+{% if not projects_page.object_list %}
+<p class="text-center" style="padding: 5em;">
+  Проекты с указанными параметрами не найдены
+</p>
+{% else %}
 
-    {% endif %}
+<table class="table table-md">
+  <thead>
+    <tr>
+      <th scope="col">Название
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
+      </th>
+      <th scope="col">Организация
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='organization' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-organization' current_order=current_order %}
+      </th>
+      <th scope="col">Ведущий научный сотрудник
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='lead_scientist' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-lead_scientist' current_order=current_order %}
+      </th>
+      <th scope="col">Сфера применения
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='application_scope' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-application_scope' current_order=current_order %}
+      </th>
+      <th scope="col">Прогресс
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-progress' current_order=current_order %}
+      </th>
+      <th scope="col">Добавлено
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_at' current_order=current_order %}
+      </th>
+      <th scope="col">Добавил
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_by' current_order=current_order %}
+      </th>
+      <th scope="col">Изменено
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_at' current_order=current_order %}
+      </th>
+      <th scope="col">Изменил
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
+        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_by' current_order=current_order %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for proj in projects_page.object_list %}
+    <tr>
+      <td>
+        <a href="{% url 'project_detail' pk=proj.pk %}" class="card-link">{{ proj.name }}
+        </a>
+      </td>
+      <td>
+        <a href="{% url 'organization_detail' pk=proj.organization.pk %}" class="card-link">{{ proj.organization }}
+        </a>
+      </td>
+      <td>{{ proj.lead_scientist }}</td>
+      <td>{{ proj.application_scope }}</td>
+      <td>{{ proj.progress }}</td>
+      <td>{{ proj.inserted_at }}</td>
+      <td>{{ proj.inserted_by.get_full_name }}</td>
+      <td>{{ proj.updated_at }}</td>
+      <td>{{ proj.updated_by.get_full_name }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include 'organizations/snippets/pagination.html' with obj_page=projects_page query_params=filter_fields %}
+
+{% endif %}
 
 {% endblock %}

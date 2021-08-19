@@ -3,17 +3,28 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'project_list' %}">Проекты</a></li>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+     <li class="breadcrumb-item"><a href="{% url 'project_list' %}">Проекты</a></li>
+     <li class="breadcrumb-item"><a href="{% url 'project_detail' pk=form.instance.pk %}">{{ form.instance.name }}</a></li>
     <li class="breadcrumb-item active" aria-current="page">Редактирование проекта</li>
-  </ol>
-</nav>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Редактирование проекта</h1>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col col-md-8 col-lg-6">
-    <h1><span class="bi bi-star"></span> Редактирование проекта</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {% bootstrap_form form %}
         <button type="submit" class="save btn btn-success">
