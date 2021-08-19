@@ -38,8 +38,21 @@
       <dt class="col-sm-4 col-md-3">Сайт</dt>
       <dd class="col-sm-8 col-md-9"><a href="{{ organization.site }}">{{ organization.site }}</a></dd>
 
+
+      <dt class="col-sm-4 col-md-3 text-truncate">Сфера деятельности</dt>
+      <dd class="col-sm-8 col-md-9">
+        {% for field in organization.FieldOfActivity.choices %}
+        {% if field.0 == organization.field_of_activity %}
+        {{ field.1 }}
+        {% endif %}
+        {% endfor %}
+      </dd>
+
       <dt class="col-sm-4 col-md-3 text-truncate">Описание деятельности</dt>
       <dd class="col-sm-8 col-md-9">{% firstof organization.activity_description '' %}</dd>
+
+      <dt class="col-sm-4 col-md-3 text-truncate">Продукция</dt>
+      <dd class="col-sm-8 col-md-9">{% firstof organization.products '' %}</dd>
 
       <dt class="col-sm-4 col-md-3">Проекты</dt>
       <dd class="col-sm-8 col-md-9">
