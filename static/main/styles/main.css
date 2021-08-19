@@ -4,11 +4,13 @@
 
 .navbar .btn-link {
     text-decoration: none;
-    color: #6c757d ;
+    color: #6c757d;
 }
+
 .navbar .dropdown .btn-warning.btn-link {
     color: #212529;
 }
+
 #create-object-global-btn {
     margin-right: 1.5em;
 }
@@ -22,7 +24,7 @@
     border-left: 1px solid #ddd;
     font-size: small;
     font-weight: bolder;
-    line-height: 1.2em;;
+    line-height: 1.2em;
     padding-left: 3rem;
     position: relative;
 }
@@ -102,9 +104,10 @@ body {
     min-height: 100vh;
     position: relative;
     margin: 0;
-    padding-bottom: 80px; /*height of the footer*/
+    /*height of the footer*/
+    padding-bottom: 80px;
     box-sizing: border-box;
-    }
+}
 
 footer {
     position: absolute;
@@ -120,6 +123,6 @@ footer {
 
 footer small:first-child {
     border-right: 1px solid #6c757d46;
-    margin-right: .5em ;
+    margin-right: .5em;
+    padding-right: .3em;
 }
-
