@@ -166,3 +166,7 @@ footer small:first-child {
         top: .3em;
     }
 }
+
+.table {
+    font-size: .9em;
+}
