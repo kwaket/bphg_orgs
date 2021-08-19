@@ -50,9 +50,9 @@
   <tbody>
     {% for emp in page.object_list %}
     <tr>
-      <th scope="row">
+      <td scope="row">
         <a href="{% url 'employee_detail' pk=emp.pk %}">{{ emp.get_full_name }}</a>
-      </th>
+      </td>
       <td>{{ emp.degree }}</td>
       <td>{{ emp.role }}</td>
       <td>{{ emp.organization }}</td>
