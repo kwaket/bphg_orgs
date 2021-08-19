@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+     <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{ obj.username }}<li>
-  </ol>
-</nav>
+      </ol>
+    </nav>
+  </div>
+</div>
 
-{% include 'snippets/page_header.html' with name=page_name button_url=url_new icon_name='bi-person-fill' button_name='Редактировать' %}
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Пользователи</h1>
+    </div>
+    <div class="col col-md-auto">
+      <a href="{% url 'user_edit' pk=obj.pk %}" class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-pencil-fill"></span>
+        Редактировать
+      </a>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col col-md-12 col-lg-10">
