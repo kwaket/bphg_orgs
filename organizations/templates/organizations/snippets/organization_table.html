@@ -76,10 +76,10 @@
             {% endfor %}
           </ul>
         </td>
-        <td>{{ org.inserted_at }}</td>
-        <td>{{ org.inserted_by.get_full_name }}</td>
-        <td>{{ org.updated_at }}</td>
-        <td>{{ org.updated_by.get_full_name  }}</td>
+        <td class="text-muted">{{ org.inserted_at }}</td>
+        <td class="text-muted">{% firstof org.inserted_by.get_full_name org.inserted_by.username %}</td>
+        <td class="text-muted">{{ org.updated_at }}</td>
+        <td class="text-muted">{% firstof org.updated_by.get_full_name org.updated_by.username  %}</td>
       </tr>
       {% endfor %}
     </tbody>

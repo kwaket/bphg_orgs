@@ -110,10 +110,10 @@
       <td>{{ proj.lead_scientist }}</td>
       <td>{{ proj.application_scope }}</td>
       <td>{{ proj.progress }}</td>
-      <td>{{ proj.inserted_at }}</td>
-      <td>{{ proj.inserted_by.get_full_name }}</td>
-      <td>{{ proj.updated_at }}</td>
-      <td>{{ proj.updated_by.get_full_name }}</td>
+      <td class="text-muted">{{ proj.inserted_at }}</td>
+      <td class="text-muted">{% firstof proj.inserted_by.get_full_name proj.inserted_by.username %}</td>
+      <td class="text-muted">{{ proj.updated_at }}</td>
+      <td class="text-muted">{% firstof proj.updated_by.get_full_name proj.updated_by.username %}</td>
     </tr>
     {% endfor %}
   </tbody>
