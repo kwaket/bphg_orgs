@@ -19,12 +19,14 @@
     <div class="col">
       <h1>Все проекты</h1>
     </div>
+    {% if perms.organizations.add_project %}
     <div class="col col-md-auto">
       <a href="{% url 'project_new' %}" class="btn btn-outline-primary btn-sm btn-lisnk">
         <span class="bi bi-plus-lg"></span>
         Добавить проект
       </a>
     </div>
+    {% endif %}
   </div>
 </div>
 

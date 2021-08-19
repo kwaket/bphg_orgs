@@ -20,12 +20,14 @@
     <div class="col">
       <h1>Все сотрудники</h1>
     </div>
+    {% if perms.organizations.add_employee %}
     <div class="col col-md-auto">
       <a href="{% url 'employee_new' %}" class="btn btn-outline-primary btn-sm btn-lisnk">
         <span class="bi bi-plus-lg"></span>
         Добавить сотрудника
       </a>
     </div>
+    {% endif %}
   </div>
 </div>
 

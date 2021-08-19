@@ -18,12 +18,14 @@
     <div class="col">
       <h1>{{ obj.get_full_name }}</h1>
     </div>
+    {% if perms.organizations.edit_employee %}
     <div class="col col-md-auto">
       <a href="{% url 'employee_edit' pk=obj.pk %}" class="btn btn-outline-primary btn-sm btn-lisnk">
         <span class="bi bi-pencil-fill"></span>
         Редактировать
       </a>
     </div>
+    {% endif %}
   </div>
 </div>
 

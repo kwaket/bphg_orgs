@@ -17,12 +17,14 @@
     <div class="col">
       <h1>{{ organization.name }}</h1>
     </div>
+    {% if perms.organizations.edit_organization %}
     <div class="col col-md-auto">
       <a href="{% url 'organization_edit' pk=organization.pk %}" class="btn btn-outline-primary btn-sm btn-lisnk">
         <span class="bi bi-pencil-fill"></span>
         Редактировать
       </a>
     </div>
+    {% endif %}
   </div>
 </div>
 
@@ -64,10 +66,12 @@
           </li>
           {% endfor %}
         </ul>
+        {% if perms.organizations.add_project %}
         <a href="{% url 'project_new' %}?organization={{organization.pk}}" class="btn btn-secondary btn-sm">
           <span class="bi bi-plus-circle-fill"></span>
           Добавить проект
         </a>
+        {% endif %}
       </dd>
       <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил</dt>
       <dd class="col-sm-8 col-md-9 text-muted">{{ organization.inserted_by.get_full_name }}</dd>
