@@ -168,7 +168,7 @@ def project_edit(request, pk):
             return redirect('project_detail', pk=proj.pk)
     else:
         form = ProjectForm(request.user, instance=proj,
-            initial={'lead_scientist': proj.lead_scientist.name,
+            initial={'lead_scientist': proj.lead_scientist.get_full_name,
                      'application_scope': proj.application_scope.name})
     return render(request, 'organizations/project_edit.html', {'form': form})
 
