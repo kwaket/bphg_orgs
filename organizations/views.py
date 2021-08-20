@@ -1,3 +1,5 @@
+import datetime as dt
+
 from urllib.parse import urlencode
 from django.db.models.query import QuerySet
 from django.urls import reverse
@@ -87,6 +89,7 @@ def organization_edit(request, pk):
                 org.countries.remove(country)
             countries = _extract_countries(form)
             org.countries.add(*countries)
+            org.updated_at = dt.datetime.now()
             org.save()
             return redirect('organization_detail', pk=org.pk)
     else:
@@ -164,6 +167,7 @@ def project_edit(request, pk):
         if form.is_valid():
             proj = form.save(commit=False)
             proj.updated_by = request.user
+            proj.updated_at = dt.datetime.now()
             proj.save()
             return redirect('project_detail', pk=proj.pk)
     else:
@@ -223,6 +227,7 @@ def employee_edit(request, pk):
         if form.is_valid():
             emp = form.save(commit=False)
             emp.updated_by = request.user
+            emp.updated_at = dt.datetime.now()
             emp.save()
             return redirect('employee_detail', pk=emp.pk)
     else:
