@@ -51,11 +51,10 @@
       </dd>
 
       <dt class="col-sm-4 col-md-3 text-truncate">Описание деятельности</dt>
-      <dd class="col-sm-8 col-md-9">{% firstof organization.activity_description '' %}</dd>
+      <dd class="col-sm-8 col-md-9">{% firstof organization.activity_description|linebreaks '' %}</dd>
 
       <dt class="col-sm-4 col-md-3 text-truncate">Продукция</dt>
-      <dd class="col-sm-8 col-md-9">{% firstof organization.products '' %}</dd>
-
+      <dd class="col-sm-8 col-md-9">{% firstof organization.products|linebreaks '' %}</dd>
       <dt class="col-sm-4 col-md-3">Проекты</dt>
       <dd class="col-sm-8 col-md-9">
         <ul>
