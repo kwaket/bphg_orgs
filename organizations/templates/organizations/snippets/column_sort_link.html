@@ -1,14 +1,22 @@
 {% load startswith %}
+{% load trim %}
 
-
-{% if order_by == current_order %}
-    {% if order_by|startswith:'-' %}
-    <span class="bi bi-caret-down-fill"></span>
-    {% else %}
-    <span class="bi bi-caret-up-fill"></span>
-    {% endif %}
+{% if current_order|startswith:'-' or current_order|trimdash != order_by|trimdash %}
+<a class="sort-column-btn" href="?page={{ current_page }}&order_by={{ order_by }}&{{ filter_fields }}">
+  <span class="bi bi-caret-up-fill text-secondary"></span>
+  {% if current_order|trimdash == order_by|trimdash %}
+  <span class="bi bi-caret-down-fill"></span>
+  {% else %}
+  <span class="bi bi-caret-down-fill text-secondary"></span>
+  {% endif %}
+</a>
 {% else %}
-<a href="?page={{ current_page }}&order_by={{ order_by }}&{{ filter_fields }}">{% if order_by|startswith:'-' %}
-<span class="bi bi-caret-down"></span>
-{% else %}<span class="bi bi-caret-up"></span>{% endif %}</a>
+<a class="sort-column-btn" href="?page={{ current_page }}&order_by=-{{ order_by }}&{{ filter_fields }}">
+  {% if current_order|trimdash == order_by|trimdash %}
+  <span class="bi bi-caret-up-fill"></span>
+  {% else %}
+  <span class="bi bi-caret-up-fill text-secondary"></span>
+  {% endif %}
+  <span class="bi bi-caret-down-fill text-secondary"></span>
+</a>
 {% endif %}
