@@ -73,6 +73,8 @@ TEMPLATES = [
             ],
             'libraries':{
                 'startswith': 'organizations.templatetags.startswith',
+                'trim': 'organizations.templatetags.trim',
+                'trimdash': 'organizations.templatetags.trim',
             }
         },
     },
