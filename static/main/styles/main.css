@@ -82,8 +82,8 @@
 }
 
 .header-group {
-    border-bottom: 1px solid rgba(133, 133, 133, 0.438);
-    margin-bottom: 1em;
+    /* border-bottom: 1px solid rgba(133, 133, 133, 0.4); */
+    margin-bottom: .5em;
 }
 
 .header-group h1 {
@@ -118,8 +118,8 @@ footer {
     bottom: 0;
     right: 0;
     left: 0;
-    height: 40px;
-    line-height: 40px;
+    height: 44px;
+    line-height: 38px;
     border-top: 1px solid #6c757d46;
     opacity: .8;
     text-align: center;
@@ -148,8 +148,8 @@ footer small:first-child {
 @media (min-width: 768px) {
     .filter-box-wrapper {
         background: #6c757d1f;
-        border: 1px solid #6c757d1e;
-        padding: 1.8em .7em .7em;
+        /* border: 1px solid #6c757d1e; */
+        padding: 1.9em .6em .6em;
         border-radius: .5em;
         position: relative;
         margin-bottom: .5em;
@@ -164,7 +164,7 @@ footer small:first-child {
         opacity: .7;
         font-size: .9em;
         position: absolute;
-        top: .3em;
+        top: .4em;
     }
 }
 
