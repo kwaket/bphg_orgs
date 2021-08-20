@@ -58,41 +58,61 @@
 <table class="table table-md">
   <thead>
     <tr>
-      <th scope="col">Название
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Название
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Организация
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='organization' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-organization' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Организация
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='organization' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Ведущий научный сотрудник
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='lead_scientist' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-lead_scientist' current_order=current_order %}
+      <th scope="col">
+        Ведущий научный
+        <span class="text-nowrap">
+          сотрудник
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='lead_scientist' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Сфера применения
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='application_scope' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-application_scope' current_order=current_order %}
+      <th scope="col">
+        Сфера
+        <span class="text-nowrap">
+          применения
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='application_scope' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Прогресс
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-progress' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Прогресс
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='progress' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Добавлено
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_at' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Добавлено
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Добавил
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_by' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Добавил
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Изменено
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_at' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Изменено
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
+        </span>
       </th>
-      <th scope="col">Изменил
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
-        {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_by' current_order=current_order %}
+      <th scope="col">
+        <span class="text-nowrap">
+          Изменил
+          {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
+        </span>
       </th>
     </tr>
   </thead>
