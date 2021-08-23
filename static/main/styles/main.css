@@ -204,3 +204,57 @@ a.sort-column-btn span.bi {
     position: absolute;
     top: -.5em;
 }
+
+.search-form-model {
+    margin-top: -.5em;
+}
+
+.search-form-model .form-check {
+    display: inline-block !important;
+    margin-right: 1.2em;
+}
+
+.search-form-model .is-valid .form-check .form-check-label {
+    color: rgba(0, 0, 0, .8) !important;
+}
+
+.search-form .form-check .is-valid {
+    border-color: rgba(0, 0, 0, .55) !important;
+}
+
+.search-form .form-check .is-valid:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd !important;
+}
+
+.search-form .form-control.is-valid,
+.search-form .form-control:valid {
+    border-color: #ced4da !important;
+    background-image: none;
+}
+
+.search-result h3 {
+    font-size: 1.7em;
+    font-weight: bold;
+}
+
+.search-result .search-item {
+    border-top: 1px solid #6c757d41;
+}
+
+.search-result .row:last-child .search-item {
+    border-bottom: 1px solid #6c757d41;
+}
+
+.search-result .search-item a {
+    text-decoration: none !important;
+}
+
+.search-result .search-item .card-body {
+    padding-left: 1.8em;
+}
+
+.search-result .search-item .card-body h5 .bi {
+    position: absolute;
+    margin-left: -1.3em;
+}
