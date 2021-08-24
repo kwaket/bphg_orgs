@@ -1,0 +1,27 @@
+# Creating the PostgreSQL Database and User
+- name: Install required python packages (global)
+  pip:
+    name:
+      - psycopg2
+
+- name: Create a new database with name {{ app_name }}
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}"
+
+- name: Connect to {{ app_name }} database, create {{ app_name }} user, and grant access to database
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: "{{ app_name }}"
+    name: "{{ app_name }}"
+    password: "{{ db_password }}"
+    priv: ALL
+    role_attr_flags: NOSUPERUSER
+
+  # setting for user recomended by django
+  # - ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+  # - ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+  # - ALTER ROLE myprojectuser SET timezone TO 'UTC';
+
