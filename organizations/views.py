@@ -8,9 +8,11 @@ from django.http import request
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render, get_object_or_404
+from django.template import RequestContext
+
 from .models import Country, Employee, EmployeeRole, Organization, Project
-from .forms import (LeadscientistForm, OrganizationForm, ProjectForm, EmployeeForm,
-                    OrganizationFilter, ProjectFilter)
+from .forms import (LeadscientistForm, OrganizationForm, ProjectForm,
+                    EmployeeForm, OrganizationFilter, ProjectFilter)
 
 
 def _delete_params(params: dict, exclude: list) -> dict:
@@ -238,3 +240,22 @@ def employee_edit(request, pk):
 def main_page(request):
     newest = Organization.objects.order_by('-inserted_at')[:10]
     return render(request, 'organizations/main.html', {'organizations': newest})
+
+
+def handler404(request, *args, **kwargs):
+    data = {'code': 404, 'message': 'Страница не найдена'}
+    response = render(request, 'error.html', data)
+    return response
+
+
+def handler403(request, *args, **kwargs):
+    data = {'code': 403,
+            'message': 'У вас недостаточно прав для просмотра данной страницы'}
+    response = render(request, 'error.html', data)
+    return response
+
+
+def handler500(request, *args, **kwargs):
+    data = {'code': 500, 'message': 'Страница не найдена'}
+    response = render(request, 'error.html', data)
+    return response

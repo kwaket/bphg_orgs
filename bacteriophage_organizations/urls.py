@@ -17,6 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
+
+handler403 = 'organizations.views.handler403'
+handler404 = 'organizations.views.handler404'
+handler500 = 'organizations.views.handler500'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
