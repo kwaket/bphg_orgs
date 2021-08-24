@@ -3,15 +3,15 @@
   <div>
     <div class="filter-box-wrapper">
       <form class="row filter-box" method="get">
-        {% bootstrap_field filter.form.name show_label=True layout='bootstrap_form' size='sm' wrapper_class='col-md-3 col-lg-3' %}
-        {% bootstrap_field filter.form.countries show_label=True layout='floating' size='sm' wrapper_class='col-md-3 col-lg-3' %}
+        {% bootstrap_field filter.form.name show_label=True layout='bootstrap_form' size='sm' wrapper_class='col-md-4 col-lg-4' %}
+        {% bootstrap_field filter.form.countries show_label=True layout='floating' size='sm' wrapper_class='col-md-4 col-lg-4' %}
 
-        <div class="col-md-3 col-lg-3 filter-box-buttons">
-          <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm">
+        <div class="col-md-4 col-lg-4 filter-box-buttons text-nowrap">
+          <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm col-md-6 col-lg-6">
             <span class="bi bi-x-lg"></span>
             Сбросить
           </a>
-          <button type="submit" class="btn btn-secondary btn-sm text-nowrap">
+          <button type="submit" class="btn btn-secondary btn-sm text-nowrap col-md-6 col-lg-6">
             <span class="bi bi-funnel-fill"></span>
             Применить
           </button>

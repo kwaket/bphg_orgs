@@ -162,11 +162,11 @@ footer small:first-child {
 @media (min-width: 768px) {
     .filter-box-wrapper {
         background: #6c757d1f;
-        /* border: 1px solid #6c757d1e; */
-        padding: 1.9em .6em .6em;
+        padding: 1.9em 1em .6em .6em;
         border-radius: .5em;
         position: relative;
         margin-bottom: .5em;
+        display: inline-block;
     }
 
     .filter-box-buttons {
