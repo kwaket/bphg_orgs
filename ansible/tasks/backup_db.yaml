@@ -4,7 +4,7 @@
   postgresql_db:
     name: "{{ db_name }}"
     state: dump
-    target: "/home/{{ app_owner }}/{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}{{ ansible_date_time.minute }}.{{ ansible_date_time.second }}.sql"
+    target: "{{ db_backup_path }}/{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}{{ ansible_date_time.minute }}.{{ ansible_date_time.second }}.dump"
     login_user: "{{ db_name }}"
     login_password: "{{ db_password }}"
     login_host: localhost

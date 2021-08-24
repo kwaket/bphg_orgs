@@ -20,8 +20,16 @@
     priv: ALL
     role_attr_flags: NOSUPERUSER
 
-  # setting for user recomended by django
-  # - ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
-  # - ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
-  # - ALTER ROLE myprojectuser SET timezone TO 'UTC';
+- name: "Make dir for backup {{ db_backup_path }}"
+  file:
+    path: "{{ db_backup_path }}"
+    state: directory
+    owner: "{{ app_owner }}"
+    group: www-data
+    recurse: yes
 
+- name: Add backingup to crontab
+  ansible.builtin.cron:
+    name: "backup {{ app_name }}"
+    hour: "0"
+    job: "pg_dump -d {{ app_name }} -U {{ app_name }} -h localhost > {{ db_backup_path }}/{{ ansible_date_time.date }}.dump"
