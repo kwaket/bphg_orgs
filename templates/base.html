@@ -45,14 +45,15 @@
           <ul class="navbar-nav me-0 ms-auto">
             {% if perms.organizations.add_organization %}
             <li>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="create-object-global-btn"
+              <div class="dropdown" id="create-object-global-btn">
+                <button class="btn btn-secondary dropdown-toggle" type="button"
                   data-bs-toggle="dropdown" aria-expanded="false">
                   Добавить <span class="bi bi-plus-lg"><span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" href="{% url 'organization_new' %}">Организацию</a></li>
                   <li><a class="dropdown-item" href="{% url 'project_new' %}">Проект</a></li>
+                  <li><a class="dropdown-item" href="{% url 'employee_new' %}">Сотрудника</a></li>
                 </ul>
               </div>
             </li>

@@ -11,6 +11,16 @@
     color: #212529;
 }
 
+.navbar #create-object-global-btn.dropdown:hover ul {
+    display: block;
+}
+
+.navbar .dropdown:hover ul.dropdown-menu-end,
+.navbar .btn-group:hover ul.dropdown-menu-end {
+    right: 0;
+    left: auto;
+}
+
 #create-object-global-btn {
     margin-right: .5em;
 }
