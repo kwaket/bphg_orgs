@@ -63,11 +63,16 @@
         </tr>
         <tr>
           <th>Описание деятельности</th>
-          <td>{% firstof organization.activity_description|linebreaks '' %}</td>
+          <td>{% if organization.activity_description %}
+          {{ organization.activity_description|linebreaks }}
+          {% endif %}</td>
         </tr>
         <tr>
           <th>Продукция</th>
-          <td>{% firstof organization.products|linebreaks '' %}</td>
+          <td>{% if organization.products %}
+            {{ organization.products|linebreaks}}
+            {% endif %}
+          </td>
         </tr>
         <tr>
           <th>Проекты</th>
