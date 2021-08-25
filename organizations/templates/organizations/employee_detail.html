@@ -28,33 +28,56 @@
     {% endif %}
   </div>
 </div>
-<hr>
-<div class="row">
-  <div class="col col-md-12 col-lg-10">
-    <dl class="row">
-      <dt class="col-sm-4 col-md-3 text-truncate">Фамилия</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.last_name }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Имя</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.first_name }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Отчество</dt>
-      <dd class="col-sm-8 col-md-9">{% firstof obj.middle_name '' %}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Ученая степень</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.degree }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Должность</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.role }}</dd>
 
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">
-        {% firstof obj.inserted_by.get_full_name obj.inserted_by.username %}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавлено</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.inserted_at }}</dd>
-
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировал</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">
-        {% firstof obj.updated_by.get_full_name obj.updated_by.username %}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировано</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.updated_at }}</dd>
-    </dl>
+<div class="row detail-block">
+  <div class="col">
+    <table class="table table-striped">
+      <tr>
+        <td class="text-truncate">Фамилия</td>
+        <td class="col-sm-8 col-md-9">{{ obj.last_name }}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate">Имя</td>
+        <td class="col-sm-8 col-md-9">{{ obj.first_name }}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate">Отчество</td>
+        <td class="col-sm-8 col-md-9">{% firstof obj.middle_name '' %}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate">Ученая степень</td>
+        <td class="col-sm-8 col-md-9">{{ obj.degree }}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate">Должность</td>
+        <td class="col-sm-8 col-md-9">{{ obj.role }}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate text-muted">Добавил</td>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-person-circle text-muted"></span>
+        {% firstof obj.inserted_by.get_full_name obj.inserted_by.username|title %}
+        </td>
+      </tr>
+      <tr>
+        <td class="text-truncate text-muted">Добавлено</td>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-calendar-date text-muted"></span>
+        {{ obj.inserted_at }}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate text-muted">Отредактировал</td>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-person-circle text-muted"></span>
+        {% firstof obj.updated_by.get_full_name obj.updated_by.username|title %}</td>
+      </tr>
+      <tr>
+        <td class="text-truncate text-muted">Отредактировано</td>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-calendar-date text-muted"></span>
+        {{ obj.updated_at }}</td>
+      </tr>
+    </table>
   </div>
 </div>
 

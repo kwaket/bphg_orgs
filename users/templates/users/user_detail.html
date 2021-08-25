@@ -5,8 +5,8 @@
   <div class="col">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-     <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ obj.username }}<li>
+        <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ obj.username }}</li>
       </ol>
     </nav>
   </div>
@@ -25,24 +25,37 @@
     </div>
   </div>
 </div>
-<hr>
-<div class="row">
-  <div class="col col-md-12 col-lg-10">
-    <dl class="row">
-      <dt class="col-sm-4 col-md-3 text-truncate">Фамилия</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.last_name }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Имя</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.first_name }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Логин</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.username }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Группы</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.groups.all|join:", " }}</dd>
 
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Последний вход</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.last_login }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Создан</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.date_joined }}</dd>
-    </dl>
+<div class="row detail-block">
+  <div class="col">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate">Фамилия</th>
+          <td class="col-sm-8 col-md-9">{{ obj.last_name }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate">Имя</th>
+          <td class="col-sm-8 col-md-9">{{ obj.first_name }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate">Логин</th>
+          <td class="col-sm-8 col-md-9">{{ obj.username }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate">Группы</th>
+          <td class="col-sm-8 col-md-9">{{ obj.groups.all|join:", " }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate text-muted">Последний вход</th>
+          <td class="col-sm-8 col-md-9 text-muted">{{ obj.last_login }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate text-muted">Создан</th>
+          <td class="col-sm-8 col-md-9 text-muted">{{ obj.date_joined }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

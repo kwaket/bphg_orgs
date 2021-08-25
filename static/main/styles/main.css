@@ -268,3 +268,34 @@ a.sort-column-btn span.bi {
     position: absolute;
     margin-left: -1.3em;
 }
+
+/* Organization detail */
+.detail-block>div>.table {
+    border: 1px solid rgb(222, 226, 230);
+}
+
+.detail-block>div>.table>tbody tr {
+    border-color: rgb(222, 226, 230);
+}
+
+.detail-block .table .table tr:first-child td {
+    padding-top: 0 !important;
+}
+
+.detail-block .table .table {
+    margin-bottom: .5em !important;
+}
+
+.detail-block .table th {
+    padding-right: 2em;
+}
+
+.detail-block td>.bi {
+    position: absolute;
+    margin-left: -1.4em;
+    opacity: .7;
+}
+
+.detail-block table .table-sm td>.bi {
+    margin-left: -1.6em;
+}
