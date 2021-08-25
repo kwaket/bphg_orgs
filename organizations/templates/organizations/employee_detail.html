@@ -33,46 +33,46 @@
   <div class="col">
     <table class="table table-striped">
       <tr>
-        <td class="text-truncate">Фамилия</td>
+        <th class="text-truncate">Фамилия</th>
         <td class="col-sm-8 col-md-9">{{ obj.last_name }}</td>
       </tr>
       <tr>
-        <td class="text-truncate">Имя</td>
+        <th class="text-truncate">Имя</th>
         <td class="col-sm-8 col-md-9">{{ obj.first_name }}</td>
       </tr>
       <tr>
-        <td class="text-truncate">Отчество</td>
+        <th class="text-truncate">Отчество</th>
         <td class="col-sm-8 col-md-9">{% firstof obj.middle_name '' %}</td>
       </tr>
       <tr>
-        <td class="text-truncate">Ученая степень</td>
+        <th class="text-truncate">Ученая степень</th>
         <td class="col-sm-8 col-md-9">{{ obj.degree }}</td>
       </tr>
       <tr>
-        <td class="text-truncate">Должность</td>
+        <th class="text-truncate">Должность</th>
         <td class="col-sm-8 col-md-9">{{ obj.role }}</td>
       </tr>
       <tr>
-        <td class="text-truncate text-muted">Добавил</td>
+        <th class="text-truncate text-muted">Добавил</th>
         <td class="col-sm-8 col-md-9 text-muted">
             <span class="bi bi-person-circle text-muted"></span>
         {% firstof obj.inserted_by.get_full_name obj.inserted_by.username|title %}
         </td>
       </tr>
       <tr>
-        <td class="text-truncate text-muted">Добавлено</td>
+        <th class="text-truncate text-muted">Добавлено</th>
         <td class="col-sm-8 col-md-9 text-muted">
             <span class="bi bi-calendar-date text-muted"></span>
         {{ obj.inserted_at }}</td>
       </tr>
       <tr>
-        <td class="text-truncate text-muted">Отредактировал</td>
+        <th class="text-truncate text-muted">Отредактировал</th>
         <td class="col-sm-8 col-md-9 text-muted">
             <span class="bi bi-person-circle text-muted"></span>
         {% firstof obj.updated_by.get_full_name obj.updated_by.username|title %}</td>
       </tr>
       <tr>
-        <td class="text-truncate text-muted">Отредактировано</td>
+        <th class="text-truncate text-muted">Отредактировано</th>
         <td class="col-sm-8 col-md-9 text-muted">
             <span class="bi bi-calendar-date text-muted"></span>
         {{ obj.updated_at }}</td>
