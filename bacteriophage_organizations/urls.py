@@ -14,8 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 from django.urls.conf import include
+
+from haystack.views import basic_search
 
 
 handler403 = 'organizations.views.handler403'
@@ -27,5 +30,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('organizations.urls')),
     path('users/', include('users.urls')),
-    path('search/', include('haystack.urls')),
+    # path('search/', include('haystack.urls')),
+    path('search/', login_required(basic_search), name='basic_search'),
 ]
