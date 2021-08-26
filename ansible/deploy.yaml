@@ -21,6 +21,12 @@
         line: "SECRET_KEY={{ secret_key }}"
         state: present
 
+    - name: Set up environment variable django app (mode)
+      lineinfile:
+        dest: /etc/environment
+        line: "DJANGO_ENV=PROD"
+        state: present
+
     - name: Set up environment variable django app
       lineinfile:
         dest: /etc/environment
@@ -44,33 +50,11 @@
           - acl
           - git
 
-    # Creating the PostgreSQL Database and User
-    - name: Install required python packages (global)
-      pip:
-        name:
-          - psycopg2
+    - name: Install and create db
+      include_tasks: ./tasks/create_db.yaml
 
-    - name: Create a new database with name {{ app_name }}
-      become: true
-      become_user: postgres
-      postgresql_db:
-        name: "{{ db_name }}"
-
-    - name: Connect to {{ app_name }} database, create {{ app_name }} user, and grant access to database
-      become: true
-      become_user: postgres
-      postgresql_user:
-        db: "{{ app_name }}"
-        name: "{{ app_name }}"
-        password: "{{ db_password }}"
-        priv: ALL
-        role_attr_flags: NOSUPERUSER
-
-      # setting for user recomended by django
-      # - ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
-      # - ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
-      # - ALTER ROLE myprojectuser SET timezone TO 'UTC';
-
+    - name: Backup db
+      include_tasks: ./tasks/backup_db.yaml
 
     # Installing python3.8 for ubuntu 18.04
     - name: install software-properties-common
@@ -79,7 +63,7 @@
 
     - name: Add repository
       apt_repository:
-        repo:  ppa:deadsnakes/ppa
+        repo: ppa:deadsnakes/ppa
 
     - name: Install python3.8
       apt:

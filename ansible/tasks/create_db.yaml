@@ -1,0 +1,35 @@
+# Creating the PostgreSQL Database and User
+- name: Install required python packages (global)
+  pip:
+    name:
+      - psycopg2
+
+- name: Create a new database with name {{ app_name }}
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}"
+
+- name: Connect to {{ app_name }} database, create {{ app_name }} user, and grant access to database
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: "{{ app_name }}"
+    name: "{{ app_name }}"
+    password: "{{ db_password }}"
+    priv: ALL
+    role_attr_flags: NOSUPERUSER
+
+- name: "Make dir for backup {{ db_backup_path }}"
+  file:
+    path: "{{ db_backup_path }}"
+    state: directory
+    owner: "{{ app_owner }}"
+    group: www-data
+    recurse: yes
+
+- name: Add backingup to crontab
+  ansible.builtin.cron:
+    name: "backup {{ app_name }}"
+    hour: "0"
+    job: "pg_dump -d {{ app_name }} -U {{ app_name }} -h localhost > {{ db_backup_path }}/{{ ansible_date_time.date }}.dump"
