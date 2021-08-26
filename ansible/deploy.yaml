@@ -21,6 +21,12 @@
         line: "SECRET_KEY={{ secret_key }}"
         state: present
 
+    - name: Set up environment variable django app (mode)
+      lineinfile:
+        dest: /etc/environment
+        line: "DJANGO_ENV=PROD"
+        state: present
+
     - name: Set up environment variable django app
       lineinfile:
         dest: /etc/environment
