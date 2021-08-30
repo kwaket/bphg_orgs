@@ -60,6 +60,7 @@ def user_edit(request, pk):
         if form.is_valid():
             user = form.save()
             group = get_object_or_404(Group, pk=int(form.data['group']))
+            user.groups.clear()
             user.groups.add(group)
             user.save()
             return redirect('user_detail', pk=user.pk)
