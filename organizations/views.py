@@ -125,7 +125,9 @@ def project_detail(request, pk):
 
 
 def _get_leadscientist(fields: dict) -> Employee:
-    emp, created = Employee.objects.get_or_create(**fields)
+    emp, created = Employee.objects.get_or_create(
+        first_name=fields['first_name'], last_name=fields['last_name'],
+        degree=fields['degree'])
     emp.save()
     return emp
 
@@ -137,7 +139,7 @@ def project_new(request):
         emp_role = EmployeeRole.objects.filter(
             name='Ведущий научный сотрудник').first()
         duplicate_error = 'Сотрудник с такими значениями полей Имя, Фамилия и Ученная степень уже существует.'
-        if proj_form.is_valid() and (emp_form.is_valid() or duplicate_error in emp_form.errors['__all__']):
+        if proj_form.is_valid() and (emp_form.is_valid() or duplicate_error == emp_form.errors['__all__'][0]):
             proj = proj_form.save(commit=False)
             emp_fields = emp_form.cleaned_data
             emp_fields.update({
