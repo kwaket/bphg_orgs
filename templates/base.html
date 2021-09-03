@@ -9,8 +9,14 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% block styles %}
   <!-- Bootstrap CSS -->
   {% bootstrap_css %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  {% endblock %}
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
   <title>Реестр организаций</title>
@@ -162,7 +168,10 @@
     </div>
   </footer>
 
+  {% block scripts %}
   {% bootstrap_javascript %}
+  {% endblock %}
+
 
   {% comment %} <div id="search-popup-result">
     <div>
