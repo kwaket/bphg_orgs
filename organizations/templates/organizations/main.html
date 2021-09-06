@@ -20,37 +20,28 @@
 </div>
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
   {% for org in organizations %}
-  <div class="col">
-    <div class="card bg-light">
+  <div class="col col-md-3 col-lg-4">
+    <div class="card organization-card {% if org.theme_is_dark %} text-white bg-dark {% else %} text-dark bg-light{% endif %} mb-3">
+      {% if org.image %}
+      <img src="{{ org.image }}">
+      {% endif %}
       <div class="card-body">
-        <h5 class="card-title">{{ org.name }}</h5>
+        <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
+        </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ org.countries.all|join:", " }}</h6>
-        <p class="card-text">
-          <small>
-            <span class="text-muted">Сайт: </span>
-            <a href="{{ org.site }}" target="_blank" class="card-link">
-              {{ org.site }}
-            </a>
-          </small>
-        </p>
-        <div class="card-meta-block">
-          <p class="card-text text-muted">
-            <small>Добавлено: {{ org.inserted_at }}</small>
-          </p>
-          <a href="{% url 'organization_detail' pk=org.pk %}" class="card-link">Подробнее</a>
-        </div>
+        <p class="card-text">Сайт: <a class="text-reset" href="http://kwa.ket">http://kwa.ket</a></p>
+        <small class="text-muted">Добавлено: {{ org.inserted_at }}</small>
       </div>
     </div>
   </div>
-
-  {% empty %}
-  <div class="col">
-    <p>В базе данных еще нет организаций.</p>
-    <a class="btn btn-primary" href="{% url 'organization_new' %}">
-      <span class="bi bi-plus-lg"></span>
-      Добавить организацию
-    </a>
-  </div>
-  {% endfor %}
+{% empty %}
+<div class="col">
+  <p>В базе данных еще нет организаций.</p>
+  <a class="btn btn-primary" href="{% url 'organization_new' %}">
+    <span class="bi bi-plus-lg"></span>
+    Добавить организацию
+  </a>
+</div>
+{% endfor %}
 </div>
 {% endblock %}
