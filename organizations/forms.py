@@ -12,7 +12,7 @@ class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
         fields = ('name', 'countries', 'address', 'site', 'activity_description',
-                  'field_of_activity', 'products')
+                  'field_of_activity', 'products', 'image')
 
     def __init__(self, user, *args, **kwargs):
         self.user = user

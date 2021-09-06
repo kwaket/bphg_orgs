@@ -1,0 +1,59 @@
+.custom-multiselect-phantom {
+    padding: 3px 3px 0;
+    display: flex;
+    min-height: 36px;
+}
+
+.custom-multiselect-phantom.focused {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.custom-multiselect-phantom input {
+    border: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+.custom-multiselect-phantom input::-webkit-calendar-picker-indicator {
+    display: none !important;
+}
+
+.custom-multiselect-phantom input:focus {
+    border: none;
+    outline: none;
+}
+
+.selected-items {
+    flex: 0 0 auto;
+    max-width: 70%;
+    /* background: red; */
+    /* display: flex; */
+}
+
+.custom-multiselect-phantom input {
+    flex: 1 1 auto;
+}
+
+.selected-item {
+    background-color: rgb(188, 232, 253) !important;
+    display: inline-block;
+    /* flex-wrap: wrap; */
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin: 0 .2em .2em;
+
+    /* font-size: .9rem; */
+}
+
+.selected-item .remove-item {
+    border-radius: .2em;
+    padding: .0em .1em;
+}
+
+.selected-item .remove-item:hover {
+    background: rgba(0, 0, 0, .2);
+    cursor: pointer;
+}

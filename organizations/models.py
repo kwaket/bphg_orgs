@@ -69,6 +69,8 @@ class Organization(UpdatingMixit):
         verbose_name='Сфера деятельности')
     products = models.TextField(max_length=2048, verbose_name='Продукция',
         null=True, blank=True)
+    image = models.URLField(verbose_name='Ссылка на изображение',
+        null=True, blank=True)
 
     class Meta:
         verbose_name_plural='Организации'
