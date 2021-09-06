@@ -13,6 +13,8 @@ elasticsearch = "*"
 django-haystack = {git = "https://github.com/django-haystack/django-haystack"}
 gunicorn = "*"
 django-computed-property = "*"
+numpy = "*"
+pillow = "*"
 
 [dev-packages]
 black = "*"
