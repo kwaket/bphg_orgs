@@ -71,6 +71,8 @@ class Organization(UpdatingMixit):
         null=True, blank=True)
     image = models.URLField(verbose_name='Ссылка на изображение',
         null=True, blank=True)
+    theme_is_dark = models.BooleanField(max_length=50, verbose_name='Тема оформления карточки',
+        blank=True, null=True)
 
     class Meta:
         verbose_name_plural='Организации'
