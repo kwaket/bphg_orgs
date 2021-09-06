@@ -328,8 +328,12 @@ a.sort-column-btn span.bi {
     z-index: 10;
 }
 
+.organization-card .card-body h5 {
+    font-weight: bold;
+}
+
 .organization-card.bg-light {
-    text-shadow: 0 0 3px white, 0 0 5px white, 0, 0 0 10px white, 0 25px white;
+    text-shadow: 0 0 3px white, 0 0 5px white, 0 0 25px white;
 }
 
 .organization-card.bg-dark {
