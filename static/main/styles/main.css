@@ -299,3 +299,52 @@ a.sort-column-btn span.bi {
 .detail-block table .table-sm td>.bi {
     margin-left: -1.6em;
 }
+
+/* main page */
+.organization-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 15em;
+}
+
+.organization-card-background {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    overflow: hidden;
+}
+
+.organization-card .organization-card-background>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+}
+
+.organization-card .card-body {
+    z-index: 10;
+}
+
+.organization-card.bg-light {
+    text-shadow: 0 0 3px white, 0 0 5px white, 0, 0 0 10px white, 0 25px white;
+}
+
+.organization-card.bg-dark {
+    text-shadow: 1px 1px 5px black;
+}
+
+.organization-card.bg-light .text-muted {
+    color: #4e545a !important;
+}
+
+.organization-card.bg-dark .text-muted {
+    color: #c5cfd6 !important;
+}
+
+.organization-card .meta {
+    position: absolute;
+    bottom: .5em;
+}
