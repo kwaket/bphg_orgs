@@ -17,7 +17,7 @@ Django==3.2.7
 django-bootstrap5==2.1.2
 django-computed-property==0.3.0
 django-filter==2.4.0
-django-haystack==3.1.2.dev23+g393028e
+django-haystack @ git+https://github.com/django-haystack/django-haystack@a3f45f959a9c7f972ddba1a5be36f1a20255aa10
 elasticsearch==7.14.1
 gunicorn==20.1.0
 html5lib==1.0.1
