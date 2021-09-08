@@ -32,7 +32,7 @@
         <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ org.countries.all|join:", " }}</h6>
-        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}" target="blank">{{ org.site }}</a></p>
+        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}" target="_blank">{{ org.site }}</a></p>
         <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small>
       </div>
     </div>
