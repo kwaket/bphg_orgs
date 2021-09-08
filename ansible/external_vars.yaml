@@ -1,6 +1,7 @@
 app_name: bacteriophage_organizations
 app_owner: savva
 app_path: "/var/www/html/{{app_name}}"
+python_version: python3.9
 secret_key: $1FPHnhL0HBpM # TODO: fix it. Research the way to gen key
 db_name: "{{ app_name }}"
 db_password: "{{ app_name }}"

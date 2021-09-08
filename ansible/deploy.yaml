@@ -65,9 +65,9 @@
       apt_repository:
         repo: ppa:deadsnakes/ppa
 
-    - name: Install python3.8
+    - name: "Install {{ python_version }}"
       apt:
-        name: python3.8
+        name: "{{ python_version }}"
         update_cache: yes
 
 
@@ -127,7 +127,7 @@
 
     - name: Initiate virtualenv
       pip: virtualenv="{{ virtualenv_path }}"
-           virtualenv_python=python3.8
+           virtualenv_python="{{ python_version }}"
            requirements={{ app_path }}/requirements.txt
 
     # Setting up Django
@@ -146,10 +146,6 @@
 
 
     # Elastic search
-    # - name: Download elasticsearch
-    #   get_url:
-    #     url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.14.0-amd64.deb
-    #     dest: /tmp/
 
     - name: Install Elastic search from the internet
       apt:
@@ -161,6 +157,13 @@
         name: update elasticsearch index
         minute: "*/1"
         job: "{{ virtualenv_path }}/bin/python {{ app_path }}/manage.py update_index"
+
+    - name: Creates a cron file under /etc/cron.d
+      ansible.builtin.cron:
+        name: update organizations images
+        minute: "*/5"
+        job: "{{ virtualenv_path }}/bin/python {{ app_path }}/manage.py update_organization"
+
 
     # Setting up Gunicorn and NGINX
     - name: Copy systemd socket file
