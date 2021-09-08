@@ -8,6 +8,7 @@ import requests
 # from requests.models import requote_uri
 import numpy as np
 from PIL import Image
+from requests import exceptions
 
 
 def _filter_by_ext(l:list, ext:str) -> list:
@@ -16,12 +17,28 @@ def _filter_by_ext(l:list, ext:str) -> list:
 
 def get_imageurl_from_site(url:str) -> str:
     r = requests.get(url)
-    imgs = re.findall(r'<img.*?>', str(r.content))
+    imgs = re.findall(r'<img.*?>', str(r.content.decode('utf-8')))
     imgs = [re.findall(r'src\s?=\s?["\']{1}(.*?)["\']{1}\s', i) for i in imgs]
-    imgs = [_filter_by_ext(i, '.svg') for i in imgs]
-    imgs = [urljoin(url, i[0]) for i in imgs if i]
-    imgs = [i for i in imgs if not i[0].lower().endswith('.svg')]
-    return imgs[0]
+    imgs = [item for sublist in imgs for item in sublist]
+    imgs2 = re.findall(r'background\-image:\s?url\((.*)\)', str(r.content.decode('utf-8')))
+    imgs2 = [i for i in imgs2 if i]
+    imgs.extend(imgs2)
+    imgs = [i.strip('"') for i in imgs]
+    imgs = [i.strip("'") for i in imgs]
+    imgs = _filter_by_ext(imgs, '.svg')
+    imgs = _filter_by_ext(imgs, '.png')
+    imgs = _filter_by_ext(imgs, '.gif')
+    imgs = [i for i in imgs if i]
+    imgs = [urljoin(url, i) for i in imgs if not i.startswith('http://')]
+    imgs = [i for i in imgs if not i.lower().endswith('.svg')]
+    imgs = [i for i in imgs if not i.lower().endswith('.gif')]
+    imgs = [(url, get_file_by_url(url)) for url in imgs]
+    imgs = [(u, l) for (u, l) in imgs if u is not None and l is not None]
+    imgs = [(url, Image.open(b).size[0]/Image.open(b).size[1] , Image.open(b).size[0] * Image.open(b).size[1]) for (url, b) in imgs]
+
+    imgs.sort(key=lambda x: -x[1])
+    imgs = [i[0] for i in imgs]
+    return imgs[0] if imgs else None
 
 
 def get_file_by_url(url:str) -> Union[BytesIO, None]:
@@ -30,7 +47,8 @@ def get_file_by_url(url:str) -> Union[BytesIO, None]:
         r = requests.get(url)
     except requests.exceptions.MissingSchema:
         return None
-
+    except requests.exceptions.RequestException:
+        return None
     if r.status_code == 200:
         return BytesIO(r.content)
     return None
