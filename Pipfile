@@ -15,6 +15,7 @@ gunicorn = "*"
 django-computed-property = "*"
 numpy = "*"
 pillow = "*"
+requests = "*"
 
 [dev-packages]
 black = "*"
