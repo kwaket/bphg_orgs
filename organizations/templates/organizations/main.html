@@ -22,7 +22,7 @@
   {% for org in organizations %}
   <div class="col col-md-6 col-lg-3">
     <div
-      class="card organization-card {% if org.theme_is_dark %} text-white bg-dark {% else %} text-dark bg-light{% endif %} mb-3">
+      class="card organization-card {% if org.theme_is_dark %} text-white bg-dark {% else %} text-dark bg-light{% endif %}">
       {% if org.image %}
       <div class="organization-card-background">
         <img src="{{ org.image }}">
@@ -32,7 +32,7 @@
         <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ org.countries.all|join:", " }}</h6>
-        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}">{{ org.site }}</a></p>
+        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}" target="blank">{{ org.site }}</a></p>
         <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small>
       </div>
     </div>
