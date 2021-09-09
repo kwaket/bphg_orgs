@@ -15,6 +15,13 @@ def _filter_by_ext(l:list, ext:str) -> list:
     return list(filter(lambda x: not x.lower().endswith(ext), l))
 
 
+def _get_image_proportion(img: Image, top_limit=1) -> int:
+    r = img.size[0] / img.size[1]
+    if r > top_limit:
+        return top_limit
+    return r
+
+
 def get_imageurl_from_site(url:str) -> str:
     r = requests.get(url)
     imgs = re.findall(r'<img.*?>', str(r.content.decode('utf-8')))
@@ -34,7 +41,9 @@ def get_imageurl_from_site(url:str) -> str:
     imgs = [i for i in imgs if not i.lower().endswith('.gif')]
     imgs = [(url, get_file_by_url(url)) for url in imgs]
     imgs = [(u, l) for (u, l) in imgs if u is not None and l is not None]
-    imgs = [(url, Image.open(b).size[0]/Image.open(b).size[1] , Image.open(b).size[0] * Image.open(b).size[1]) for (url, b) in imgs]
+    imgs_ = [(u, i) for u, i in imgs if Image.open(i).size[0] > 500 and _get_image_proportion(Image.open(i)) > .5]
+    imgs = imgs_ if imgs_ else imgs
+    imgs = [(url, _get_image_proportion(Image.open(b)) , Image.open(b).size[0] * Image.open(b).size[1]) for (url, b) in imgs]
 
     imgs.sort(key=lambda x: -x[1])
     imgs = [i[0] for i in imgs]
