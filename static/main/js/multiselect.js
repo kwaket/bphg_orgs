@@ -65,6 +65,17 @@
         fillDatalist(datalist, options)
     }
 
+    const updateSelectedItems = (select, selectedItemsContainer, datalist) => {
+        for (option of select.children) {
+            let optionText = option.textContent.trim();
+            if (option.selected) {
+                selecteItem(select, optionText, selectedItemsContainer, datalist);
+            } else {
+                deselectItem(select, optionText, selectedItemsContainer, datalist);
+            }
+        }
+    }
+
     const selectOption = (selectedItemText, options, selected) => {
         for (let option of options) {
             if (option.textContent === selectedItemText) {
@@ -116,6 +127,7 @@
         wrapperField.appendChild(inputField);
         let datalist = generateDatalist(id, options)
         wrapperField.appendChild(datalist)
+        updateSelectedItems(select, selectedItemsContainer, datalist)
 
         inputField.addEventListener('input', onInput);
         inputField.addEventListener('keyup', onKeyup);
