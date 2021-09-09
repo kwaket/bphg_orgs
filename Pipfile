@@ -16,6 +16,7 @@ django-computed-property = "*"
 numpy = "*"
 pillow = "*"
 requests = "*"
+bumpversion = "*"
 
 [dev-packages]
 black = "*"
