@@ -1,5 +1,5 @@
 ---
-- hosts: test
+- hosts: production
   user: "{{ ansible_ssh_user }}"
   become: yes
   become_user: root
@@ -33,8 +33,15 @@
         line: "APP_HOST={{ inventory_hostname }}"
         state: present
 
+    - name: Add nginx source repository into sources list
+      apt_repository:
+        repo: deb https://nginx.org/packages/ubuntu/ focal nginx
+        state: present
+
     - name: Update apt cache
-      apt: update_cache=yes
+      apt: 
+        update_cache: yes
+        upgrade: yes
 
     - name: Install required packages
       apt:
@@ -90,32 +97,14 @@
         group: www-data
         recurse: yes
 
-    ## Generate ssh key
-    - name: Generate /etc/ssh/ RSA host key
-      command : ssh-keygen -q -t rsa -f {{ ssh_key }} -C "" -N ""
-      args:
-        creates: "{{ ssh_key }}"
-
     - name: Get ssh_key_pub content
-      shell: "cat {{ ssh_key }}.pub"
+      shell: "cat /home/{{ app_owner }}/.ssh/id_rsa.pub"
       register: ssh_key_pub
-
-    - name: Add deploy key to repo
-      github_deploy_key:
-        owner: "kwaket"
-        repo: bacteriophage_organizations # TODO: chage to variable and check
-        name: "deploy-key"
-        key: "{{ ssh_key_pub.stdout }}"
-        force: no
-        token: "{{ git_token }}"
-        # read_only: yes
 
     - name: Clone app from repository
       git:
-        repo: git@github.com:kwaket/bacteriophage_organizations.git
+        repo: "{{ git_repository }}"
         dest: "{{ app_path }}"
-        accept_hostkey: yes
-        key_file: "{{ ssh_key }}"
         version: "{{ git_branch }}"
       notify: Restart gunicorn
 

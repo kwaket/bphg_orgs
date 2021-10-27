@@ -19,7 +19,7 @@
 
     - name: Initiate virtualenv
       pip: virtualenv="{{ virtualenv_path }}"
-           virtualenv_python=python3.6
+           virtualenv_python=python3.8
            requirements={{ app_path }}/requirements.txt
 
     - name: Initial migration

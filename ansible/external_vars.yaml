@@ -1,14 +1,15 @@
 app_name: bacteriophage_organizations
-app_owner: savva
+app_owner: user
 app_path: "/var/www/html/{{app_name}}"
 secret_key: $1FPHnhL0HBpM # TODO: fix it. Research the way to gen key
 db_name: "{{ app_name }}"
 db_password: "{{ app_name }}"
 db_backup_path: "/home/{{ app_owner }}/backup"
-ssh_key: /var/www/.ssh/deploy_key
-git_token: f882f6ab20da0452587cb010b133dcd7e4c51001
-git_repository: git@github.com:kwaket/bacteriophage_organizations.git
+git_user: "{{ lookup('env', 'GIT_USER') }}"
+git_password: "{{ lookup('env', 'GIT_PASSWORD') }}"
+git_repository: "http://{{ git_user }}:{{ git_password }}@192.168.3.32:3000/services/bph_orgs.git"
 git_repo_name: "{{ app_name }}"
+git_branch: "0.4.0"
 virtualenv_path: "{{ app_path }}/env"
 django_admin_name: "admin"
 django_admin_email: "kwaket@ya.ru"
