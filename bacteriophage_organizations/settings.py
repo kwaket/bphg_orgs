@@ -73,6 +73,8 @@ TEMPLATES = [
             ],
             'libraries':{
                 'startswith': 'organizations.templatetags.startswith',
+                'trim': 'organizations.templatetags.trim',
+                'trimdash': 'organizations.templatetags.trim',
             }
         },
     },
@@ -146,6 +148,10 @@ FILTERS_NULL_CHOICE_LABEL = ''
 
 STATIC_ROOT = BASE_DIR.joinpath('static')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, "static"),
+    os.path.join(STATIC_ROOT, 'main')
+]
 
 HAYSTACK_CONNECTIONS = {
     'default': {

@@ -3,37 +3,61 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    {% include 'snippets/page_header.html' with name='Пользователи' button_url=url_new icon_name='bi-gear' button_name='Добавить' %}
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Настройки</li>
+        <li class="breadcrumb-item active">Пользователи и группы</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
-    {% if not page.object_list %}
-    <p class="text-center" style="padding: 5em;">
-      Данные отсутствуют
-    </p>
-    {% else %}
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Пользователи и группы</h1>
+    </div>
+    <div class="col col-md-auto">
+      <a href="{% url 'user_new' %}" class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-plus-lg"></span>
+        Добавить пользователя
+      </a>
+    </div>
+  </div>
+</div>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-            <th scope="col">Логин</th>
-            <th scope="col">ФИО</th>
-            <th scope="col">Группы</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for user in page.object_list %}
-        <tr>
-            <th scope="row">
-                <a href="{% url 'user_detail' pk=user.pk %}">{{ user.username }}</a>
-            </th>
-            <td>{{ user.first_name }} {{ user.last_name }}</td>
-            <td>{{ user.groups.all|join:", " }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
 
-    {% include 'organizations/snippets/pagination.html' with obj_page=page query_params=filter_fields %}
+{% if not page.object_list %}
+<p class="text-center" style="padding: 5em;">
+  Данные отсутствуют
+</p>
+{% else %}
 
-    {% endif %}
+<table class="table table-md">
+  <thead>
+    <tr>
+      <th scope="col">Логин</th>
+      <th scope="col">ФИО</th>
+      <th scope="col">Группы</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in page.object_list %}
+    <tr>
+      <th scope="row">
+        <a href="{% url 'user_detail' pk=user.pk %}">{{ user.username }}</a>
+      </th>
+      <td>{{ user.first_name }} {{ user.last_name }}</td>
+      <td>{{ user.groups.all|join:", " }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include 'organizations/snippets/pagination.html' with obj_page=page query_params=filter_fields %}
+
+{% endif %}
 
 {% endblock %}

@@ -1,25 +1,49 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% load django_bootstrap5 %}
 
-{% block content %}
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'styles/multiselect.css' %}">
+{% endblock %}
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    {% comment %} <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Главная</a></li> {% endcomment %}
-    <li class="breadcrumb-item"><a href="{% url 'organization_list' %}">Организации</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Новая организация</li>
-  </ol>
-</nav>
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/multiselect.js' %}"></script>
+<script>
+replaceSelect(document.getElementById('id_countries').parentNode);
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'organization_list' %}">Организации</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Новая организация</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Новая организация</h1>
+    </div>
+  </div>
+</div>
+
 
 <div class="row">
   <div class="col col-md-8 col-lg-6">
-    <h1><span class="bi bi-building"></span> Новая организация</h1>
     <form method="POST" class="post-form">{% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="save btn btn-success">
-            <span class="bi bi-check-circle"></span> Сохранить
-        </button>
+      {% bootstrap_form form %}
+      <button type="submit" class="save btn btn-success">
+        <span class="bi bi-check-circle"></span> Сохранить
+      </button>
     </form>
   </div>
 </div>

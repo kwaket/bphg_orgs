@@ -1,62 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Последние добавленные организации</h1>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Главная</li>
+        <li class="breadcrumb-item active">Последние добавленные организации</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Последние добавленные организации</h1>
+    </div>
+  </div>
+</div>
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-{% for org in organizations %}
-    <div class="col">
-         {% comment %} <div class="card text-dark bg-light h-100">
-            <div class="card-body">
-                <h5 class="card-title">{{ org.name }}</h5>
-                <p class="card-text">{% firstof org.activity_description '' %}</p>
-
-                <div class="card-meta-block">
-                    <p class="card-text">{{ org.country }}</p>
-
-                    <p class="card-text">
-                        <small class="text-muted">Добавлено: {{ org.inserted_at }},
-                            пользователем {{ org.inserted_by }}</small></p>
-                    <a href="{% url 'organization_detail' pk=org.pk %}"
-                       class="card-link">Просмотреть</a>
-                </div>
-            </div>
-        </div> {% endcomment %}
-
-        <div class="card bg-light">
-            <div class="card-body">
-                <h5 class="card-title">{{ org.name }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ org.country }}</h6>
-                <p class="card-text">
-                    {% firstof org.activity_description '' %}
-                </p>
-                <p class="card-text">
-                    <small>
-                        <span class="text-muted">Сайт: </span>
-                        <a href="{{ org.site }}" target="_blank" class="card-link">
-                            {{ org.site }}
-                        </a>
-                    </small>
-                </p>
-                <div class="card-meta-block">
-                    <p class="card-text text-muted">
-                        <small>{{ org.inserted_at }}</small><br>
-                        <small>{{ org.inserted_by.get_full_name}}</small>
-                    </p>
-                    <a href="{% url 'organization_detail' pk=org.pk %}"
-                       class="card-link">Подробнее</a>
-                </div>
-            </div>
-        </div>
+  {% for org in organizations %}
+  <div class="col col-md-6 col-lg-3">
+    <div
+      class="card organization-card {% if org.theme_is_dark %} text-white bg-dark {% else %} text-dark bg-light{% endif %}">
+      {% if org.image %}
+      <div class="organization-card-background">
+        <img src="{{ org.image }}">
+      </div>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ org.countries.all|join:", " }}</h6>
+        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}" target="_blank">{{ org.site }}</a></p>
+        <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small>
+      </div>
     </div>
-
-{% empty %}
-    <div class="col">
-        В базе данных еще нет организаций.<br>
-        <a class="btn btn-primary" href="{% url 'organization_new' %}">
-            <span class="bi bi-plus-circle-fill"></span>
-            Добавить организацию
-        </a>
-    </div>
-{% endfor %}
+  </div>
+  {% empty %}
+  <div class="col">
+    <p>В базе данных еще нет организаций.</p>
+    <a class="btn btn-primary" href="{% url 'organization_new' %}">
+      <span class="bi bi-plus-lg"></span>
+      Добавить организацию
+    </a>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}

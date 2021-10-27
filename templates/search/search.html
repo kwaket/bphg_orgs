@@ -3,90 +3,109 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-        <div class="container-fluid">
-    <h1>Поиск</h1>
+
+
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Поиск</li>
+        <li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Поиск</h1>
     </div>
+  </div>
+</div>
 
-    <form method="get" action=".">
-      <div class="container-fluid search-form">
-        {% comment %} {% bootstrap_form form layout='inline' %} {% endcomment %}
-        <div class="row">
-          <div class="col-md-6">
-            {% bootstrap_field form.q show_label=False %}
-          </div>
 
-          <div class="col-md-2">
-            <button type="submit" class="save btn btn-success">
-                <span class="bi bi-search"></span> Найти
-            </button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="search-form-model">
-            {% bootstrap_field form.models show_label=False %}
-          </div>
-        </div>
+<form method="get" action="/search">
+  <div class="search-form">
+    <div class="row">
+      <div class="col-md-6">
+        {% bootstrap_field form.q show_label=False %}
       </div>
 
-        {% if query %}
-            <div class="container-fluid">
-            <h3>Результаты поиска</h3>
-            {% for result in page.object_list %}
-            <div class="row">
-              <div class="col">
-                {% if result.content_type == 'organizations.organization' %}
-                <div class="search-item">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <span class="bi bi-building"></span>
-                      <a href="{% url 'organization_detail' pk=result.object.pk %}">
-                      {{ result.object.name }}</a>
-                      <small class="text-muted">(Организация)</small>
-                    </h5>
-                    <p class="card-text">
-                        <small class="text-muted">{{ result.object.countries.all|join:", " }}</small>
-                    </p>
-                    {% comment %} <p class="card-text">{{ result.object.activity_description }}</p> {% endcomment %}
-                  </div>
-                </div>
-                {% endif %}
+      <div class="col-md-2">
+        <button type="submit" class="save btn btn-primary">
+          <span class="bi bi-search"></span> Найти
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="search-form-model">
+        {% bootstrap_field form.models show_label=False %}
+      </div>
+    </div>
+  </div>
 
-                {% if result.content_type == 'organizations.project' %}
-                <div class="search-item">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <span class="bi bi-box"></span>
-                      <a href="{% url 'project_detail' pk=result.object.pk %}">
-                      {{ result.object.name }}</a>
-                      <small class="text-muted">(Проект)</small>
-                    </h5>
-                    <p class="card-text">
-                      <small class="text-muted">
-                      <span class="bi bi-building"></span>
-                      <a href="{% url 'organization_detail' pk=result.object.organization.pk %}">
-                        {{ result.object.organization }}
-                        </a>
-                        </small>
-                    </p>
-                  </div>
-                </div>
-                {% endif %}
-              </div>
-            </div>
-            {% empty %}
-                <p>Не найдено.</p>
-            {% endfor %}
-            </div>
-
-            {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-                </div>
-            {% endif %}
-        {% else %}
-            {# Show some example queries to run, maybe query syntax, something else? #}
+  {% if query %}
+  <div class="search-result">
+    <h3>Результаты поиска</h3>
+    {% for result in page.object_list %}
+    <div class="row">
+      <div class="col">
+        {% if result.content_type == 'organizations.organization' %}
+        <div class="search-item">
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="bi bi-building"></span>
+              <a href="{% url 'organization_detail' pk=result.object.pk %}">
+                {{ result.object.name }}</a>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">Организация</h6>
+            {% comment %} <small class="text-muted"></small> {% endcomment %}
+            <p class="card-text">
+              <small class="text-muted">{{ result.object.countries.all|join:", " }}</small>
+            </p>
+          </div>
+        </div>
         {% endif %}
-    </form>
+
+        {% if result.content_type == 'organizations.project' %}
+        <div class="search-item">
+          <div class="card-body">
+            <h5 class="card-title">
+              <span class="bi bi-box"></span>
+              <a href="{% url 'project_detail' pk=result.object.pk %}">
+                {{ result.object.name }}</a>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">Проект</h6>
+            <p class="card-text">
+              <small class="text-muted">
+                <span class="bi bi-building"></span>
+                <a href="{% url 'organization_detail' pk=result.object.organization.pk %}">
+                  {{ result.object.organization }}
+                </a>
+              </small>
+            </p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <p>Не найдено.</p>
+    {% endfor %}
+  </div>
+
+  {% if page.has_previous or page.has_next %}
+  <div>
+    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo;
+      Previous{% if page.has_previous %}</a>{% endif %}
+    |
+    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next
+      &raquo;{% if page.has_next %}</a>{% endif %}
+  </div>
+  {% endif %}
+  {% else %}
+  {# Show some example queries to run, maybe query syntax, something else? #}
+  {% endif %}
+</form>
 {% endblock %}

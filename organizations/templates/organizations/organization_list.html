@@ -2,38 +2,66 @@
 
 
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h1><span class="bi bi-building"></span> Организации</h1>
-        </div>
-        <div class="col text-center h1-group">
-            <div class="btn-group">
-                <a href="{% url 'organization_list' %}?mode=list"
-                   class="btn btn-outline-secondary {% if mode == 'list' %}active{% endif %}"
-                   {% if mode == 'list' %}aria-current="page"{% endif %}>
-                    <span class="bi bi-list"></span>
-                    Список
-                </a>
-                <a href="{% url 'organization_list' %}?mode=by_country"
-                   class="btn btn-outline-secondary {% if mode == 'by_country' %}active{% endif %}"
-                   {% if mode == 'by_country' %}aria-current="page"{% endif %}>
-                    <span class="bi bi-diagram-2-fill"></span>
-                    По странам
-                </a>
-            </div>
-        </div>
-        <div class="col text-end h1-group">
-            <a href="{% url 'organization_new' %}" class="btn btn-primary">
-                <span class="bi bi-plus-circle-fill"></span>
-                Добавить организацию
-            </a>
-        </div>
-    </div>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Организации</li>
+        <li class="breadcrumb-item active">Все организации</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
-    {% if mode == 'list' %}
-    {% include 'organizations/snippets/organization_table.html' with organizations_page=organizations_page current_page=current_page current_order=current_order %}
-    {% elif mode == 'by_country' %}
-    {% include 'organizations/snippets/organization_country_list.html' with countries=countries%}
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>Все организации</h1>
+    </div>
+    {% if perms.organizations.add_organization %}
+    <div class="col col-md-auto">
+      <a href="{% url 'organization_new' %}" class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-plus-lg"></span>
+        Добавить организацию
+      </a>
+    </div>
     {% endif %}
+  </div>
+</div>
+
+{% comment %}
+<div class="row">
+  <div class="col">
+    <h1><span class="bi bi-building"></span> Организации</h1>
+  </div>
+  <div class="col text-center h1-group">
+    <div class="btn-group">
+      <a href="{% url 'organization_list' %}?mode=list"
+        class="btn btn-outline-secondary {% if mode == 'list' %}active{% endif %}"
+        {% if mode == 'list' %}aria-current="page" {% endif %}>
+        <span class="bi bi-list"></span>
+        Список
+      </a>
+      <a href="{% url 'organization_list' %}?mode=by_country"
+        class="btn btn-outline-secondary {% if mode == 'by_country' %}active{% endif %}"
+        {% if mode == 'by_country' %}aria-current="page" {% endif %}>
+        <span class="bi bi-diagram-2-fill"></span>
+        По странам
+      </a>
+    </div>
+  </div>
+  <div class="col text-end h1-group">
+    <a href="{% url 'organization_new' %}" class="btn btn-primary">
+      <span class="bi bi-plus-circle-fill"></span>
+      Добавить организацию
+    </a>
+  </div>
+</div>
+{% endcomment %}
+{% if mode == 'list' %}
+{% include 'organizations/snippets/organization_table.html' with organizations_page=organizations_page current_page=current_page current_order=current_order %}
+{% elif mode == 'by_country' %}
+{% include 'organizations/snippets/organization_country_list.html' with countries=countries%}
+{% endif %}
 
 {% endblock %}

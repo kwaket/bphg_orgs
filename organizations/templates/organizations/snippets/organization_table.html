@@ -1,91 +1,103 @@
 {% load django_bootstrap5 %}
 <div>
   <div>
-    <div class="filter-box-wrapper texts-white bgs-secondary">
+    <div class="filter-box-wrapper">
       <form class="row filter-box" method="get">
-        {% bootstrap_field filter.form.name show_label=True layout='bootstrap_form' size='sm' wrapper_class='col-md-3 col-lg-3' %}
-        {% bootstrap_field filter.form.countries show_label=True layout='floating' size='sm' wrapper_class='col-md-3 col-lg-3' %}
+        {% bootstrap_field filter.form.name show_label=True layout='bootstrap_form' size='sm' wrapper_class='col-md-4 col-lg-4' %}
+        {% bootstrap_field filter.form.countries show_label=True layout='floating' size='sm' wrapper_class='col-md-4 col-lg-4' %}
 
-        <div class="col-md-3 col-lg-3 filter-box-buttons">
-        <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm">
+        <div class="col-md-4 col-lg-4 filter-box-buttons text-nowrap">
+          <a href="?page={{ current_page }}&order_by={{ order_by }}" class="btn btn-outline-secondary btn-sm col-md-6 col-lg-6">
             <span class="bi bi-x-lg"></span>
             Сбросить
-        </a>
-        <button type="submit" class="btn btn-secondary btn-sm text-nowrap">
+          </a>
+          <button type="submit" class="btn btn-secondary btn-sm text-nowrap col-md-6 col-lg-6">
             <span class="bi bi-funnel-fill"></span>
             Применить
-        </button>
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-   {% if not organizations_page.object_list %}
-    <p class="text-center" style="padding: 5em;">
-        Организации с указанными параметрами не найдены
-    </p>
-    {% else %}
-    <table class="table table-md">
-        <thead>
-            <tr>
-                <th scope="col">Название
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-name' current_order=current_order %}
-                </th>
-                <th scope="col">Страна
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='countries' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-countries' current_order=current_order %}
-                </th>
-                <th scope="col">Адрес
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='address' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-address' current_order=current_order %}
-                </th>
-                <th scope="col">Проекты</th>
-                <th scope="col">Добавлено
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_at' current_order=current_order %}
-                </th>
-                <th scope="col">Добавил
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-inserted_by' current_order=current_order %}
-                </th>
-                <th scope="col">Изменено
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_at' current_order=current_order %}
-                </th>
-                <th scope="col">Изменил
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
-                    {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='-updated_by' current_order=current_order %}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for org in organizations_page.object_list %}
-            <tr>
-                <td><a href="{% url 'organization_detail' pk=org.pk %}"
-                    class="card-link">{{ org.name }}</a>
-                </td>
-                <td>{{ org.countries.all|join:", " }}</td>
-                <td>{{ org.address }}</td>
-                <td>
-                    <ul>
-                        {% for project in org.project_set.all %}
-                        <li>
-                        <a href="{% url 'project_detail' pk=project.pk %}"
-                            class="card-link">{{ project.name }}
-                        </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td>{{ org.inserted_at }}</td>
-                <td>{{ org.inserted_by.get_full_name }}</td>
-                <td>{{ org.updated_at }}</td>
-                <td>{{ org.updated_by.get_full_name  }}</td>
-            </tr>
+  {% if not organizations_page.object_list %}
+  <p class="text-center" style="padding: 5em;">
+    Организации с указанными параметрами не найдены
+  </p>
+  {% else %}
+  <table class="table table-md">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span class="text-nowrap">
+            Название
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='name' current_order=current_order %}
+          </span>
+        </th>
+        <th scope="col">
+          <span class="text-nowrap">
+            Страна
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='countries' current_order=current_order %}
+          </span>
+        </th>
+        <th scope="col">
+          <span class="text-nowrap">
+            Адрес
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='address' current_order=current_order %}
+          </span>
+        </th>
+        <th scope="col">Проекты</th>
+        <th scope="col">
+          <span class="text-nowrap">
+            Добавлено
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_at' current_order=current_order %}
+          </span>
+        </th>
+        <th scope="col">
+          <span class="text-nowrap">
+            Добавил
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='inserted_by' current_order=current_order %}
+          </span>
+        </th>
+        <th scope="col">
+          <span class="text-nowrap">
+            Изменено
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_at' current_order=current_order %}
+          </span>
+        </th>
+        <th scope="col">
+          <span class="text-nowrap">
+            Изменил
+            {% include "organizations/snippets/column_sort_link.html" with page=current_page filter_fields=filter_fields order_by='updated_by' current_order=current_order %}
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for org in organizations_page.object_list %}
+      <tr>
+        <td><a href="{% url 'organization_detail' pk=org.pk %}" class="card-link">{{ org.name }}</a>
+        </td>
+        <td>{{ org.countries.all|join:", " }}</td>
+        <td>{{ org.address }}</td>
+        <td>
+          <ul>
+            {% for project in org.project_set.all %}
+            <li>
+              <a href="{% url 'project_detail' pk=project.pk %}" class="card-link">{{ project.name }}
+              </a>
+            </li>
             {% endfor %}
-        </tbody>
-    </table>
-    {% include 'organizations/snippets/pagination.html' with obj_page=organizations_page query_params=filter_fields %}
+          </ul>
+        </td>
+        <td class="text-muted">{{ org.inserted_at }}</td>
+        <td class="text-muted">{% firstof org.inserted_by.get_full_name org.inserted_by.username %}</td>
+        <td class="text-muted">{{ org.updated_at }}</td>
+        <td class="text-muted">{% firstof org.updated_by.get_full_name org.updated_by.username  %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include 'organizations/snippets/pagination.html' with obj_page=organizations_page query_params=filter_fields %}
 </div>
 {% endif %}

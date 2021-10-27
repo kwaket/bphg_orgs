@@ -1,58 +1,94 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'project_list' %}">Проекты</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
-  </ol>
-</nav>
-
 <div class="row">
-  <div class="col col-md-12 col-lg-10">
-    <h1><span class="bi bi-box"></span> {{ project.name }}</h1>
-    <dl class="row">
-    <dt class="col-sm-4 col-md-3">Страна</dt>
-    <dd class="col-sm-8 col-md-9">{{ project.organization.country }}</dd>
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project_list' %}">Проекты</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
-    <dt class="col-sm-4 col-md-3">Организация</dt>
-    <dd class="col-sm-8 col-md-9">
-      <a href="{% url 'organization_detail' pk=project.organization.pk %}"
-                       class="card-link">{{ project.organization.name }}</a>
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>{{ project.name }}</h1>
+    </div>
+    {% if perms.organizations.edit_project %}
+    <div class="col col-md-auto">
+      <a href="{% url 'project_edit' pk=project.pk %}" class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-pencil-fill"></span>
+        Редактировать
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
 
-    </dd>
-
-    <dt class="col-sm-4 col-md-3">Ведущия научный сотрудник</dt>
-    <dd class="col-sm-8 col-md-9">{{ project.lead_scientist }}</dd>
-
-    <dt class="col-sm-4 col-md-3 text-truncate">Область применения</dt>
-    <dd class="col-sm-8 col-md-9">{{ project.application_scope }}</dd>
-
-    <dt class="col-sm-4 col-md-3">Описание</dt>
-    <dd class="col-sm-8 col-md-9">{{ project.description }}</dd>
-
-    <dt class="col-sm-4 col-md-3">Прогресс</dt>
-    <dd class="col-sm-8 col-md-9">{% firstof project.progress '' %}</dd>
-
-    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил</dt>
-    <dd class="col-sm-8 col-md-9 text-muted">{{ project.inserted_by.get_full_name }}</dd>
-    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавлено</dt>
-    <dd class="col-sm-8 col-md-9 text-muted">{{ project.inserted_at }}</dd>
-
-    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировал</dt>
-    <dd class="col-sm-8 col-md-9 text-muted">{{ project.updated_by.get_full_name }}</dd>
-    <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировано</dt>
-    <dd class="col-sm-8 col-md-9 text-muted">{{ project.updated_at }}</dd>
-
-
-    </dl>
-
-    <a class="btn btn-outline-primary" href="{% url 'project_edit' pk=project.pk %}">
-      <span class="bi bi-pencil-fill"></span> Редактировать
-    </a>
-
-
+<div class="row detail-block">
+  <div class="col">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th style="width: 30%">Страна</th>
+          <td>{{ project.organization.countries.all|join:", " }}</td>
+        </tr>
+        <tr>
+          <th>Организация</th>
+          <td>
+            <span class="bi bi-building text-muted"></span>
+            <a href="{% url 'organization_detail' pk=project.organization.pk %}"
+              class="card-link">{{ project.organization.name }}</a>
+          </td>
+        </tr>
+        <tr>
+          <th>Ведущия научный сотрудник</th>
+          <td>
+            <span class="bi bi-person-fill text-muted"></span>
+            {{ project.lead_scientist }}
+          </td>
+        </tr>
+        <tr>
+          <th>Область применения</th>
+          <td>{{ project.application_scope }}</td>
+        </tr>
+        <tr>
+          <th>Описание</th>
+          <td>{{ project.description }}</td>
+        </tr>
+        <tr>
+          <th>Прогресс</th>
+          <td>{% firstof project.progress '' %}</td>
+        </tr>
+        <tr>
+          <th class="text-truncate text-muted">Добавил</th>
+          <td class="text-muted">
+            <span class="bi bi-person-circle text-muted"></span>
+            {% firstof project.inserted_by.get_full_name project.inserted_by.username|title %}</td>
+        </tr>
+        <tr>
+          <th class="text-truncate text-muted">Добавлено</th>
+          <td class="text-muted">
+            <span class="bi bi-calendar-date text-muted"></span>
+            {{ project.inserted_at }}</td>
+        </tr>
+        <tr>
+          <th class="text-truncate text-muted">Отредактировал</th>
+          <td class="text-muted">
+            <span class="bi bi-person-circle text-muted"></span>
+            {% firstof project.updated_by.get_full_name project.updated_by.username|title %}</td>
+        </tr>
+        <tr>
+          <th class="text-truncate text-muted">Отредактировано</th>
+          <td class="text-muted">
+            <span class="bi bi-calendar-date text-muted"></span>
+            {{ project.updated_at }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

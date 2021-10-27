@@ -1,2 +1,3 @@
 ansible/inventory.ini
 Pipfile.lock
+*.pyc

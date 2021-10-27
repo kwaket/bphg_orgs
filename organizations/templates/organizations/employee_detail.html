@@ -1,42 +1,83 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'employee_list' %}">Сотрудники</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ obj.get_full_name }}<li>
-  </ol>
-</nav>
-
-{% include 'snippets/page_header.html' with name=page_name url_new=url_new icon_name='bi-person-fill' button_name='Редактировать' %}
-
 <div class="row">
-  <div class="col col-md-12 col-lg-10">
-    <dl class="row">
-      <dt class="col-sm-4 col-md-3 text-truncate">Фамилия</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.last_name }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Имя</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.first_name }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Отчество</dt>
-      <dd class="col-sm-8 col-md-9">{% firstof obj.middle_name '' %}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Ученая степень</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.degree }}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate">Должность</dt>
-      <dd class="col-sm-8 col-md-9">{{ obj.role }}</dd>
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'employee_list' %}">Сотрудники</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ obj.get_full_name }}
+        <li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавил</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">
-        {% firstof obj.inserted_by.get_full_name obj.inserted_by.username %}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Добавлено</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.inserted_at }}</dd>
+<div class="header-group">
+  <div class="row">
+    <div class="col">
+      <h1>{{ obj.get_full_name }}</h1>
+    </div>
+    {% if perms.organizations.edit_employee %}
+    <div class="col col-md-auto">
+      <a href="{% url 'employee_edit' pk=obj.pk %}" class="btn btn-outline-primary btn-sm btn-lisnk">
+        <span class="bi bi-pencil-fill"></span>
+        Редактировать
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
 
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировал</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">
-        {% firstof obj.updated_by.get_full_name obj.updated_by.username %}</dd>
-      <dt class="col-sm-4 col-md-3 text-truncate text-muted">Отредактировано</dt>
-      <dd class="col-sm-8 col-md-9 text-muted">{{ obj.updated_at }}</dd>
-    </dl>
+<div class="row detail-block">
+  <div class="col">
+    <table class="table table-striped">
+      <tr>
+        <th class="text-truncate">Фамилия</th>
+        <td class="col-sm-8 col-md-9">{{ obj.last_name }}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate">Имя</th>
+        <td class="col-sm-8 col-md-9">{{ obj.first_name }}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate">Отчество</th>
+        <td class="col-sm-8 col-md-9">{% firstof obj.middle_name '' %}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate">Ученая степень</th>
+        <td class="col-sm-8 col-md-9">{{ obj.degree }}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate">Должность</th>
+        <td class="col-sm-8 col-md-9">{{ obj.role }}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate text-muted">Добавил</th>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-person-circle text-muted"></span>
+        {% firstof obj.inserted_by.get_full_name obj.inserted_by.username|title %}
+        </td>
+      </tr>
+      <tr>
+        <th class="text-truncate text-muted">Добавлено</th>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-calendar-date text-muted"></span>
+        {{ obj.inserted_at }}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate text-muted">Отредактировал</th>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-person-circle text-muted"></span>
+        {% firstof obj.updated_by.get_full_name obj.updated_by.username|title %}</td>
+      </tr>
+      <tr>
+        <th class="text-truncate text-muted">Отредактировано</th>
+        <td class="col-sm-8 col-md-9 text-muted">
+            <span class="bi bi-calendar-date text-muted"></span>
+        {{ obj.updated_at }}</td>
+      </tr>
+    </table>
   </div>
 </div>
 
