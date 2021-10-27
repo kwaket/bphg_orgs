@@ -10,12 +10,12 @@ django-bootstrap5 = "*"
 django-filter = "*"
 install = "*"
 elasticsearch = "*"
-django-haystack = {git = "https://github.com/django-haystack/django-haystack"}
 gunicorn = "*"
 django-computed-property = "*"
+haystack = "*"
+django-haystack = "*"
 
 [dev-packages]
-black = "*"
 pylint = "*"
 mypy = "*"
 pylint-django = "*"
