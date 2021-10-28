@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'haystack',
     'computed_property',
+    'colorfield',
 
     'organizations',
     'users',
