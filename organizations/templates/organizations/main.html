@@ -28,7 +28,7 @@
         <img src="{{ org.image }}">
       </div>
       {% endif %}
-      <div class="card-body">
+      <div class="card-body" {% if org.background_color %} style="background-color: {{ org.background_color }} {% endif %};">
         <div class="text-block logo">
           <a href="{{ org.site }}" alt="Открыть сайт организации" target="_blank">
           {% if org.logo %}
