@@ -321,11 +321,56 @@ a.sort-column-btn span.bi {
 .organization-card .organization-card-background>img {
     width: 100%;
     height: 100%;
+    opacity: .2;
     object-fit: cover !important;
 }
+.organization-card-title .card-title {
+    font-size: 1em;
+    font-weight: normal;
+    margin-bottom: 0 !important;    
+}
 
-.organization-card .card-body {
+.organization-card-title .organization-card-title-site {
+    font-size: .7em;
+    margin-top: -3em;
+}
+.organization-card .organization-card-meta {
+    font-size: 1em;
+    line-height: 1em;
+    background: rgba(0, 0, 0, .15);
+    text-align: end;
+    padding: .5em;
+    border-radius: .5em;
+    display: inline-block;
+    position: absolute;
+    bottom: .2em;
+    right: .2em;
+}
+
+.organization-card .card-body .text-block {
     z-index: 10;
+    position: absolute;
+}
+
+.organization-card .card-body .text-block.logo {
+    top: .5em;
+    right: .5em;
+    left: .5em;
+    bottom: 5em;
+}
+
+.organization-card .card-body .text-block.logo img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: 100%;
+}
+
+.organization-card .card-body .text-block.description {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .8em 1em;
 }
 
 .organization-card .card-body h5 {
@@ -348,9 +393,4 @@ a.sort-column-btn span.bi {
 
 .organization-card.bg-dark .text-muted {
     color: #c5cfd6 !important;
-}
-
-.organization-card .meta {
-    position: absolute;
-    bottom: .5em;
 }

@@ -29,11 +29,29 @@
       </div>
       {% endif %}
       <div class="card-body">
-        <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ org.countries.all|join:", " }}</h6>
-        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}" target="_blank">{{ org.site }}</a></p>
-        <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small>
+        <div class="text-block logo">
+          <a href="{{ org.site }}" alt="Открыть сайт организации" target="_blank">
+          {% if org.logo %}
+            <img src="{{ org.logo }}" alt="Логотип">
+          {% else %}
+            <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
+            </h5>
+          {% endif %}
+          </a>
+        </div>
+        <div class="text-block description">
+          <div class="organization-card-title">
+            <h5 class="card-title mb-2 text-muted">
+              <strong>{{ org.name }}</strong> {{ org.countries.all|join:", " }}</h5>
+            <a class="organization-card-title-site text-reset" href="{{ org.site }}"
+               target="_blank" alt="Сайт организации">{{ org.site }}</a>
+          </div>
+          <p class="card-text text-small organization-card-meta">
+              <a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">
+                <span class="bi bi-box-arrow-up-right"></span></a>
+          </p>
+          <!-- <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small> -->
+        </div>
       </div>
     </div>
   </div>
