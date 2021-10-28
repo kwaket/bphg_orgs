@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import fields, indexes
 from django.utils import timezone
 
-from computed_property import ComputedTextField
+from colorfield.fields import ColorField
 
 
 class InsertingMixin(models.Model):
@@ -74,6 +74,7 @@ class Organization(UpdatingMixit):
     logo = models.URLField(verbose_name='Cсылка на логотип', null=True, blank=True)
     theme_is_dark = models.BooleanField(max_length=50, verbose_name='Тема оформления карточки',
         blank=True, null=True)
+    background_color = ColorField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural='Организации'
