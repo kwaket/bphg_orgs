@@ -42,7 +42,12 @@
         <div class="text-block description">
           <div class="organization-card-title">
             <h5 class="card-title mb-2 text-muted">
-              <strong>{{ org.name }}</strong> {{ org.countries.all|join:", " }}</h5>
+              <strong>{{ org.name }}</strong>
+              <small>{% for country in org.countries.all %}
+                <span class="flag flag-{{ country.alpha2 | lower }}" title="{{ country.name }}"></span>
+                  {% endfor %}
+              </small>
+            </h5>
             <a class="organization-card-title-site text-reset" href="{{ org.site }}"
                target="_blank" alt="Сайт организации">{{ org.site }}</a>
           </div>
