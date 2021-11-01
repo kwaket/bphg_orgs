@@ -154,6 +154,9 @@ STATICFILES_DIRS = [
     os.path.join(STATIC_ROOT, 'main')
 ]
 
+MEDIA_ROOT = BASE_DIR.joinpath('media')
+MEDIA_URL = '/media/'
+
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch7_backend.Elasticsearch7SearchEngine',
