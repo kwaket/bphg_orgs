@@ -34,7 +34,8 @@
           {% if org.logo %}
             <img src="{{ org.logo }}" alt="Логотип">
           {% else %}
-            <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
+            <h5 class="card-title">
+              <a class="text-reset" href="{{ org.site }}">{{ org.name }}</a>
             </h5>
           {% endif %}
           </a>
