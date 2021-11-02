@@ -200,6 +200,7 @@
         command: "createsuperuser --noinput --username={{django_admin_name}} --email={{django_admin_email}}"
         app_path: "{{ app_path }}"
         virtualenv: "{{ virtualenv_path }}"
+      ignore_errors: yes
       # python manage.py changepassword <user_name>
 
     - name: Start Elasticsearch
