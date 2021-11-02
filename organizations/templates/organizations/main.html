@@ -28,12 +28,41 @@
         <img src="{{ org.image }}">
       </div>
       {% endif %}
-      <div class="card-body">
-        <h5 class="card-title"><a class="text-reset" href="{% url 'organization_detail' pk=org.pk %}">{{ org.name }}</a>
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ org.countries.all|join:", " }}</h6>
-        <p class="card-text">Сайт: <a class="text-reset" href="{{ org.site }}" target="_blank">{{ org.site }}</a></p>
-        <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small>
+      <div class="card-body" {% if org.background_color %}
+        style="background-color: {{ org.background_color }} {% endif %};">
+        <div class="text-block logo">
+            {% if org.logo %}
+            <img src="{{ org.logo }}" alt="{{ org.name }}">
+            {% else %}
+            <h5 class="card-title">
+              {{ org.name }}
+            </h5>
+            {% endif %}
+        </div>
+        <div class="text-block description">
+          <div class="organization-card-title">
+            <h5 class="card-title mb-2 text-dmuted">
+              <strong>{{ org.name }}</strong>
+              <small>{% for country in org.countries.all %}
+                <span class="flag flag-{{ country.alpha2 | lower }}" title="{{ country.name }}"></span>
+                {% endfor %}
+              </small>
+            </h5>
+          </div>
+          <p class="card-text text-small organization-card-meta">
+            <a class="organization-card-title-site text-reset"
+               href="{{ org.site }}"
+               target="_blank"
+               alt="Сайт организации">Сайт организации
+              <span class="bi bi-box-arrow-up-right"></span>
+            </a>
+            <a class="text-reset text-small" 
+               href="{% url 'organization_detail' pk=org.pk %}"
+               target="_blank">
+              Карточка организации <span class="bi bi-box-arrow-up-right"></span></a>
+          </p>
+          <!-- <small class="meta text-muted">Добавлено: {{ org.inserted_at }}</small> -->
+        </div>
       </div>
     </div>
   </div>

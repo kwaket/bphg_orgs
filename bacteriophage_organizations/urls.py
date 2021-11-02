@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 from django.urls.conf import include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from haystack.views import basic_search
 
@@ -33,3 +36,10 @@ urlpatterns = [
     # path('search/', include('haystack.urls')),
     path('search/', login_required(basic_search), name='basic_search'),
 ]
+
+# Serving the media files in development mode
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += staticfiles_urlpatterns()

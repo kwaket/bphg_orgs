@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'haystack',
     'computed_property',
+    'colorfield',
 
     'organizations',
     'users',
@@ -149,9 +150,13 @@ FILTERS_NULL_CHOICE_LABEL = ''
 STATIC_ROOT = BASE_DIR.joinpath('static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, "static"),
-    os.path.join(STATIC_ROOT, 'main')
+#     # os.path.join(BASE_DIR, "static"),
+    os.path.join(STATIC_ROOT, 'main'),
+    os.path.join(STATIC_ROOT, 'vendors')
 ]
+
+MEDIA_ROOT = BASE_DIR.joinpath('media')
+MEDIA_URL = '/media/'
 
 HAYSTACK_CONNECTIONS = {
     'default': {
