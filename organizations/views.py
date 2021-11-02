@@ -240,7 +240,7 @@ def employee_edit(request, pk):
 
 
 def main_page(request):
-    newest = Organization.objects.order_by('-inserted_at')[:10]
+    newest = Organization.objects.order_by('-inserted_at')[:25]
     return render(request, 'organizations/main.html', {'organizations': newest})
 
 
