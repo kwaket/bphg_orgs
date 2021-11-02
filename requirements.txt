@@ -19,3 +19,4 @@ sqlparse==0.4.1
 urllib3==1.26.6
 idna==3.2
 requests==2.26.0
+django-colorfield==0.4.5
