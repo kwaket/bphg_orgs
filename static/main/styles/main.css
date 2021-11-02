@@ -337,14 +337,27 @@ a.sort-column-btn span.bi {
 .organization-card .organization-card-meta {
     font-size: 1em;
     line-height: 1em;
-    background: rgba(0, 0, 0, .15);
-    text-align: end;
-    padding: .5em;
+    /* text-align: end; */
+    /* position: absolute; */
+    bottom: .5em;
+    right: .5em;
+    padding: .5em 0 0em .0em;;
+    font-size: .7em;
+}
+
+.organization-card .organization-card-meta a {
+    text-decoration: none;
     border-radius: .5em;
     display: inline-block;
-    position: absolute;
-    bottom: .2em;
-    right: .2em;
+    padding: .5em .7em;
+}
+
+.organization-card.bg-light .organization-card-meta a {
+    background: rgba(0, 0, 0, .15);
+} 
+
+.organization-card.bg-dark .organization-card-meta a {
+    background: rgba(255, 255, 255, .15);
 }
 
 .organization-card .card-body .text-block {
@@ -377,24 +390,9 @@ a.sort-column-btn span.bi {
     font-weight: bold;
 }
 
-.organization-card.bg-light {
-    text-shadow:  
-        0px 0px 10px rgba(255, 255, 255, 0.9),
-        0px 0px 25px rgba(255, 255, 255, 0.5);
+.organization-card h5 {
+    opacity: .85;
 }
-
-.organization-card.bg-dark {
-    text-shadow: 1px 1px 5px black;
-}
-
-.organization-card.bg-light .text-muted {
-    color: #1b1d1f !important;
-}
-
-.organization-card.bg-dark .text-muted {
-    color: #c5cfd6 !important;
-}
-
 
 span.flag {
     width: 22px !important;

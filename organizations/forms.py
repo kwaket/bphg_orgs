@@ -14,6 +14,8 @@ class OrganizationForm(forms.ModelForm):
         fields = ('name', 'countries', 'address', 'site', 'activity_description',
                   'field_of_activity', 'products', 'image', 'logo', 'theme_is_dark',
                   'background_color')
+    background_color = forms.CharField(label='hex_color', max_length=7,
+        widget=forms.TextInput(attrs={'type': 'color', 'value': '#888888'}))
 
     def __init__(self, user, *args, **kwargs):
         self.user = user

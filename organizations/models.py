@@ -74,7 +74,7 @@ class Organization(UpdatingMixit):
     logo = models.URLField(max_length=2048, verbose_name='Cсылка на логотип', null=True, blank=True)
     theme_is_dark = models.BooleanField(max_length=50, verbose_name='Тeмная тема оформления',
         blank=True, null=True)
-    background_color = ColorField(null=True, blank=True)
+    background_color = ColorField(null=True, blank=True, default='#666666')
 
     class Meta:
         verbose_name_plural='Организации'
