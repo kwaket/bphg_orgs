@@ -13,8 +13,6 @@
     - external_vars.yaml
 
   tasks:
-    # - group: name=sudo state=present
-
 
     - name: Add {{ app_owner }} user
       user: name="{{ app_owner }}"
@@ -32,8 +30,6 @@
       authorized_key: user="{{ app_owner }}" key="{{item}}"
       with_file:
         - "{{ ssh_key_file }}"
-
-
 
     - name: Update apt cache
       apt: update_cache=yes

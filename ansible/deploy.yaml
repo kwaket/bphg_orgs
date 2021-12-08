@@ -77,9 +77,6 @@
         name: "{{ python_version }}"
         update_cache: yes
 
-
-
-
     # Cloning project
     - name: Make dir for project
       file:
@@ -132,7 +129,6 @@
         command: collectstatic
         app_path: "{{ app_path }}"
         virtualenv: "{{ virtualenv_path }}"
-
 
     # Elastic search
 

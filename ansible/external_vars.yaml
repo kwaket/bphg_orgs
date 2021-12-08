@@ -2,7 +2,7 @@ app_name: bacteriophage_organizations
 app_owner: "{{ ansible_ssh_user }}"
 app_path: "/var/www/html/{{app_name}}"
 python_version: python3.9
-secret_key: $1FPHnhL0HBpM # TODO: fix it. Research the way to gen key
+secret_key: "{{ lookup('env', 'SECRET_KEY') }}"
 db_name: "{{ app_name }}"
 db_password: "{{ app_name }}"
 db_backup_path: "/home/{{ app_owner }}/backup"
@@ -13,4 +13,4 @@ git_repo_name: "{{ app_name }}"
 git_branch: "v0.4.4"
 virtualenv_path: "{{ app_path }}/env"
 django_admin_name: "admin"
-django_admin_email: "kwaket@ya.ru"
+django_admin_email: "{{ lookup('env', 'ADMIN_EMAIL') }}"
