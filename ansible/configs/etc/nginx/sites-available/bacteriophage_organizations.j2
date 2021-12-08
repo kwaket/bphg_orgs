@@ -18,7 +18,11 @@ server {
         expires 30d;
         add_header Cache-Control "public, no-transform";
     }
-
+    location /media/ {
+        root {{ app_path }}/;
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
     location / {
         include proxy_params;
         proxy_pass http://unix:/run/gunicorn.sock;
