@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'colorfield',
 
     'organizations',
+    'strains_supply',
     'users',
 ]
 
