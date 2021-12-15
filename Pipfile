@@ -4,28 +4,27 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 psycopg2-binary = "*"
 django-bootstrap5 = "*"
 django-filter = "*"
 django-haystack = "*"
 install = "*"
-elasticsearch = "*"
+elasticsearch = ">=7.0.0,<8.0.0"
 gunicorn = "*"
 django-computed-property = "*"
-haystack = "*"
-django-haystack = "*"
 numpy = "*"
 pillow = "*"
 requests = "*"
 bumpversion = "*"
 django-colorfield = "*"
+django = ">=3,<4"
 
 [dev-packages]
 pylint = "*"
 mypy = "*"
 pylint-django = "*"
 ipdb = "*"
+yapf = "*"
 
 [requires]
 python_version = "3.9"
