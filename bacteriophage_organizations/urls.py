@@ -33,7 +33,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('organizations.urls')),
     path('users/', include('users.urls')),
-    # path('search/', include('haystack.urls')),
     path('search/', login_required(basic_search), name='basic_search'),
 ]
 
