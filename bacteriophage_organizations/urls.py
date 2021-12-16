@@ -31,9 +31,10 @@ handler500 = 'organizations.views.handler500'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('organizations.urls')),
+    path('organizations/', include('organizations.urls')),
     path('users/', include('users.urls')),
     path('search/', login_required(basic_search), name='basic_search'),
+    path('strains_supply/', include('strains_supply.urls')),
 ]
 
 # Serving the media files in development mode
