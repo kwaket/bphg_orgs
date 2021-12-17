@@ -1,0 +1,15 @@
+{% extends 'strains_supply/base.html' %}
+
+{% block content %}
+
+<h1>Поставки</h1>
+
+<table>
+  {% for item in supply_list %}
+  item
+  {% empty %}
+  Еще нет поставок
+  {% endfor %}
+</table>
+
+{% endblock %}}
