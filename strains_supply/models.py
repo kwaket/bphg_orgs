@@ -22,12 +22,12 @@ class Supply(models.Model):
     dest = models.ForeignKey(CompanyBranch, verbose_name='Филиал', on_delete=models.PROTECT)
     sent_at = models.DateTimeField(null=True, blank=True,
                                    verbose_name='Предполагаемая дата отправки')
+    num = models.DateTimeField(null=True, blank=True,
+                               verbose_name='Предполагаемое количество')
     recieved_at = models.DateTimeField(null=True, blank=True,
                                        verbose_name='Дата приема')
     recieved_remark = models.CharField(max_length=500, null=True, blank=True,
                                        verbose_name='Примичание при приеме')
-    num = models.DateTimeField(null=True, blank=True,
-                               verbose_name='Предполагаемое количество')
 
 
 class Strain(models.Model):
