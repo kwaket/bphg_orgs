@@ -9,6 +9,10 @@ class City(models.Model):
 
 class Source(models.Model):
     name = models.CharField(max_length=1000, verbose_name='Название')
+    city = models.ForeignKey(City, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.city.name}, {self.name}'
 
 
 class CompanyBranch(models.Model):
@@ -18,8 +22,8 @@ class CompanyBranch(models.Model):
 class Supply(models.Model):
     source = models.ForeignKey(Source, verbose_name='Лечебное учреждение',
                                on_delete=models.PROTECT)
-    source_city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
-    dest = models.ForeignKey(CompanyBranch, verbose_name='Филиал', on_delete=models.PROTECT)
+    dest = models.ForeignKey(CompanyBranch, verbose_name='Филиал',
+                             on_delete=models.PROTECT)
     sent_at = models.DateTimeField(null=True, blank=True,
                                    verbose_name='Предполагаемая дата отправки')
     num = models.DateTimeField(null=True, blank=True,
