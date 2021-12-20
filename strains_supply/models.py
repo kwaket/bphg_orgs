@@ -28,6 +28,18 @@ class UpdatingMixin(InsertingMixin):
     class Meta:
         abstract = True
 
+
+class AliasMixin(models.Model):
+    def save(self, **kwargs):
+        self.alias = utils.get_alias(self.name)
+        super().save(**kwargs)
+
+    class Meta:
+        abstract = True
+
+
+class City(UpdatingMixin, AliasMixin):
+    alias = models.CharField(max_length=500, unique=True)
     name = models.CharField(max_length=500, verbose_name='Название')
 
     def __str__(self) -> str:
@@ -44,7 +56,9 @@ class Source(models.Model):
     class Meta:
         unique_together = ('name', 'city')
 
-class CompanyBranch(models.Model):
+
+class CompanyBranch(AliasMixin):
+    alias = models.CharField(max_length=500, unique=True)
     name = models.CharField(max_length=500, verbose_name='Название')
 
     def __str__(self) -> str:
