@@ -32,9 +32,10 @@ class SourceForm(forms.Form):
             self.cleaned_data['source_id'] = int(source_id)
 
     def __init__(self, *args, **kwargs):
-        sources_ = [(s.id, s.name) for s in Source.objects.all()]
+        super(SourceForm, self).__init__(*args, **kwargs)
+        sources_ = [(s.id, str(s)) for s in Source.objects.all()]
         sources = [('', ' + Добавить новое лечебное учреждение')]
-        sources = sources.extend(sources_)
+        sources.extend(sources_)
         self.fields['source_id'].choices = sources
 
 
@@ -52,6 +53,7 @@ class DestForm(forms.Form):
             self.cleaned_data['dest_id'] = int(dest_id)
 
     def __init__(self, *args, **kwargs):
+        super(DestForm, self).__init__(*args, **kwargs)
         dests_ = [(c.id, c.name) for c in CompanyBranch.objects.all()]
         dests = [('', ' + Добавить филиал')]
         dests.extend(dests_)
