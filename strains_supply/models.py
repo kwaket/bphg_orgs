@@ -57,7 +57,7 @@ class Source(models.Model):
         unique_together = ('name', 'city')
 
 
-class CompanyBranch(AliasMixin):
+class CompanyBranch(UpdatingMixin, AliasMixin):
     alias = models.CharField(max_length=500, unique=True)
     name = models.CharField(max_length=500, verbose_name='Название')
 
@@ -65,7 +65,7 @@ class CompanyBranch(AliasMixin):
         return self.name
 
 
-class Supply(models.Model):
+class Supply(UpdatingMixin):
     source = models.ForeignKey(Source, verbose_name='Лечебное учреждение',
                                on_delete=models.PROTECT)
     dest = models.ForeignKey(CompanyBranch, verbose_name='Филиал',
