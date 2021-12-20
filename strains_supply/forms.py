@@ -66,7 +66,7 @@ class SupplyForm(forms.ModelForm):
         model = Supply
         fields = ['source', 'dest', 'sent_at', 'num']
 
-    widgets = {
-        'sent_at': DateInput,
-        'num': NumberInput
-    }
+        widgets = {
+            'sent_at': DateInput,
+            'num': NumberInput
+        }
