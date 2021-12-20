@@ -1,17 +1,44 @@
+from django.conf import settings
+from django.utils import timezone
 from django.db import models
 from django.db.models.fields import CharField
 from django.db.models.fields.related import ForeignKey
 
+from strains_supply import utils
 
-class City(models.Model):
+
+class InsertingMixin(models.Model):
+    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE, verbose_name='Добавил')
+    inserted_at = models.DateTimeField(default=timezone.now,
+        verbose_name='Добавлено')
+
+    class Meta:
+        abstract = True
+
+
+class UpdatingMixin(InsertingMixin):
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE, verbose_name='Обновил',
+            related_name="%(app_label)s_%(class)s_related")
+
+    updated_at = models.DateTimeField(default=timezone.now,
+        verbose_name='Обновлено')
+
+    class Meta:
+        abstract = True
+
     name = models.CharField(max_length=500, verbose_name='Название')
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Source(models.Model):
     name = models.CharField(max_length=1000, verbose_name='Название')
     city = models.ForeignKey(City, on_delete=models.PROTECT)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.city.name}, {self.name}'
 
     class Meta:
@@ -19,6 +46,9 @@ class Source(models.Model):
 
 class CompanyBranch(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Supply(models.Model):
