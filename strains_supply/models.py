@@ -14,6 +14,8 @@ class Source(models.Model):
     def __str__(self):
         return f'{self.city.name}, {self.name}'
 
+    class Meta:
+        unique_together = ('name', 'city')
 
 class CompanyBranch(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название')
