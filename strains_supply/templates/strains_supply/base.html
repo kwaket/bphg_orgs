@@ -35,7 +35,12 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">
-                Поставки <span class="badge rounded-pill bg-danger">1</span></a>
+                Поставки
+                <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
+                {% if opened_supply %}
+                {{ opened_supply | length }}
+                {% endif %}
+                </span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link position-relative" href="#">Прием</a>
