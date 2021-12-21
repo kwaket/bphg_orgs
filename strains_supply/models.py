@@ -70,9 +70,9 @@ class Supply(UpdatingMixin):
                                on_delete=models.PROTECT)
     dest = models.ForeignKey(CompanyBranch, verbose_name='Филиал',
                              on_delete=models.PROTECT)
-    sent_at = models.DateTimeField(null=True, blank=True,
+    sent_at = models.DateField(null=True, blank=True,
                                    verbose_name='Предполагаемая дата отправки')
-    num = models.DateTimeField(null=True, blank=True,
+    num = models.IntegerField(null=True, blank=True,
                                verbose_name='Предполагаемое количество')
     recieved_at = models.DateTimeField(null=True, blank=True,
                                        verbose_name='Дата приема')
