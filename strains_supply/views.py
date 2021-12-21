@@ -15,6 +15,7 @@ def main_page(request):
 def new_supply(request):
     step = int(request.GET.get('step', '1'))
     print(step, '------')
+    prev = None
     if request.method == 'POST':
         if step == 1:
             form = SourceForm(request.POST)
@@ -44,14 +45,23 @@ def new_supply(request):
                 )
     else:
         if step == 1:
-            form = SourceForm()
+            fields = {}
+            source = request.GET.get('source')
+            if source:
+                fields['source_id'] = int(source)
+            form = SourceForm(initial=fields)
         elif step == 2:
-            form = DestForm()
+            fields = {}
+            source = request.GET.get('source')
+            dest = request.GET.get('dest')
+            if dest:
+                fields['dest_id'] = int(dest)
+            form = DestForm(initial=fields)
+            prev = f'/strains_supply/new?step={step - 1}&source={source}'
         else:
             source = request.GET.get('source')
             dest = request.GET.get('dest')
-
-            print(dest, 'dest =====')
+            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}'
             form = SupplyForm(initial={
                 'source': services.get_source_by_id(source),
                 'dest': services.get_dest_by_id(dest)
@@ -59,5 +69,6 @@ def new_supply(request):
 
     return render(request, 'strains_supply/edit_supply.html', {
         'form': form,
-        'step': step
+        'step': step,
+        'prev': prev
     })
