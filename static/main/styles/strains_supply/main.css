@@ -1,9 +1,21 @@
+h1 {
+    font-weight: bold;
+    font-size: 2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+
 .form-steps {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 0;
     position: relative;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .form-step::after {
