@@ -76,13 +76,15 @@ def get_or_create_dest(dest_id: int, name: str,
     return dest
 
 
-def create_supply(source: Source, dest: CompanyBranch,
+def create_supply(inserted_by: User, source: Source, dest: CompanyBranch,
                   sent_at: dt.date=None, num: int=None) -> Supply:
     supply = Supply.objects.create(
         source=source,
         dest=dest,
         sent_at=sent_at,
-        num=num
+        num=num,
+        inserted_by=inserted_by,
+        updated_by=inserted_by
     )
     supply.save()
     return supply
