@@ -1,9 +1,9 @@
 from django.shortcuts import redirect, render
 
-from strains_supply import services
+from strains_supply import services, utils
 
 from .models import Supply
-from .forms import SourceForm, DestForm, SupplyForm
+from .forms import DetailForm, SourceForm, DestForm, SupplyForm
 
 
 def main_page(request):
@@ -31,6 +31,17 @@ def new_supply(request):
                                                    **form.cleaned_data)
                 return redirect(
                     f'/strains_supply/new?step={step + 1}&source={source_id}&dest={dest.id}')
+        elif step == 3:
+            params = utils.extract_get_param(request)
+            source_id = params['source']
+            dest_id = params['dest']
+            form = DetailForm(request.POST)
+            if form.is_valid():
+                sent_at = form.cleaned_data['sent_at']
+                num = form.cleaned_data['num']
+                return redirect(
+                    f'/strains_supply/new?step={step + 1}&source={source_id}&dest={dest_id}&num={num}&sent_at={sent_at}')
+
         else:
             form = SupplyForm(request.POST)
             if form.is_valid():
@@ -41,6 +52,7 @@ def new_supply(request):
                     num=form.cleaned_data['num'],
                     inserted_by=request.user
                 )
+                return redirect('/strains_supply/')
     else:
         if step == 1:
             fields = {}
@@ -56,14 +68,21 @@ def new_supply(request):
                 fields['dest_id'] = int(dest)
             form = DestForm(initial=fields)
             prev = f'/strains_supply/new?step={step - 1}&source={source}'
-        else:
+        elif step == 3:
             source = request.GET.get('source')
             dest = request.GET.get('dest')
             prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}'
-            form = SupplyForm(initial={
-                'source': services.get_source_by_id(source),
-                'dest': services.get_dest_by_id(dest)
-            })
+            form = DetailForm()
+        else:
+            step = 4
+            fields = utils.extract_get_param(request)
+
+            source = fields['source']
+            dest = fields['dest']
+            num = fields['num']
+            sent_at = fields['sent_at']
+            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&num={num}&sent_at={sent_at}'
+            form = SupplyForm(initial=fields)
 
     return render(request, 'strains_supply/edit_supply.html', {
         'form': form,
