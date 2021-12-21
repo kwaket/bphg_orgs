@@ -24,29 +24,33 @@
 
 <body>
   <header class="header">
-    <nav class="navbar navbar-expand-lg navbar-light justify-content-between" style="background-color: #e3f2fd;">
-      <div class="container-fluid justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+      <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 pl-10 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <a class="nav-link active" aria-current="page" href="{% url 'main_page' %}">
                 Поставки
                 <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
-                {% if opened_supply %}
-                {{ opened_supply | length }}
-                {% endif %}
+                  {% if opened_supply %}
+                  {{ opened_supply | length }}
+                  {% endif %}
                 </span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link position-relative" href="#">Прием</a>
             </li>
           </ul>
-        </div>
+         </div>
+         <form class="d-flex">
+            <button class="btn btn-lnk text-secondary" disabled><span class="bi bi-gear"></span></button>
+         </form>
+
       </div>
     </nav>
   </header>

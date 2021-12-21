@@ -12,6 +12,10 @@ h1 {
     align-items: baseline;
 }
 
+.header ul.navbar-nav {
+    margin-left: -10em !important;
+}
+
 .table {
     font-size: .9em;
 }
