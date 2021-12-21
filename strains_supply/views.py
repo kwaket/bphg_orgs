@@ -12,7 +12,7 @@ def main_page(request):
                   {'supply_list': supply_list})
 
 
-def new_supply(request):
+def supply_new(request):
     step = int(request.GET.get('step', '1'))
     prev = None
     if request.method == 'POST':
