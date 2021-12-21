@@ -14,7 +14,6 @@ def main_page(request):
 
 def new_supply(request):
     step = int(request.GET.get('step', '1'))
-    print(step, '------')
     prev = None
     if request.method == 'POST':
         if step == 1:
@@ -28,7 +27,6 @@ def new_supply(request):
             source_id = request.GET.get('source')
             form = DestForm(request.POST)
             if form.is_valid():
-                import ipdb; ipdb.set_trace()
                 dest = services.get_or_create_dest(inserted_by=request.user,
                                                    **form.cleaned_data)
                 return redirect(
