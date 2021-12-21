@@ -7,7 +7,7 @@ from .forms import DetailForm, SourceForm, DestForm, SupplyForm
 
 
 def main_page(request):
-    supply_list = Supply.objects.all()
+    supply_list = Supply.objects.all().order_by('-inserted_at')[:10]
     return render(request, 'strains_supply/main.html',
                   {'supply_list': supply_list})
 
