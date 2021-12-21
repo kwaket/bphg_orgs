@@ -15,7 +15,8 @@ class NumberInput(forms.NumberInput):
 
 class SourceForm(forms.Form):
 
-    source_id = forms.ChoiceField(label='Выберите лечебное учреждение')
+    source_id = forms.ChoiceField(label='Выберите лечебное учреждение',
+                                  required=False)
     name = forms.CharField(label='Название', required=False)
     city = forms.CharField(label='Город', required=False)
 
@@ -23,7 +24,7 @@ class SourceForm(forms.Form):
         source_id = self.cleaned_data['source_id']
         name = self.cleaned_data['name']
         city = self.cleaned_data['city']
-        if source_id == 0:
+        if source_id == '':
             if not name:
                 self.add_error('name', 'Заполните название лечебного учреждения')
             if not city:
@@ -35,7 +36,8 @@ class SourceForm(forms.Form):
         super(SourceForm, self).__init__(*args, **kwargs)
         sources_ = [(s.id, str(s)) for s in Source.objects.all()]
         sources = [('', ' + Добавить новое лечебное учреждение')]
-        sources.extend(sources_)
+        sources.append(
+            ('Сохраненные лечебные учреждения', sources_))
         self.fields['source_id'].choices = sources
 
 
