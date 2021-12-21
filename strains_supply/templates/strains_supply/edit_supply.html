@@ -5,16 +5,53 @@
 
 {% block content %}
 
-<h1>Добавить поставку</h1>
-
-<div class="row">
+<div class="row justify-content-center">
   <div class="col col-md-8 col-lg-6">
+    <h1>Добавить поставку</h1>
+
+    <hr>
+    <ol class="form-steps">
+      <li class="form-step {% if step == 1 %}active{% elif step > 1%} success{% endif %}">
+        <div class="step-icon">
+          <span class="bi bi-building"></span>
+        </div>
+        <span class="step-description">Откуда<span></li>
+      <li class="form-step {% if step == 2 %}active{% elif step > 2%} success{% endif %}">
+        <div class="step-icon">
+          <span class="bi bi-building"></span>
+        </div>
+        <span class="step-description">Куда</li>
+      <li class="form-step {% if step == 3 %}active{% elif step > 3%} success{% endif %}">
+        <div class="step-icon">
+          <span class="bi bi-box-seam"></span>
+        </div>
+        <span class="step-description">Детали поставки</li>
+      <li class="form-step {% if step == 4 %}active{% endif %}">
+        <div class="step-icon">
+          <span class="bi bi-check-lg"></span>
+        </div>
+        <span class="step-description">Подтверждение</li>
+    </ol>
+    {% comment %} progress | step {{ step }} {% endcomment %}
+    <hr>
+</div>
+<div class="row justify-content-center">
+  <div class="col col-md-8 col-lg-6">
+    {% if step %}
     <form method="POST" class="post-form">{% csrf_token %}
       {% bootstrap_form form %}
-      <button type="submit" class="save btn btn-success">
-        <span class="bi bi-check-circle"></span> Сохранить
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+      {% if prev %}
+      <a href="{{ prev }}" class="btn btn-secondary">
+        <span class="bi bi-arrow-left"></span> Назад
+      </a>
+      {% endif %}
+      <button type="submit" class="save btn btn-primary">
+        Далее <span class="bi bi-arrow-right"></span>
       </button>
+      </div>
     </form>
+    {% endif %}
   </div>
 </div>
 
