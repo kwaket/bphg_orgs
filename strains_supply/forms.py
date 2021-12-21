@@ -62,6 +62,14 @@ class DestForm(forms.Form):
         self.fields['dest_id'].choices = dests
 
 
+class DetailForm(forms.Form):
+
+    sent_at = forms.DateField(label='Предполагаемая дата отправки',
+                              widget=DateInput, required=False)
+    num = forms.IntegerField(label='Предполагаемое количество',
+                             widget=NumberInput, required=False)
+
+
 class SupplyForm(forms.ModelForm):
 
     class Meta:
