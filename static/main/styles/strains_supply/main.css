@@ -5,6 +5,17 @@ h1 {
     margin-bottom: .5em;
 }
 
+.header-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.table {
+    font-size: .9em;
+}
+
 
 .form-steps {
     display: flex;

@@ -2,14 +2,63 @@
 
 {% block content %}
 
-<h1>Поставки</h1>
-
-<table>
-  {% for item in supply_list %}
-  item
-  {% empty %}
-  Еще нет поставок
-  {% endfor %}
-</table>
+<div class="row justify-content-center">
+  <div class="col col-md-12 col-lg-10">
+    <div class="header-group">
+      <h1>Поставки</h1>
+      <a class="btn btn-primary btn-sm"
+        href="{% url 'supply_new' %}">
+        <span class="bi bi-plus-lg"><span>
+        Добавить поставку
+      </a>
+    </div>
+    <table class="table table-sm">
+      <thead>
+        <th>ID</th>
+        <th>Лечебное учреждение</th>
+        <th>Филиал</th>
+        <th>Дата отправки</th>
+        <th>Количество</th>
+        <th>Дата приема</th>
+      </thead>
+      <tbody>
+      {% for item in supply_list %}
+        <tr>
+          <td>{{ item.pk }}</td>
+          <td>
+            {{ item.source.name }}
+            <br>
+            <small class="text-muted">
+              {{ item.source.city.name }}
+            <small>
+          </td>
+          <td>{{ item.dest }}</td>
+          <td>
+            {% if item.sent_at %}
+            <span class="text-nowrap"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Предполагаемая дата">
+              <small class="bi bi-exclamation-triangle-fill text-warning"></small>
+              {{ item.sent_at }}
+            </span>
+            {% endif %}
+          </td>
+          <td>
+            {% if item.num %}
+            <span class="text-nowrap"
+              data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Предполагаемое количество">
+              <small class="bi bi-exclamation-triangle-fill text-warning"></small>
+              {{ item.num }}
+            </span>
+            {% endif %}
+            <small class="text-muted"></small>
+          </td>
+          <td></td>
+      {% empty %}
+      Еще нет поставок
+      {% endfor %}
+      <tbody>
+    </table>
 
 {% endblock %}}
