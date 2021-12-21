@@ -43,8 +43,8 @@ class SourceForm(forms.Form):
 
 class DestForm(forms.Form):
 
-    dest_id = forms.ChoiceField(label='Филиал назначения')
-    name = forms.ChoiceField(label='Название филиала', required=False)
+    dest_id = forms.ChoiceField(label='Филиал назначения', required=False)
+    name = forms.CharField(label='Название филиала', required=False)
 
     def clean(self):
         dest_id = self.cleaned_data['dest_id']
