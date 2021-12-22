@@ -86,6 +86,9 @@ class Supply(UpdatingMixin):
 class Strain(models.Model):
     name = CharField(max_length=500)
 
+    def __str__(self):
+        return self.name
+
 
 class SupplyContent(models.Model):
     supply_id = ForeignKey(Supply, on_delete=models.PROTECT)
