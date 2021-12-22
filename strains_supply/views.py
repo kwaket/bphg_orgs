@@ -6,9 +6,9 @@ from .models import Supply
 from .forms import DetailForm, SourceForm, DestForm, SupplyForm
 
 
-def main_page(request):
+def supply_main(request):
     supply_list = Supply.objects.all().order_by('-inserted_at')[:10]
-    return render(request, 'strains_supply/main.html',
+    return render(request, 'strains_supply/supply_main.html',
                   {'supply_list': supply_list,
                    'opened_supply': supply_list})
 
@@ -85,7 +85,7 @@ def supply_new(request):
             prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&num={num}&sent_at={sent_at}'
             form = SupplyForm(initial=fields)
 
-    return render(request, 'strains_supply/edit_supply.html', {
+    return render(request, 'strains_supply/supply_edit.html', {
         'form': form,
         'step': step,
         'prev': prev
