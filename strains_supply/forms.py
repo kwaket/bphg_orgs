@@ -1,3 +1,5 @@
+import datetime as dt
+
 from django import forms
 from django.db import models
 from django.forms import widgets
@@ -7,6 +9,11 @@ from .models import Source, Supply, CompanyBranch
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
+
+class DateTimeInput(forms.DateTimeInput):
+    input_type = 'datetime-local'
+    format = "%d.%m.%Y %H:%M:%S %Z"
 
 
 class NumberInput(forms.NumberInput):
@@ -65,7 +72,7 @@ class DestForm(forms.Form):
 class DetailForm(forms.Form):
 
     suggested_sent_date = forms.DateField(label='Предполагаемая дата отправки',
-                              widget=DateInput, required=False)
+                             widget=DateInput, required=False)
     suggested_num = forms.IntegerField(label='Предполагаемое количество',
                              widget=NumberInput, required=False)
 
@@ -80,3 +87,13 @@ class SupplyForm(forms.ModelForm):
             'suggested_sent_date': DateInput,
             'suggested_num': NumberInput
         }
+
+
+class ReceiveForm(forms.Form):
+    sent_at = forms.DateField(label='Фактическая дата отправки',
+                              required=False,
+                              help_text="Необязательное поле",
+                              widget=DateInput)
+    received_at = forms.DateTimeField(label='Дата получения',
+                                      widget=DateTimeInput,
+                                      initial=dt.datetime.now)

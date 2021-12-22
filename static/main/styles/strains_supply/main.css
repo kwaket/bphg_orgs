@@ -123,3 +123,11 @@ h1, h2, h3 {
 }
 
 /* -- Receive supply -- */
+.card.supply-detail-card {
+    font-size: .8em !important;
+    /* background-color: red; */
+}
+
+.card.supply-detail-card .row {
+    margin-bottom: 0;
+}

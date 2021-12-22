@@ -1,0 +1,50 @@
+{% extends 'strains_supply/base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col col-md-8 col-lg-8">
+    <div class="header-group">
+      <h1>Прием поставки №{{ supply.pk }}</h1>
+    </div>
+
+    <div class="card bg-light supply-detail-card">
+      <div class="card-body">
+        <h5 class="card-title">Детали поставки</h5>
+        {% comment %} <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> {% endcomment %}
+        <dl class="row">
+          <dt class="col-md-2">Откуда</dt>
+          <dd class="col-md-10">
+            {{ supply.source.name }}<br>
+            <span class="text-muted">{{ supply.source.city.name }}</span>
+          </dd>
+          <dt class="col-md-2">Куда</dt>
+          <dd class="col-md-10">{{ supply.dest.name }}</dd>
+          {% if supply.suggested_sent_date %}
+          <dt class="col-md-2">Предполагаемая дата отправки</dt>
+          <dd class="col-md-10">{{ supply.suggested_sent_date }}</dd>
+          {% endif %}
+          {% if supply.suggested_num %}
+          <dt class="col-md-2">Предполагаемое количество</dt>
+          <dd class="col-md-10">{{ supply.suggested_num }}</dd>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+    <form method="POST" class="post-form">{% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="submit" class="btn btn-primary">
+          Далее <span class="bi bi-arrow-right"></span>
+        </button>
+     </div>
+    </form>
+
+    <div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

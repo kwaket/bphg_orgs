@@ -102,3 +102,19 @@ def get_supplylist_for_user(user: User) -> QuerySet:
     company_branch = get_companybranch(user)
     supply_list = Supply.objects.filter(received_at=None, dest=company_branch).all()
     return supply_list
+
+
+def get_supply(pk: int) -> Supply:
+    return get_object_or_404(Supply, pk=pk)
+
+
+def receive_supply(supply: Supply, user: User, received_at: dt.datetime,
+                   sent_at: dt.datetime=None) -> Supply:
+    """Function update receiving fields and correct sent_at field if possible"""
+    supply.received_at = received_at
+    supply.sent_at = sent_at
+    supply.updated_at = dt.datetime.now()
+    supply.updated_by = user
+    supply.save()
+    return supply
+

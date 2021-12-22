@@ -7,4 +7,6 @@ urlpatterns = [
     path('', login_required(views.supply_main), name='supply_main'),
     path('new', login_required(views.supply_new), name='supply_new'),
     path('receiving', login_required(views.receiving_main), name='receiving_main'),
+    path('supply/<int:pk>/receiving', login_required(views.receive_supply),
+        name='receive_supply'),
 ]

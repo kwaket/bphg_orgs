@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from strains_supply import services, utils
 
 from .models import Supply
-from .forms import DetailForm, SourceForm, DestForm, SupplyForm
+from .forms import DetailForm, ReceiveForm, SourceForm, DestForm, SupplyForm
 
 
 def supply_main(request):
@@ -97,4 +97,20 @@ def receiving_main(request):
     supply_list = services.get_supplylist_for_user(request.user)
     return render(request, 'strains_supply/receiving_main.html', {
         'supply_list': supply_list
+    })
+
+
+def receive_supply(request, pk):
+    supply = services.get_supply(pk=pk)
+    if request.method == "POST":
+        form = ReceiveForm(request.POST)
+        if form.is_valid():
+            supply = services.receive_supply(supply=supply, user=request.user,
+                **form.cleaned_data)
+            return redirect('strains_supply/unpack_supply')
+    else:
+        form = ReceiveForm()
+    return render(request, 'strains_supply/receive_supply.html', {
+        'supply': supply,
+        'form': form
     })
