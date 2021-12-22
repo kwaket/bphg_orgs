@@ -6,7 +6,6 @@
   <div class="col col-md-10 col-lg-10">
     <div class="header-group">
       <h1>Прием</h1>
-
     </div>
 
     <div>
@@ -15,9 +14,10 @@
     {% for supply in supply_list %}
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ supply.source.city.name }}</h5>
-        <p class="card-text">{{ supply.source.name }}</p>
-        <a href="#" class="btn btn-secondary">Принять поставку</a>
+        <h5 class="card-title mt-0">{{ supply.source.city.name }}</h5>
+        <h6 class="card-subtitle mb-1 text-muted">{{ supply.source.name }}</h6>
+        <a href="{% url 'receive_supply' pk=supply.pk %}"
+           class="btn btn-secondary btn-sm">Принять поставку</a>
       </div>
     </div>
     {% endfor %}
