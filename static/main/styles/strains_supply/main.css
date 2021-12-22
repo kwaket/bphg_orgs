@@ -1,8 +1,21 @@
+body {
+    /* margin-bottom: 1em; */
+}
+
 h1 {
-    font-weight: bold;
     font-size: 2em;
     margin-top: .5em;
     margin-bottom: .5em;
+}
+h2 {
+    font-size: 1.8em;
+}
+h3 {
+    font-size: 1.6em;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
 }
 
 .header-group {
@@ -20,6 +33,11 @@ h1 {
     font-size: .9em;
 }
 
+.card {
+    margin-bottom: 1em;
+}
+
+/* -- Add new supply -- */
 
 .form-steps {
     display: flex;
@@ -102,3 +120,5 @@ h1 {
 .step-description {
     font-size: .6em;
 }
+
+/* -- Receive supply -- */
