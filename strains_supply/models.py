@@ -75,8 +75,9 @@ class Supply(UpdatingMixin):
     suggested_num = models.IntegerField(null=True, blank=True,
                                verbose_name='Предполагаемое количество')
     recieved_at = models.DateTimeField(null=True, blank=True,
+    received_at = models.DateTimeField(null=True, blank=True,
                                        verbose_name='Дата приема')
-    recieved_remark = models.CharField(max_length=500, null=True, blank=True,
+    received_remark = models.CharField(max_length=500, null=True, blank=True,
                                        verbose_name='Примичание при приеме')
 
 
