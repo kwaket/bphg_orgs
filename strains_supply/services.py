@@ -2,6 +2,7 @@ from typing import Union
 import datetime as dt
 
 from django.shortcuts import get_object_or_404
+from django.db.models import QuerySet
 
 from .models import CompanyBranch, Source, City, Supply
 from django.contrib.auth.models import User
@@ -88,3 +89,16 @@ def create_supply(inserted_by: User, source: Source, dest: CompanyBranch,
     )
     supply.save()
     return supply
+
+
+def get_companybranch(user: User) -> CompanyBranch:
+    """Function return CompanyBranch related to user."""
+    company_branch = CompanyBranch.objects.all().first()  # TODO: fix it. It is placeholder returned first CompanyBranch
+    return company_branch
+
+
+def get_supplylist_for_user(user: User) -> QuerySet:
+    """Function return list of supply related to user's company branch"""
+    company_branch = get_companybranch(user)
+    supply_list = Supply.objects.filter(received_at=None, dest=company_branch).all()
+    return supply_list

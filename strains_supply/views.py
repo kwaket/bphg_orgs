@@ -91,3 +91,10 @@ def supply_new(request):
         'step': step,
         'prev': prev
     })
+
+
+def receiving_main(request):
+    supply_list = services.get_supplylist_for_user(request.user)
+    return render(request, 'strains_supply/receiving_main.html', {
+        'supply_list': supply_list
+    })
