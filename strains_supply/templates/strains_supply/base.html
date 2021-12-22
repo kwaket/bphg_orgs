@@ -34,13 +34,14 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 pl-10 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'main_page' %}">
+              <a class="nav-link active" aria-current="page" href="{% url 'supply_main' %}">
                 Поставки
+                {% if opened_supply %}
                 <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
-                  {% if opened_supply %}
                   {{ opened_supply | length }}
-                  {% endif %}
-                </span></a>
+                </span>
+                {% endif %}
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link position-relative" href="#">Прием</a>
