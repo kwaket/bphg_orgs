@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Supply, SupplyContent, Strain, Source, City, CompanyBranch
+
+admin.site.register([Supply, SupplyContent, Strain, Source, City, CompanyBranch])
