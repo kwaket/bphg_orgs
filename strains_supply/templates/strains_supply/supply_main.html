@@ -33,19 +33,19 @@
           </td>
           <td>{{ item.dest }}</td>
           <td>
-            {% if item.sent_at %}
+            {% if item.suggested_sent_date %}
             <span class="text-nowrap" data-bs-toggle="tooltip" data-bs-placement="top" title="Предполагаемая дата">
               <small class="bi bi-exclamation-triangle-fill text-warning"></small>
-              {{ item.sent_at }}
+              {{ item.suggested_sent_date }}
             </span>
             {% endif %}
           </td>
           <td>
-            {% if item.num %}
+            {% if item.suggested_num %}
             <span class="text-nowrap" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Предполагаемое количество">
               <small class="bi bi-exclamation-triangle-fill text-warning"></small>
-              {{ item.num }}
+              {{ item.suggested_num }}
             </span>
             {% endif %}
             <small class="text-muted"></small>

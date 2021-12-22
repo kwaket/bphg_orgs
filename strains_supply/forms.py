@@ -64,9 +64,9 @@ class DestForm(forms.Form):
 
 class DetailForm(forms.Form):
 
-    sent_at = forms.DateField(label='Предполагаемая дата отправки',
+    suggested_sent_date = forms.DateField(label='Предполагаемая дата отправки',
                               widget=DateInput, required=False)
-    num = forms.IntegerField(label='Предполагаемое количество',
+    suggested_num = forms.IntegerField(label='Предполагаемое количество',
                              widget=NumberInput, required=False)
 
 
@@ -74,9 +74,9 @@ class SupplyForm(forms.ModelForm):
 
     class Meta:
         model = Supply
-        fields = ['source', 'dest', 'sent_at', 'num']
+        fields = ['source', 'dest', 'suggested_sent_date', 'suggested_num']
 
         widgets = {
-            'sent_at': DateInput,
-            'num': NumberInput
+            'suggested_sent_date': DateInput,
+            'suggested_num': NumberInput
         }

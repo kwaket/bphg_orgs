@@ -38,10 +38,10 @@ def supply_new(request):
             dest_id = params['dest']
             form = DetailForm(request.POST)
             if form.is_valid():
-                sent_at = form.cleaned_data['sent_at']
-                num = form.cleaned_data['num']
+                sent_date = form.cleaned_data['suggested_sent_date']
+                num = form.cleaned_data['suggested_num']
                 return redirect(
-                    f'/strains_supply/new?step={step + 1}&source={source_id}&dest={dest_id}&num={num}&sent_at={sent_at}')
+                    f'/strains_supply/new?step={step + 1}&source={source_id}&dest={dest_id}&suggested_num={num}&suggested_sent_date={sent_date}')
 
         else:
             form = SupplyForm(request.POST)
@@ -49,8 +49,8 @@ def supply_new(request):
                 services.create_supply(
                     source=form.cleaned_data['source'],
                     dest=form.cleaned_data['dest'],
-                    sent_at=form.cleaned_data['sent_at'],
-                    num=form.cleaned_data['num'],
+                    suggested_sent_date=form.cleaned_data['suggested_sent_date'],
+                    suggested_num=form.cleaned_data['suggested_num'],
                     inserted_by=request.user
                 )
                 return redirect('/strains_supply/')
@@ -73,16 +73,17 @@ def supply_new(request):
             source = request.GET.get('source')
             dest = request.GET.get('dest')
             prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}'
-            form = DetailForm()
+            fields = utils.extract_get_param(request)
+            form = DetailForm(initial=fields)
         else:
             step = 4
             fields = utils.extract_get_param(request)
 
             source = fields['source']
             dest = fields['dest']
-            num = fields['num']
-            sent_at = fields['sent_at']
-            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&num={num}&sent_at={sent_at}'
+            num = fields['suggested_num']
+            sent_date = fields['suggested_sent_date']
+            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&suggested_num={num}&suggested_sent_date={sent_date}'
             form = SupplyForm(initial=fields)
 
     return render(request, 'strains_supply/supply_edit.html', {

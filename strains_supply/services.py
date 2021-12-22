@@ -77,12 +77,12 @@ def get_or_create_dest(dest_id: int, name: str,
 
 
 def create_supply(inserted_by: User, source: Source, dest: CompanyBranch,
-                  sent_at: dt.date=None, num: int=None) -> Supply:
+                  suggested_sent_date: dt.date=None, suggested_num: int=None) -> Supply:
     supply = Supply.objects.create(
         source=source,
         dest=dest,
-        sent_at=sent_at,
-        num=num,
+        suggested_sent_date=suggested_sent_date,
+        suggested_num=suggested_num,
         inserted_by=inserted_by,
         updated_by=inserted_by
     )
