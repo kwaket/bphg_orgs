@@ -16,10 +16,10 @@
       <div class="card-body">
         <h5 class="card-title mt-0">{{ supply.source.city.name }}</h5>
         <h6 class="card-subtitle mb-1 text-muted">{{ supply.source.name }}</h6>
-        {% if not supply.sent_at %}
+        {% if not supply.sent_at and not is_supply_moderator %}
         <a href="{% url 'receive_supply' pk=supply.pk %}"
            class="btn btn-secondary btn-sm">Принять поставку</a>
-        {% elif not supply.num %}
+        {% elif not supply.num and not is_supply_moderator %}
         <a href="{% url 'unpack_supply' pk=supply.pk %}"
            class="btn btn-warning btn-sm">Продолжить прием поставки</a>
         {% endif %}

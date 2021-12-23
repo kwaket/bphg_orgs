@@ -34,9 +34,10 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 pl-10 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'supply_main' %}">
+            {% comment %} <a class="nav-link {% if request.path|startswith:'/projects' %} active {% endif %}" {% endcomment %}
+              <a class="nav-link {% if request.path == '/strains_supply/' %} active {% endif %}" aria-current="page" href="{% url 'supply_main' %}">
                 Поставки
-                {% if unreceived_supply_num  %}
+                {% if unreceived_supply_num and is_supply_moderator %}
                 <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
                   {{ unreceived_supply_num }}
                 </span>
@@ -44,8 +45,14 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link position-relative" href="{% url 'receiving_main' %}">
-              Прием</a>
+              <a class="nav-link position-relative {% if request.path|startswith:'/strains_supply/receiv' %} active {% endif %}" href="{% url 'receiving_main' %}">
+              Прием
+              {% if unreceived_supply_num and not is_supply_moderator %}
+                <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
+                  {{ unreceived_supply_num }}
+                </span>
+                {% endif %}
+              </a>
             </li>
           </ul>
          </div>
