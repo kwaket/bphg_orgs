@@ -93,8 +93,7 @@ def create_supply(inserted_by: User, source: Source, dest: CompanyBranch,
 
 def get_companybranch(user: User) -> CompanyBranch:
     """Function return CompanyBranch related to user."""
-    company_branch = CompanyBranch.objects.all().first()  # TODO: fix it. It is placeholder returned first CompanyBranch
-    return company_branch
+    return user.profile.company_branch
 
 
 def get_supplylist_for_user(user: User) -> QuerySet:
@@ -152,3 +151,7 @@ def count_unreceived_supply(user: User) -> int:
     num = Supply.objects.filter(dest=company_branch, num=None).all().count()
     return num
 
+
+# permissions
+def is_supply_moderator(user: User) -> bool:
+    return True  # TODO: FIX IT, BITCH!!!
