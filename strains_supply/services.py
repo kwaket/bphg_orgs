@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 import datetime as dt
 
 from django.shortcuts import get_object_or_404
@@ -96,13 +96,20 @@ def get_companybranch(user: User) -> CompanyBranch:
     return user.profile.company_branch
 
 
-def get_supplylist_for_user(user: User, limit=10) -> QuerySet:
+def get_supplylist_for_user(user: User, limit=10) -> Union[QuerySet, list]:
     """Function return list of supply related to user's company branch"""
     company_branch = get_companybranch(user)
-    supply_list = Supply.objects.filter(dest=company_branch)\
-        .filter(Q(received_at=None) | Q(num=None))\
-        .all().order_by('-inserted_at')[:limit]
-    return supply_list
+    is_moderator = is_supply_moderator(user)
+    if is_moderator:
+        supply_list = Supply.objects.filter(Q(received_at=None) | Q(num=None))\
+            .all().order_by('-inserted_at')[:limit]
+        return supply_list
+    if company_branch:
+        supply_list = Supply.objects.filter(dest=company_branch)\
+            .filter(Q(received_at=None) | Q(num=None))\
+            .all().order_by('-inserted_at')[:limit]
+        return supply_list
+    return []
 
 
 def get_supply(pk: int) -> Supply:
@@ -148,11 +155,16 @@ def unpack_supply(supply: Supply, content: List[dict]) -> Supply:
 
 def count_unreceived_supply(user: User) -> int:
     company_branch = get_companybranch(user)
-    num = Supply.objects.filter(dest=company_branch, num=None).all().count()
+    if company_branch:
+        num = Supply.objects.filter(dest=company_branch, num=None).all().count()
+    if is_supply_moderator(user):
+        num = Supply.objects.filter(num=None).all().count()
     return num
 
 
 # permissions
 def is_supply_moderator(user: User) -> bool:
-    # import ipdb; ipdb.set_trace()
-    return True  # TODO: FIX IT, BITCH!!!
+    gr = user.groups.filter(name='Поставки (Администратор)').first()
+    if gr:
+        return True
+    return False
