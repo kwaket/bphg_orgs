@@ -91,7 +91,7 @@ class Strain(models.Model):
 
 
 class SupplyContent(models.Model):
-    supply_id = ForeignKey(Supply, on_delete=models.PROTECT)
-    strain_id = ForeignKey(Strain, on_delete=models.PROTECT)
+    supply = ForeignKey(Supply, on_delete=models.PROTECT)
+    strain = ForeignKey(Strain, on_delete=models.PROTECT)
     num = models.IntegerField(default=0)
 
