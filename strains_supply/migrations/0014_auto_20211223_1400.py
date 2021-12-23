@@ -17,7 +17,6 @@ def get_permissions(apps):
 def add_strains_group(apps, schema_editor):
     permissions = get_permissions(apps)
     Group = apps.get_model('auth', 'Group')
-    # GroupPermisson = apps.get_model('auth', 'GroupPermission')
     groups = [
         {'name': 'Поставки (Администратор)'},
         {'name': 'Поставки (Прием)'}
@@ -25,9 +24,6 @@ def add_strains_group(apps, schema_editor):
     for group in groups:
         g = Group.objects.create(name = group['name'])
         g.permissions.set(permissions)
-        # for perm in permissions:
-            # gp = GroupPermisson.objects.create(group=group, permission=perm)
-            # gp.save()
         g.save()
 
 
