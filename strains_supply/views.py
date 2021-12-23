@@ -3,7 +3,9 @@ from django.shortcuts import redirect, render
 from strains_supply import services, utils
 
 from .models import Supply
-from .forms import DetailForm, ReceiveForm, SourceForm, DestForm, SupplyForm
+from .forms import (
+    DetailForm, ReceiveForm, SourceForm, DestForm, SupplyForm, UnpackForm
+)
 
 
 def supply_main(request):
@@ -68,11 +70,11 @@ def supply_new(request):
             if dest:
                 fields['dest_id'] = int(dest)
             form = DestForm(initial=fields)
-            prev = f'/strains_supply/new?step={step - 1}&source={source}'
+            prev = f'/strains_supply/new?step={step - 1}&source={source}'  # TODO: generate url with function
         elif step == 3:
             source = request.GET.get('source')
             dest = request.GET.get('dest')
-            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}'
+            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}'  # TODO: generate url with function
             fields = utils.extract_get_param(request)
             form = DetailForm(initial=fields)
         else:
@@ -83,7 +85,7 @@ def supply_new(request):
             dest = fields['dest']
             num = fields['suggested_num']
             sent_date = fields['suggested_sent_date']
-            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&suggested_num={num}&suggested_sent_date={sent_date}'
+            prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&suggested_num={num}&suggested_sent_date={sent_date}'  # TODO: generate url with function
             form = SupplyForm(initial=fields)
 
     return render(request, 'strains_supply/supply_edit.html', {
@@ -107,10 +109,25 @@ def receive_supply(request, pk):
         if form.is_valid():
             supply = services.receive_supply(supply=supply, user=request.user,
                 **form.cleaned_data)
-            return redirect('strains_supply/unpack_supply')
+            return redirect('unpack_supply', pk=supply.pk)
     else:
         form = ReceiveForm()
     return render(request, 'strains_supply/receive_supply.html', {
+        'supply': supply,
+        'form': form
+    })
+
+
+def unpack_supply(request, pk):
+    supply = services.get_supply(pk=pk)
+    if request.method == "POST":
+        form = UnpackForm(request.POST)
+        if form.is_valid():
+            supply = services.unpack_supply(supply, form.cleaned_data)
+            return redirect('receiving_main')
+    else:
+        form = UnpackForm()
+    return render(request, 'strains_supply/unpack_supply.html', {
         'supply': supply,
         'form': form
     })

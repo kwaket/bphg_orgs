@@ -1,0 +1,29 @@
+{% extends 'strains_supply/base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col col-md-8 col-lg-8">
+    <div class="header-group">
+      <h1>Прием поставки №{{ supply.pk }}</h1>
+    </div>
+
+    {% include 'strains_supply/snippets/supply_details_card.html' with supply=supply %}
+
+    <form method="POST" class="post-form">{% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="submit" class="btn btn-success">
+          Завершить прием
+        </button>
+     </div>
+    </form>
+
+    <div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

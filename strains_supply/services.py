@@ -1,10 +1,10 @@
-from typing import Union
+from typing import List
 import datetime as dt
 
 from django.shortcuts import get_object_or_404
-from django.db.models import QuerySet, Q
+from django.db.models import QuerySet, Q, Sum
 
-from .models import CompanyBranch, Source, City, Supply
+from .models import CompanyBranch, Source, City, Strain, Supply, SupplyContent
 from django.contrib.auth.models import User
 from . import utils
 
@@ -120,3 +120,28 @@ def receive_supply(supply: Supply, user: User, received_at: dt.datetime,
     supply.save()
     return supply
 
+
+def get_strain(pk: int) -> Strain:
+    return get_object_or_404(Strain, pk=pk)
+
+
+def add_supply_content(supply: Supply, strain_id: int, num: int):
+    strain = get_strain(strain_id)
+    supply_content = SupplyContent.objects.create(
+        supply=supply,
+        strain=strain,
+        num=num
+    )
+    supply_content.save()
+    return supply_content
+
+
+def unpack_supply(supply: Supply, content: List[dict]) -> Supply:
+    for strain_id, num in content.items():
+        if num < 1:
+            continue
+        add_supply_content(supply, strain_id, num)
+    total = SupplyContent.objects.filter(supply=supply).aggregate(Sum("num"))
+    supply.num = total['num__sum']
+    supply.save()
+    return supply
