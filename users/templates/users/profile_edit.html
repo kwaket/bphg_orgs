@@ -8,8 +8,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'user_list' %}">Пользователи</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Новый пользователь
-        <li>
+        <li class="breadcrumb-item active" aria-current="page">Новый пользователь</a></li>
       </ol>
     </nav>
   </div>
@@ -18,7 +17,7 @@
 <div class="header-group">
   <div class="row">
     <div class="col">
-      <h1>Новый пользователь</h1>
+      <h1>Редактировать пользователя</h1>
     </div>
   </div>
 </div>
@@ -26,7 +25,8 @@
 <div class="row">
   <div class="col col-md-8 col-lg-6">
     <form method="POST" class="post-form">{% csrf_token %}
-      {% bootstrap_form form %}
+      {% bootstrap_form user_form %}
+      {% bootstrap_form profile_form %}
       <button type="submit" class="save btn btn-success">
         <span class="bi bi-check-circle"></span> Сохранить
       </button>

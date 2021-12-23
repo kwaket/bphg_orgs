@@ -31,12 +31,12 @@
     <table class="table table-striped">
       <tbody>
         <tr>
-          <th class="col-sm-4 col-md-3 text-truncate">Фамилия</th>
-          <td class="col-sm-8 col-md-9">{{ obj.last_name }}</td>
-        </tr>
-        <tr>
           <th class="col-sm-4 col-md-3 text-truncate">Имя</th>
           <td class="col-sm-8 col-md-9">{{ obj.first_name }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-truncate">Фамилия</th>
+          <td class="col-sm-8 col-md-9">{{ obj.last_name }}</td>
         </tr>
         <tr>
           <th class="col-sm-4 col-md-3 text-truncate">Логин</th>
@@ -48,11 +48,23 @@
         </tr>
         <tr>
           <th class="col-sm-4 col-md-3 text-truncate text-muted">Последний вход</th>
-          <td class="col-sm-8 col-md-9 text-muted">{{ obj.last_login }}</td>
+          <td class="col-sm-8 col-md-9 text-muted">
+          {% if obj.last_login %}
+            {{ obj.last_login }}
+          {% endif %}
+          </td>
         </tr>
         <tr>
           <th class="col-sm-4 col-md-3 text-truncate text-muted">Создан</th>
           <td class="col-sm-8 col-md-9 text-muted">{{ obj.date_joined }}</td>
+        </tr>
+        <tr>
+          <th class="col-sm-4 col-md-3 text-trancate text-muted">Филиал</th>
+          <td class="col-sm-8 col-md-9 text-trancate text-muted">
+          {% if obj.profile.company_branch %}
+            {{ obj.profile.company_branch }}
+          {% endif %}
+          </td>
         </tr>
       </tbody>
     </table>

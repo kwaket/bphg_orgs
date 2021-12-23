@@ -41,6 +41,7 @@
       <th scope="col">Логин</th>
       <th scope="col">ФИО</th>
       <th scope="col">Группы</th>
+      <th scope="col">Филиал</th>
     </tr>
   </thead>
   <tbody>
@@ -51,6 +52,7 @@
       </th>
       <td>{{ user.first_name }} {{ user.last_name }}</td>
       <td>{{ user.groups.all|join:", " }}</td>
+      <td>{{ user.profile.company_branch.name }}</td>
     </tr>
     {% endfor %}
   </tbody>
