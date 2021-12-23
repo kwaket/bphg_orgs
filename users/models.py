@@ -8,8 +8,8 @@ from strains_supply.models import CompanyBranch
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    companyBranch = models.ForeignKey(CompanyBranch, on_delete=models.PROTECT,
-                                      null=True, blank=True)
+    company_branch = models.ForeignKey(CompanyBranch, on_delete=models.PROTECT,
+                                      null=True, blank=True, verbose_name='Филиал')
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
