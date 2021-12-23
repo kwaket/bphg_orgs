@@ -36,9 +36,9 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'supply_main' %}">
                 Поставки
-                {% if opened_supply %}
+                {% if unreceived_supply_num  %}
                 <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
-                  {{ opened_supply | length }}
+                  {{ unreceived_supply_num }}
                 </span>
                 {% endif %}
               </a>

@@ -145,3 +145,10 @@ def unpack_supply(supply: Supply, content: List[dict]) -> Supply:
     supply.num = total['num__sum']
     supply.save()
     return supply
+
+
+def count_unreceived_supply(user: User) -> int:
+    company_branch = get_companybranch(user)
+    num = Supply.objects.filter(dest=company_branch, num=None).all().count()
+    return num
+

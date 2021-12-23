@@ -72,8 +72,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'strains_supply.context_processors.load_unreceived_supply_num',
             ],
-            'libraries':{
+            'libraries': {
                 'startswith': 'organizations.templatetags.startswith',
                 'trim': 'organizations.templatetags.trim',
                 'trimdash': 'organizations.templatetags.trim',
