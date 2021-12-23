@@ -96,12 +96,12 @@ def get_companybranch(user: User) -> CompanyBranch:
     return user.profile.company_branch
 
 
-def get_supplylist_for_user(user: User) -> QuerySet:
+def get_supplylist_for_user(user: User, limit=10) -> QuerySet:
     """Function return list of supply related to user's company branch"""
     company_branch = get_companybranch(user)
     supply_list = Supply.objects.filter(dest=company_branch)\
         .filter(Q(received_at=None) | Q(num=None))\
-        .all()
+        .all().order_by('-inserted_at')[:limit]
     return supply_list
 
 
@@ -154,4 +154,5 @@ def count_unreceived_supply(user: User) -> int:
 
 # permissions
 def is_supply_moderator(user: User) -> bool:
+    # import ipdb; ipdb.set_trace()
     return True  # TODO: FIX IT, BITCH!!!

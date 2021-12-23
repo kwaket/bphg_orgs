@@ -9,7 +9,7 @@ from .forms import (
 
 
 def supply_main(request):
-    supply_list = Supply.objects.all().order_by('-inserted_at')[:10]
+    supply_list = services.get_supplylist_for_user(request.user, limit=10)
     return render(request, 'strains_supply/supply_main.html',
                   {'supply_list': supply_list,
                    'opened_supply': supply_list})
