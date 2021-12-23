@@ -33,24 +33,28 @@
           </td>
           <td>{{ item.dest }}</td>
           <td>
-            {% if item.suggested_sent_date %}
-            <span class="text-nowrap" data-bs-toggle="tooltip" data-bs-placement="top" title="Предполагаемая дата">
-              <small class="bi bi-exclamation-triangle-fill text-warning"></small>
+            {% if item.sent_at %}
+              {{ item.sent_at }}
+            {% elif item.suggested_sent_date %}
+            <span class="text-nowrap text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Предполагаемая дата">
               {{ item.suggested_sent_date }}
+              <small class="bi bi-exclamation-triangle-fill text-black-50"></small>
             </span>
             {% endif %}
           </td>
           <td>
-            {% if item.suggested_num %}
-            <span class="text-nowrap" data-bs-toggle="tooltip" data-bs-placement="top"
+            {% if item.num %}
+              {{ item.num }}
+            {% elif item.suggested_num %}
+            <span class="text-nowrap text-muted" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Предполагаемое количество">
-              <small class="bi bi-exclamation-triangle-fill text-warning"></small>
               {{ item.suggested_num }}
+              <small class="bi bi-exclamation-triangle-fill text-black-50"></small>
             </span>
             {% endif %}
             <small class="text-muted"></small>
           </td>
-          <td></td>
+          <td>{% if item.received_at %}{{ item.received_at }}{% endif %}</td>
           {% empty %}
           Еще нет поставок
           {% endfor %}
