@@ -7,8 +7,10 @@ from django.db import migrations
 
 def populate_progress(apps, schema_editor):
     Data = apps.get_model('organizations', 'EmployeeRole')
+    User = apps.get_model('auth', 'User')
+    user, _ = User.objects.get_or_create(username="admin")
     for name in ['Ведущий научный сотрудник']:
-        Data.objects.create(name=name.capitalize(), inserted_by_id=1,
+        Data.objects.create(name=name.capitalize(), inserted_by=user,
                             inserted_at=dt.datetime.now().isoformat())
 
 
