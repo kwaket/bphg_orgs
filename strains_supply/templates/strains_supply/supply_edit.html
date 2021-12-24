@@ -59,3 +59,33 @@
 
 
 {% endblock %}
+
+{% block scripts %}
+{{  block.super }}
+<script>
+(function() {
+  /* Hide alternative field if select field value is not empty */
+  select = document.getElementsByTagName('select')[0];
+  if (select) {
+    select.onchange = (event) => {
+      target = event.target;
+      form = target.closest('form');
+      alternative_fields  = form.querySelectorAll("input[data-choose-item]")
+      alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]")
+      if (event.target.value) {
+        alternative_fields.forEach((input) => {
+          input.closest('div').style.display = 'none';
+          input.setAttribute('type', 'hidden');
+        });
+      } else {
+        alternative_fields.forEach((input) => {
+          input.closest('div').style.display = 'block';
+          input.setAttribute('type', 'text');
+        });
+      }
+    }
+  }
+})();
+</script>
+{% endblock %}
+

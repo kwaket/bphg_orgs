@@ -21,9 +21,13 @@ class NumberInput(forms.NumberInput):
 class SourceForm(forms.Form):
 
     source_id = forms.ChoiceField(label='Выберите лечебное учреждение',
-                                  required=False)
-    name = forms.CharField(label='Название', required=False)
-    city = forms.CharField(label='Город', required=False)
+                                  required=False, widget=forms.Select(
+                                      attrs={"data-choose-item": "exists"}
+                                  ))
+    name = forms.CharField(label='Название', required=False,
+        widget=forms.TextInput(attrs={"data-choose-item": "create"}))
+    city = forms.CharField(label='Город', required=False,
+        widget=forms.TextInput(attrs={"data-choose-item": "create"}))
 
     def clean(self):
         source_id = self.cleaned_data['source_id']
@@ -48,8 +52,14 @@ class SourceForm(forms.Form):
 
 class DestForm(forms.Form):
 
-    dest_id = forms.ChoiceField(label='Филиал назначения', required=False)
-    name = forms.CharField(label='Название филиала', required=False)
+    dest_id = forms.ChoiceField(label='Филиал назначения', required=False,
+                                widget=forms.Select(
+                                      attrs={"data-choose-item": "exists"}
+                                  ))
+    name = forms.CharField(label='Название филиала', required=False,
+                           widget=forms.TextInput(
+                                      attrs={"data-choose-item": "create"}
+                                  ))
 
     def clean(self):
         dest_id = self.cleaned_data['dest_id']
