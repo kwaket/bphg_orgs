@@ -111,6 +111,25 @@ def get_supplylist_for_user(user: User, limit=10) -> Union[QuerySet, list]:
         return supply_list
     return []
 
+def get_newest_supply_for_user(user: User, limit=25) -> Union[QuerySet, list]:
+    """Function return list of newest supply.
+
+    List sorted by:
+    - not received (field num is empty)
+    - inserted date (inserted_at)
+    """
+    company_branch = get_companybranch(user)
+    is_moderator = is_supply_moderator(user)
+    if is_moderator:
+        supply_list = Supply.objects.all().order_by('-num', '-inserted_at')[:limit]
+        return supply_list
+    if company_branch:
+        supply_list = Supply.objects.filter(dest=company_branch)\
+            .all().order_by('-num', '-inserted_at')[:limit]
+        return supply_list
+    return []
+
+
 
 def get_supply(pk: int) -> Supply:
     return get_object_or_404(Supply, pk=pk)

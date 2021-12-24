@@ -5,12 +5,14 @@
 <div class="row justify-content-center">
   <div class="col col-md-12 col-lg-10">
     <div class="header-group">
-      <h1>Поставки</h1>
+      <h1>Последние поставки</h1>
       <a class="btn btn-primary btn-sm" href="{% url 'supply_new' %}">
         <span class="bi bi-plus-lg"><span>
             Добавить поставку
       </a>
     </div>
+
+    {% if supply_list %}
     <table class="table table-sm">
       <thead>
         <th scope="col">ID</th>
@@ -19,6 +21,7 @@
         <th scope="col" class="text-nowrap">Дата отправки</th>
         <th scope="col">Количество</th>
         <th scope="col" class="text-nowrap">Дата приема</th>
+        <th scope="col"></th>
       </thead>
       <tbody>
         {% for item in supply_list %}
@@ -55,10 +58,14 @@
             <small class="text-muted"></small>
           </td>
           <td>{% if item.received_at %}{{ item.received_at }}{% endif %}</td>
-          {% empty %}
-          Еще нет поставок
+          <td class="align-middle">{% if not supply.sent_at and not is_supply_moderator and not item.num %}
+            <a href="{% url 'receive_supply' pk=item.pk %}"
+               class="btn btn-secondary btn-sm text-nowrap">Принять поставку</a>
+              {% endif %}
+          </td>
           {% endfor %}
       <tbody>
     </table>
+    {% endif %}
 
     {% endblock %}}

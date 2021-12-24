@@ -9,11 +9,11 @@ from .forms import (
 
 
 def supply_main(request):
-    supply_list = services.get_supplylist_for_user(request.user, limit=10)
+    supply_list = services.get_newest_supply_for_user(request.user, limit=10)
     is_moderator = services.is_supply_moderator(request.user)
     return render(request, 'strains_supply/supply_main.html',
                   {'supply_list': supply_list,
-                   'opened_supply': supply_list,
+                #    'opened_supply_list': supply_list,
                    'is_supply_moderator': is_moderator})
 
 
