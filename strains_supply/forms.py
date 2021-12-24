@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django import forms
+from django.forms.widgets import TextInput, Textarea
 
 from .models import Source, Strain, Supply, CompanyBranch
 
@@ -136,3 +137,8 @@ class UnpackForm(forms.Form):
                 label=s.name,
                 initial=0,
                 widget=NumberInput)
+
+
+class RemarkForm(forms.Form):
+
+    remark = forms.CharField(label='Комментарий', widget=Textarea)

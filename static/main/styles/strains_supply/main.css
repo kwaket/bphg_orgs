@@ -72,12 +72,19 @@ h1, h2, h3 {
 }
 
 .form-step {
-    width: 25%;
     text-align: center;
     list-style: none;
     margin: 0;
     position: relative;
 }
+.form-steps-4 .form-step {
+    width: 25%;
+}
+
+.form-steps-3 .form-step {
+    width: 33.4%;
+}
+
 
 .form-step.active {
     font-weight: bold;

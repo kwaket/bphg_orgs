@@ -172,6 +172,11 @@ def unpack_supply(supply: Supply, content: List[dict]) -> Supply:
     return supply
 
 
+def add_remark_to_supply(supply: Supply, remark:str) -> Supply:
+    supply.received_remark = remark
+    supply.save()
+    return supply
+
 def count_unreceived_supply(user: User) -> int:
     company_branch = get_companybranch(user)
     if company_branch:

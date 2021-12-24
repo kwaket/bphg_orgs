@@ -4,7 +4,7 @@ from strains_supply import services, utils
 
 from .models import Supply
 from .forms import (
-    DetailForm, ReceiveForm, SourceForm, DestForm, SupplyForm, UnpackForm
+    DetailForm, ReceiveForm, RemarkForm, SourceForm, DestForm, SupplyForm, UnpackForm
 )
 
 
@@ -114,23 +114,39 @@ def receive_supply(request, pk, step):
             if form.is_valid():
                 supply = services.receive_supply(supply=supply, user=request.user,
                     **form.cleaned_data)
-                return redirect('receive_supply', pk=supply.pk, step=2)
+                return redirect('receive_supply', pk=supply.pk, step=step + 1)
         else:
             form = ReceiveForm()
         return render(request, 'strains_supply/receive_supply.html', {
             'supply': supply,
-            'form': form
+            'form': form,
+            'step': step
         })
-    elif step ==2:
+    elif step == 2:
         supply = services.get_supply(pk=pk)
         if request.method == "POST":
             form = UnpackForm(request.POST)
             if form.is_valid():
                 supply = services.unpack_supply(supply, form.cleaned_data)
-                return redirect('supply_main')
+                return redirect('receive_supply', pk=supply.pk, step=step + 1)
         else:
             form = UnpackForm()
-        return render(request, 'strains_supply/unpack_supply.html', {
+        return render(request, 'strains_supply/receive_supply.html', {
             'supply': supply,
-            'form': form
+            'form': form,
+            'step': step
+        })
+    elif step == 3:
+        supply = services.get_supply(pk=pk)
+        if request.method == "POST":
+            form = RemarkForm(request.POST)
+            if form.is_valid():
+                supply = services.add_remark_to_supply(supply, form.cleaned_data)
+                return redirect('supply_main')
+        else:
+            form = RemarkForm()
+        return render(request, 'strains_supply/receive_supply.html', {
+            'supply': supply,
+            'form': form,
+            'step': step
         })
