@@ -8,7 +8,7 @@ from django.db import migrations
 def populate_progress(apps, schema_editor):
     Progress = apps.get_model('organizations', 'Progress')
     User = apps.get_model('auth', 'User')
-    user = User.objects.get_or_create(username="admin")
+    user, _ = User.objects.get_or_create(username="admin")
     user.save()
     for name in ['начальный этап', 'давно в работе', 'завершен']:
         Progress.objects.create(name=name.capitalize(), inserted_by=user,
