@@ -58,10 +58,16 @@
             <small class="text-muted"></small>
           </td>
           <td>{% if item.received_at %}{{ item.received_at }}{% endif %}</td>
-          <td class="align-middle">{% if not supply.sent_at and not is_supply_moderator and not item.num %}
-            <a href="{% url 'receive_supply' pk=item.pk %}"
-               class="btn btn-secondary btn-sm text-nowrap">Принять поставку</a>
+          <td class="align-middle">
+            {% if not is_supply_moderator %}
+              {% if not item.received_at  %}
+              <a href="{% url 'receive_supply' pk=item.pk step=1 %}"
+                class="btn btn-secondary btn-sm text-nowrap">Принять поставку</a>
+              {% elif not item.num %}
+              <a href="{% url 'receive_supply' pk=item.pk step=2 %}"
+                class="btn btn-warning btn-sm text-nowrap">Продолжить прием поставки</a>
               {% endif %}
+            {% endif %}
           </td>
           {% endfor %}
       <tbody>
