@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'organizations',
     'strains_supply',
     'users',
+    'main',
 ]
 
 MIDDLEWARE = [
