@@ -141,4 +141,5 @@ class UnpackForm(forms.Form):
 
 class RemarkForm(forms.Form):
 
-    remark = forms.CharField(label='Комментарий', widget=Textarea)
+    remark = forms.CharField(label='Комментарий', widget=Textarea,
+                             required=False)
