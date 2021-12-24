@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('sent_at', models.DateTimeField(blank=True, null=True, verbose_name='Предполагаемая дата отправки')),
                 ('recieved_at', models.DateTimeField(blank=True, null=True, verbose_name='Дата приема')),
                 ('recieved_remark', models.CharField(blank=True, max_length=500, null=True, verbose_name='Примичание при приеме')),
-                ('num', models.DateTimeField(blank=True, null=True, verbose_name='Предполагаемое количество')),
+                ('num', models.IntegerField(blank=True, null=True, verbose_name='Предполагаемое количество')),
                 ('dest', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='strains_supply.companybranch', verbose_name='Филиал')),
                 ('source', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='strains_supply.source', verbose_name='Лечебное учреждение')),
                 ('source_city', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='strains_supply.city', verbose_name='Город')),
