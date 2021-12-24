@@ -13,6 +13,6 @@ class Profile(models.Model):
 
     def __str__(self):
         if self.company_branch:
-            return r'{self.user.name}, {self.company_branch.name}'
-        return self.user.name
+            return f'{self.user.username}, {self.company_branch.name}'
+        return self.user.username
 
