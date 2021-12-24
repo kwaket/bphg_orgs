@@ -91,8 +91,10 @@ def create_supply(inserted_by: User, source: Source, dest: CompanyBranch,
     return supply
 
 
-def get_companybranch(user: User) -> CompanyBranch:
+def get_companybranch(user: User) -> Union[CompanyBranch, None]:
     """Function return CompanyBranch related to user."""
+    if user.is_anonymous:
+        return None
     return user.profile.company_branch
 
 
@@ -180,10 +182,10 @@ def add_remark_to_supply(supply: Supply, remark:str) -> Supply:
 def count_unreceived_supply(user: User) -> int:
     company_branch = get_companybranch(user)
     if company_branch:
-        num = Supply.objects.filter(dest=company_branch, num=None).all().count()
+        return Supply.objects.filter(dest=company_branch, num=None).all().count()
     if is_supply_moderator(user):
-        num = Supply.objects.filter(num=None).all().count()
-    return num
+        return Supply.objects.filter(num=None).all().count()
+    return 0
 
 
 # permissions
