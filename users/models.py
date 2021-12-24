@@ -10,3 +10,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     company_branch = models.ForeignKey(CompanyBranch, on_delete=models.PROTECT,
                                       null=True, blank=True, verbose_name='Филиал')
+
+    def __str__(self):
+        if self.company_branch:
+            return r'{self.user.name}, {self.company_branch.name}'
+        return self.user.name
+
