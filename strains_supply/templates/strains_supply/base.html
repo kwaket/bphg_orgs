@@ -36,7 +36,7 @@
             <li class="nav-item">
             {% comment %} <a class="nav-link {% if request.path|startswith:'/projects' %} active {% endif %}" {% endcomment %}
               <a class="nav-link {% if request.path == '/strains_supply/' %} active {% endif %}" aria-current="page" href="{% url 'supply_main' %}">
-                Поставки
+                Главная
                 {% if unreceived_supply_num and is_supply_moderator %}
                 <span class="badge rounded-pill {% if added_at_recieving %}bg-danger{% else %}bg-secondary{% endif %}">
                   {{ unreceived_supply_num }}
