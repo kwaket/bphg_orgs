@@ -107,6 +107,7 @@ class BacteriaType(models.Model):
 
 class SupplyContent(models.Model):
     supply = ForeignKey(Supply, on_delete=models.PROTECT)
-    strain = ForeignKey(Strain, on_delete=models.PROTECT)
-    num = models.IntegerField(default=0)
-
+    bacteria_type = ForeignKey(BacteriaType, on_delete=models.PROTECT,
+        verbose_name='Наименование пробы')
+    strain = models.CharField(max_length=500, null=True, blank=True,
+        verbose_name='Штамм')
