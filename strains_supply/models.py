@@ -90,6 +90,14 @@ class Strain(models.Model):
         return self.name
 
 
+class BacteriaType(models.Model):
+    name = CharField(max_length=500, unique=True)
+    code = CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class SupplyContent(models.Model):
     supply = ForeignKey(Supply, on_delete=models.PROTECT)
     strain = ForeignKey(Strain, on_delete=models.PROTECT)
