@@ -83,16 +83,23 @@ class Supply(UpdatingMixin):
                                        verbose_name='Примичание при приеме')
 
 
-class Strain(models.Model):
+class Strain(models.Model):  # TODO: delete model
     name = CharField(max_length=500)
 
     def __str__(self):
         return self.name
 
 
+class BacteriaCode(models.Model):
+    name = CharField(max_length=50, unique=True, verbose_name='Название кода')
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class BacteriaType(models.Model):
-    name = CharField(max_length=500, unique=True)
-    code = CharField(max_length=50, unique=True)
+    name = CharField(max_length=500, unique=True, verbose_name='Название')
+    code = ForeignKey(BacteriaCode, verbose_name='Код', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
