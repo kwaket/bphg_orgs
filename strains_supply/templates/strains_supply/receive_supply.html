@@ -30,11 +30,11 @@
     {% if step == 2 %}
     <form method="POST" id="form-container" class="post-form">
       {% csrf_token %}
-      {{ form.management_form }}
-      {% for supply_form in form %}
+      {{ formset.management_form }}
+      {% for form in formset %}
       <div class="sample-form">
         <hr>
-        {% bootstrap_form supply_form layout='horizontail' %}
+        {% bootstrap_form form layout='horizontail' %}
       </div>
       {% endfor %}
 
@@ -80,16 +80,9 @@
 {% block scripts %}
 {{  block.super }}
 <script>
-
 (function() {
-  {% comment %} const form = document.forms[0] {% endcomment %}
-  {% comment %} sendBtn = form.querySelector('button[type="submit"]') {% endcomment %}
-  {% comment %} console.log(form); {% endcomment %}
-  {% comment %} console.log(sendBtn, '-------'); {% endcomment %}
-
   let supplyContentForms = document.querySelectorAll('.sample-form')
   let container = document.querySelector("#form-container")
-  console.log(container, 'container')
   let addButton = document.querySelector("#add-form")
   let addButtonsBlock = document.querySelector(".add-item-block")
   let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
@@ -99,14 +92,10 @@
 
   function addForm(e) {
     e.preventDefault()
-
-    console.log(supplyContentForms)
     let newForm = supplyContentForms[0].cloneNode(true)
     let formRegex = RegExp(`form-(\\d){1}-`, 'g')
-
     formNum++
     newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
-    console.log(container, newForm, addButtonsBlock)
     container.insertBefore(newForm, addButtonsBlock)
     totalForms.setAttribute('value', `${formNum+1}`)
   }

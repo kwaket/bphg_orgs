@@ -124,7 +124,7 @@ def receive_supply(request, pk, step):
                 initial=[{'supply': supply} for _ in range(3)])
         return render(request, 'strains_supply/receive_supply.html', {
             'supply': supply,
-            'form': formset,
+            'formset': formset,
             'step': step,
         })
     elif step == 3:
