@@ -2,9 +2,9 @@ from django.shortcuts import redirect, render
 
 from strains_supply import services, utils
 
-from .models import Supply
 from .forms import (
-    DetailForm, ReceiveForm, RemarkForm, SourceForm, DestForm, SupplyForm, UnpackForm
+    DetailForm, ReceiveForm, RemarkForm, SourceForm, DestForm, SupplyContentFormSet,
+    SupplyForm
 )
 
 
@@ -115,16 +115,17 @@ def receive_supply(request, pk, step):
     elif step == 2:
         supply = services.get_supply(pk=pk)
         if request.method == "POST":
-            form = UnpackForm(request.POST)
-            if form.is_valid():
-                supply = services.unpack_supply(supply, form.cleaned_data)
+            formset = SupplyContentFormSet(request.POST)
+            if formset.is_valid():
+                supply = services.unpack_supply(formset.cleaned_data)
                 return redirect('receive_supply', pk=supply.pk, step=step + 1)
         else:
-            form = UnpackForm()
+            formset = SupplyContentFormSet(
+                initial=[{'supply': supply} for _ in range(3)])
         return render(request, 'strains_supply/receive_supply.html', {
             'supply': supply,
-            'form': form,
-            'step': step
+            'form': formset,
+            'step': step,
         })
     elif step == 3:
         supply = services.get_supply(pk=pk)

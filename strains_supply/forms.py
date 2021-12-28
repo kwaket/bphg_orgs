@@ -1,9 +1,10 @@
 import datetime as dt
 
 from django import forms
-from django.forms.widgets import TextInput, Textarea
+from django.forms.models import formset_factory
+from django.forms.widgets import Textarea
 
-from .models import Source, Strain, Supply, CompanyBranch
+from .models import BacteriaType, Source, Supply, CompanyBranch, SupplyContent
 
 
 class DateInput(forms.DateInput):
@@ -108,38 +109,18 @@ class ReceiveForm(forms.Form):
                                       initial=dt.datetime.now)
 
 
-class UnpackForm(forms.Form):
+class SupplyContentForm(forms.ModelForm):
+    supply = forms.ModelChoiceField(queryset = Supply.objects.all(),
+        widget = forms.HiddenInput())
 
-    def clean(self):
-        for key, val in self.cleaned_data.items():
-            if not val:
-                continue
-            self.cleaned_data[key] = int(val)
-        return self.cleaned_data
+    class Meta:
+        model = SupplyContent
+        fields = '__all__'
 
-    @property
-    def dynamic_fields(self):
-        fields = {}
-        for k, v in self.data.items():
-            if k == 'csrfmiddlewaretoken':
-                continue
-            fields[k] = v
-        return fields
 
-    def _clean_fields(self):
-        self.cleaned_data = self.dynamic_fields
-
-    def __init__(self, *args, **kwargs):
-        super(UnpackForm, self).__init__(*args, **kwargs)
-        strains = Strain.objects.all()
-        for s in strains:
-            self.fields[s.pk] = forms.CharField(
-                label=s.name,
-                initial=0,
-                widget=NumberInput)
+SupplyContentFormSet = formset_factory(SupplyContentForm, extra=0)
 
 
 class RemarkForm(forms.Form):
-
     remark = forms.CharField(label='Комментарий', widget=Textarea,
                              required=False)

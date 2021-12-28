@@ -4,7 +4,7 @@ import datetime as dt
 from django.shortcuts import get_object_or_404
 from django.db.models import QuerySet, Q, Sum
 
-from .models import CompanyBranch, Source, City, Strain, Supply, SupplyContent
+from .models import BacteriaType, CompanyBranch, Source, City, Strain, Supply, SupplyContent
 from django.contrib.auth.models import User
 from . import utils
 
@@ -132,7 +132,6 @@ def get_newest_supply_for_user(user: User, limit=25) -> Union[QuerySet, list]:
     return []
 
 
-
 def get_supply(pk: int) -> Supply:
     return get_object_or_404(Supply, pk=pk)
 
@@ -152,24 +151,19 @@ def get_strain(pk: int) -> Strain:
     return get_object_or_404(Strain, pk=pk)
 
 
-def add_supply_content(supply: Supply, strain_id: int, num: int):
-    strain = get_strain(strain_id)
-    supply_content = SupplyContent.objects.create(
-        supply=supply,
-        strain=strain,
-        num=num
-    )
-    supply_content.save()
-    return supply_content
+def save_supplycontent_item(supply: Supply, bacteria_type: BacteriaType,
+                            strain: str) -> SupplyContent:
+    item = SupplyContent.objects.create(supply=supply, bacteria_type=bacteria_type,
+                                        strain=strain)
+    return item
 
 
-def unpack_supply(supply: Supply, content: List[dict]) -> Supply:
-    for strain_id, num in content.items():
-        if num < 1:
-            continue
-        add_supply_content(supply, strain_id, num)
-    total = SupplyContent.objects.filter(supply=supply).aggregate(Sum("num"))
-    supply.num = total['num__sum']
+def unpack_supply(content: List[dict]) -> Supply:
+    for item in content:
+        save_supplycontent_item(**item)
+    supply = content[0]['supply']
+    total = SupplyContent.objects.filter(supply=supply).count()
+    supply.num = total
     supply.save()
     return supply
 
