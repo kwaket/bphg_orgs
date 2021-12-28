@@ -118,7 +118,8 @@ class SupplyContentForm(forms.ModelForm):
         fields = '__all__'
 
 
-SupplyContentFormSet = formset_factory(SupplyContentForm, extra=0)
+SupplyContentFormSet = formset_factory(SupplyContentForm, extra=0,
+    can_delete=True, can_delete_extra=True)
 
 
 class RemarkForm(forms.Form):

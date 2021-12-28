@@ -151,8 +151,8 @@ def get_strain(pk: int) -> Strain:
     return get_object_or_404(Strain, pk=pk)
 
 
-def save_supplycontent_item(supply: Supply, bacteria_type: BacteriaType,
-                            strain: str) -> SupplyContent:
+def update_supplycontent_item(supply: Supply, bacteria_type: BacteriaType,
+                            strain: str, delete:str) -> SupplyContent:
     item = SupplyContent.objects.create(supply=supply, bacteria_type=bacteria_type,
                                         strain=strain)
     return item
@@ -160,7 +160,10 @@ def save_supplycontent_item(supply: Supply, bacteria_type: BacteriaType,
 
 def unpack_supply(content: List[dict]) -> Supply:
     for item in content:
-        save_supplycontent_item(**item)
+        item['delete'] = item.pop('DELETE')
+        if item.get('bacteria_type') and item.get('delete'):
+            continue
+        update_supplycontent_item(**item)
     supply = content[0]['supply']
     total = SupplyContent.objects.filter(supply=supply).count()
     supply.num = total
