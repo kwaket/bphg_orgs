@@ -96,6 +96,11 @@ def supply_new(request):
     })
 
 
+def supply_detail(request, pk):
+    supply = services.get_supply_or_404(pk=pk)
+    return render(request, 'strains_supply/supply_detail.html',
+        {'supply': supply})
+
 def receive_supply(request, pk, step):
     supply = services.get_supply(pk=pk)
     if step == 1:

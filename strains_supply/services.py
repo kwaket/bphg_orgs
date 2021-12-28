@@ -76,6 +76,8 @@ def get_or_create_dest(dest_id: int, name: str,
         dest = create_dest(name, inserted_by=inserted_by)
     return dest
 
+def get_supply_or_404(pk: int):
+    return get_object_or_404(Supply, pk=pk)
 
 def create_supply(inserted_by: User, source: Source, dest: CompanyBranch,
                   suggested_sent_date: dt.date=None, suggested_num: int=None) -> Supply:

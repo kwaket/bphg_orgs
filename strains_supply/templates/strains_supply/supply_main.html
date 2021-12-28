@@ -26,7 +26,11 @@
       <tbody>
         {% for item in supply_list %}
         <tr>
-          <td>{{ item.pk }}</td>
+          <td>
+            <a href="{% url 'supply_detail' pk=item.pk %}">
+            {{ item.pk }}
+            </a>
+          </td>
           <td>
             {{ item.source.name }}
             <br>
