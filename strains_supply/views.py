@@ -89,7 +89,7 @@ def supply_new(request):
             prev = f'/strains_supply/new?step={step - 1}&source={source}&dest={dest}&suggested_num={num}&suggested_sent_date={sent_date}'  # TODO: generate url with function
             form = SupplyForm(initial=fields)
 
-    return render(request, 'strains_supply/supply_edit.html', {
+    return render(request, 'strains_supply/supply_add.html', {
         'form': form,
         'step': step,
         'prev': prev
