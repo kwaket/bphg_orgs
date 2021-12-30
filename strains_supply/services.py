@@ -153,11 +153,26 @@ def get_strain(pk: int) -> Strain:
     return get_object_or_404(Strain, pk=pk)
 
 
+def get_supplycontent_itmes(supply: Supply) -> List[SupplyContent]:
+    return SupplyContent.objects.filter(supply=supply).all()
+
+
+def count_supplycontent_itmes(supply: Supply) -> List[SupplyContent]:
+    return get_supplycontent_itmes(supply).count()
+
+
 def update_supplycontent_item(supply: Supply, bacteria_type: BacteriaType,
-                            strain: str, delete:str) -> SupplyContent:
+                              strain: str, delete:str) -> SupplyContent:
     item = SupplyContent.objects.create(supply=supply, bacteria_type=bacteria_type,
                                         strain=strain)
     return item
+
+
+def update_supplycontent(supply: Supply, formset) -> Supply:
+    formset.save()
+    supply.num = count_supplycontent_itmes(supply)
+    supply.save()
+    return supply
 
 
 def unpack_supply(content: List[dict]) -> Supply:
@@ -178,6 +193,7 @@ def add_remark_to_supply(supply: Supply, remark:str) -> Supply:
     supply.save()
     return supply
 
+
 def count_unreceived_supply(user: User) -> int:
     company_branch = get_companybranch(user)
     if company_branch:
@@ -193,3 +209,7 @@ def is_supply_moderator(user: User) -> bool:
     if gr:
         return True
     return False
+
+
+def can_edit_supply_receiving(supply: Supply, user: User) -> bool:
+    return user.profile.company_branch == supply.dest
