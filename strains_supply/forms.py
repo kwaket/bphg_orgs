@@ -124,6 +124,7 @@ class ReceiveForm(forms.ModelForm):
                     '%Y-%m-%dT%H:%M:%S')
             })
         super(ReceiveForm, self).__init__(*args, **kwargs)
+        self.fields['received_at'].required = True
 
 
 class SupplyContentForm(forms.ModelForm):
