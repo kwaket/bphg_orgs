@@ -10,6 +10,6 @@ urlpatterns = [
         name='receive_supply'),
     path('supply/<int:pk>', login_required(views.supply_detail),
         name='supply_detail'),
-    path('supply/<int:pk>/edit', login_required(views.supply_edit),
+    path('supply/<int:pk>/edit/steps/<int:step>', login_required(views.supply_edit),
         name='supply_edit')
 ]

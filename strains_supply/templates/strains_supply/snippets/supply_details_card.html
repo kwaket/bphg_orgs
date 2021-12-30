@@ -2,28 +2,29 @@
   <div class="card-body">
     <h5 class="card-title">Детали поставки</h5>
     <dl class="row">
-      <dt class="col-md-2">Откуда</dt>
-      <dd class="col-md-10">
+      <dt class="col-md-4">Откуда</dt>
+      <dd class="col-md-8">
         {{ supply.source.name }}<br>
         <span class="text-muted">{{ supply.source.city.name }}</span>
       </dd>
-      <dt class="col-md-2">Куда</dt>
-      <dd class="col-md-10">{{ supply.dest.name }}</dd>
+      <dt class="col-md-4">Куда</dt>
+      <dd class="col-md-8">{{ supply.dest.name }}</dd>
       {% if supply.suggested_sent_date %}
-      <dt class="col-md-2">Предполагаемая дата отправки</dt>
-      <dd class="col-md-10">{{ supply.suggested_sent_date }}</dd>
+      <dt class="col-md-4">Предполагаемая дата отправки</dt>
+      <dd class="col-md-8">{{ supply.suggested_sent_date }}</dd>
       {% endif %}
       {% if supply.sent_at %}
-      <dt class="col-md-2">Фактическая дата отправки</dt>
-      <dd class="col-md-10">{{ supply.sent_at }}</dd>
+      <dt class="col-md-4">Фактическая дата отправки</dt>
+      <dd class="col-md-8">{{ supply.sent_at }}</dd>
       {% endif %}
       {% if supply.suggested_num %}
-      <dt class="col-md-2">Предполагаемое количество</dt>
-      <dd class="col-md-10">{{ supply.suggested_num }}</dd>
+      <dt class="col-md-4">Предполагаемое количество</dt>
+      <dd class="col-md-8">{{ supply.suggested_num }}</dd>
       {% endif %}
       {% if supply.num %}
-      <dt class="col-md-2">Количество</dt>
-      <dd class="col-md-10">{{ supply.num }}</dd>
-      {% endif %}   </dl>
+      <dt class="col-md-4">Количество</dt>
+      <dd class="col-md-8">{{ supply.num }}</dd>
+      {% endif %}
+    </dl>
   </div>
 </div>

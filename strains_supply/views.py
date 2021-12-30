@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render
+from django.core.exceptions import PermissionDenied
 
 from strains_supply import services, utils
+from strains_supply.models import SupplyContent
 
 from .forms import (
     DetailForm, ReceiveForm, RemarkForm, SourceForm, DestForm, SupplyContentFormSet,
-    SupplyForm
+    SupplyContentEditFormSet, SupplyForm
 )
 
 
@@ -109,16 +111,16 @@ def supply_edit(request, pk, step=1):
             return render(request, 'strains_supply/supply_edit.html',
                 {'supply': supply,
                 'form': form})
-    if services.can_edit_supply(supply, request.user):
+    if services.can_edit_supply_receiving(supply, request.user):
         if step == 1:
             if request.method == "POST":
                 form = ReceiveForm(request.POST)
                 if form.is_valid():
                     supply = services.receive_supply(supply=supply, user=request.user,
                         **form.cleaned_data)
-                    return redirect('receive_supply', pk=supply.pk, step=step + 1)
+                    return redirect('supply_edit', pk=supply.pk, step=step + 1)
             else:
-                form = ReceiveForm(initial={''})
+                form = ReceiveForm(instance=supply)
             return render(request, 'strains_supply/receive_supply.html', {
                 'supply': supply,
                 'form': form,
@@ -127,17 +129,18 @@ def supply_edit(request, pk, step=1):
         elif step == 2:
             supply = services.get_supply(pk=pk)
             if request.method == "POST":
-                formset = SupplyContentFormSet(request.POST)
+                formset = SupplyContentEditFormSet(request.POST)
                 if formset.is_valid():
-                    supply = services.unpack_supply(formset.cleaned_data)
-                    return redirect('receive_supply', pk=supply.pk, step=step + 1)
+                    services.update_supplycontent(supply, formset)
+                    return redirect('supply_edit', pk=supply.pk, step=step + 1)
             else:
-                formset = SupplyContentFormSet(
-                    initial=[{'supply': supply} for _ in range(3)])
+                queryset = SupplyContent.objects.filter(supply=supply).all()
+                formset = SupplyContentEditFormSet(queryset=queryset)
             return render(request, 'strains_supply/receive_supply.html', {
                 'supply': supply,
                 'formset': formset,
                 'step': step,
+                'edit': True,
             })
         elif step == 3:
             supply = services.get_supply(pk=pk)
@@ -153,6 +156,8 @@ def supply_edit(request, pk, step=1):
                 'form': form,
                 'step': step
             })
+    else:
+        raise PermissionDenied()
 
 
 def supply_detail(request, pk):

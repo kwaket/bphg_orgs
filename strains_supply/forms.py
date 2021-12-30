@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django import forms
+from django.forms import widgets, modelformset_factory
 from django.forms.models import formset_factory
 from django.forms.widgets import Textarea
 
@@ -13,7 +14,12 @@ class DateInput(forms.DateInput):
 
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
-    format = "%d.%m.%Y %H:%M:%S %Z"
+    input_formats = [
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S.%f",
+        "%Y-%m-%dT%H:%M",
+        '%Y-%m-%d'
+    ]
 
 
 class NumberInput(forms.NumberInput):
@@ -99,14 +105,25 @@ class SupplyForm(forms.ModelForm):
         }
 
 
-class ReceiveForm(forms.Form):
-    sent_at = forms.DateField(label='Фактическая дата отправки',
-                              required=False,
-                              help_text="Необязательное поле",
-                              widget=DateInput)
-    received_at = forms.DateTimeField(label='Дата получения',
-                                      widget=DateTimeInput,
-                                      initial=dt.datetime.now)
+class ReceiveForm(forms.ModelForm):
+
+    class Meta:
+        model = Supply
+        fields = ['sent_at', 'received_at']
+
+        widgets = {
+            'sent_at': DateInput,
+            'received_at': DateTimeInput
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ReceiveForm, self).__init__(*args, **kwargs)
+        if self.instance.received_at:
+            kwargs.update(initial={
+                'received_at': self.instance.received_at.strftime(
+                    '%Y-%m-%dT%H:%M:%S')
+            })
+        super(ReceiveForm, self).__init__(*args, **kwargs)
 
 
 class SupplyContentForm(forms.ModelForm):
@@ -120,6 +137,12 @@ class SupplyContentForm(forms.ModelForm):
 
 SupplyContentFormSet = formset_factory(SupplyContentForm, extra=0,
     can_delete=True, can_delete_extra=True)
+
+
+SupplyContentEditFormSet  = modelformset_factory(SupplyContent,
+    fields=('id', 'supply', 'bacteria_type', 'strain',), extra=0,
+    can_delete=True, can_delete_extra=True,
+    widgets={'supply': forms.HiddenInput()})
 
 
 class RemarkForm(forms.Form):
