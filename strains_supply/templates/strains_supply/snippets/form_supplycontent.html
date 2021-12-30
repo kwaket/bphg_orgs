@@ -39,7 +39,7 @@
 </div>
 
 <hr>
-{% if mode == 'edit' %}
+{% if mode != 'edit' %}
 <button type="submit" class="btn btn-primary">
   Далее
 </button>
@@ -68,10 +68,15 @@
       let formRegex = RegExp(`form-(\\d){1}-`, 'g')
       formNum++
       newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+      hiddenFields = newForm.querySelectorAll('input[type="hidden"]');
+      hiddenFields.forEach(input => {
+        if (input.name.endsWith('-id')) {
+          input.value = null
+        }});
       container.insertBefore(newForm, addButtonsBlock)
       totalForms.setAttribute('value', `${formNum+1}`)
     }
-
+{% comment %}
     function isDeleteButton(elem) {
       if (elem.tagName.toLowerCase() == 'span') {
         btn = elem.closest('button')
@@ -97,7 +102,7 @@
         itemForm.style.display = 'none'
       }
     })
-
+ {% endcomment %}
   })();
 
 </script>
