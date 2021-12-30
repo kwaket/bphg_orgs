@@ -22,7 +22,7 @@ h1, h2, h3 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
 }
 
 .header ul.navbar-nav {

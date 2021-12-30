@@ -96,6 +96,65 @@ def supply_new(request):
     })
 
 
+def supply_edit(request, pk, step=1):
+    supply = services.get_supply_or_404(pk=pk)
+    if services.is_supply_moderator(request.user):
+        if request.method == "POST":
+            form = SupplyForm(request.POST, instance=supply)
+            if form.is_valid():
+                form.save()  # TODO: move to services
+                return redirect('supply_main')
+        else:
+            form = SupplyForm(instance=supply)
+            return render(request, 'strains_supply/supply_edit.html',
+                {'supply': supply,
+                'form': form})
+    if services.can_edit_supply(supply, request.user):
+        if step == 1:
+            if request.method == "POST":
+                form = ReceiveForm(request.POST)
+                if form.is_valid():
+                    supply = services.receive_supply(supply=supply, user=request.user,
+                        **form.cleaned_data)
+                    return redirect('receive_supply', pk=supply.pk, step=step + 1)
+            else:
+                form = ReceiveForm(initial={''})
+            return render(request, 'strains_supply/receive_supply.html', {
+                'supply': supply,
+                'form': form,
+                'step': step
+            })
+        elif step == 2:
+            supply = services.get_supply(pk=pk)
+            if request.method == "POST":
+                formset = SupplyContentFormSet(request.POST)
+                if formset.is_valid():
+                    supply = services.unpack_supply(formset.cleaned_data)
+                    return redirect('receive_supply', pk=supply.pk, step=step + 1)
+            else:
+                formset = SupplyContentFormSet(
+                    initial=[{'supply': supply} for _ in range(3)])
+            return render(request, 'strains_supply/receive_supply.html', {
+                'supply': supply,
+                'formset': formset,
+                'step': step,
+            })
+        elif step == 3:
+            supply = services.get_supply(pk=pk)
+            if request.method == "POST":
+                form = RemarkForm(request.POST)
+                if form.is_valid():
+                    supply = services.add_remark_to_supply(supply, form.cleaned_data)
+                    return redirect('supply_main')
+            else:
+                form = RemarkForm()
+            return render(request, 'strains_supply/receive_supply.html', {
+                'supply': supply,
+                'form': form,
+                'step': step
+            })
+
+
 def supply_detail(request, pk):
     supply = services.get_supply_or_404(pk=pk)
     return render(request, 'strains_supply/supply_detail.html',

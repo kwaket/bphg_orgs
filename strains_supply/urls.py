@@ -9,5 +9,7 @@ urlpatterns = [
     path('supply/<int:pk>/receiving/steps/<int:step>', login_required(views.receive_supply),
         name='receive_supply'),
     path('supply/<int:pk>', login_required(views.supply_detail),
-        name='supply_detail')
+        name='supply_detail'),
+    path('supply/<int:pk>/edit', login_required(views.supply_edit),
+        name='supply_edit')
 ]
