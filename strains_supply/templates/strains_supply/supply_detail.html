@@ -1,52 +1,64 @@
 {% extends 'strains_supply/base.html' %}
 
-
 {% load django_bootstrap5 %}
 
 {% block content %}
 
 <div class="row justify-content-center">
   <div class="col col-md-8 col-lg-6">
-    <h1>Поставка № {{ supply.pk }}</h1>
-</div>
-<div class="row justify-content-center">
-  <div class="col col-md-8 col-lg-6">
-    <dl class="row">
-      <dt class="col-sm-3">Откуда</dt>
-      <dd class="col-sm-9">{{ supply.source.name }}<br>
-        <span class="text-muted">{{ supply.source.city }}</dd>
-
-      <dt class="col-sm-3">Куда</dt>
-      <dd class="col-sm-9">{{ supply.dest }}</dd>
-      <dt class="col-sm-3">Отправлено</dt>
-      <dd class="col-sm-9">{% if supply.sent_at %}{{ supply.sent_at }}{% else %}<span class="text-muted">Дата не указана</span>{% endif %}</dd>
-      <dt class="col-sm-3">Получено</dt>
-      <dd class="col-sm-9">{{ supply.received_at }}</dd>
-
-
-      <dt class="col-sm-3">Общее количество</dt>
-      <dd class="col-sm-9">{{ supply.num }}</dd>
-
-      <dt class="col-sm-3">Состав</dt>
-      <dd class="col-sm-9">
-        <table class="table table-sm">
-        <tr><th>Тип</th><th>Штамм</th></tr>
-        {% for item in supply.supplycontent_set.all %}
-        <tr>
-          <td>{{ item.bacteria_type }}</td><td>{{ item.strain }}</td>
-        <tr>
-        {% endfor %}
-        </table>
-      </dd>
-
-      <dt class="col-sm-3 text-muted">Добалено</dt>
-      <dd class="col-sm-9 text-muted">{{ supply.inserted_at }}</dd>
-
-      <dt class="col-sm-3 text-muted">Добавил пользователь</dt>
-      <dd class="col-sm-9 text-muted">{{ supply.inserted_by }}</dd>
-
-    </dl>
+    <div class="header-group">
+      <h1>Поставка № {{ supply.pk }}</h1>
+      <a class="btn btn-outline-primary btn-sm"
+         href="{% url 'supply_edit' pk=supply.pk  step=1%}">
+        <span class="bi bi-pencil-fill"><span>
+            Редактировать
+      </a>
+    </div>
   </div>
-</div>
 
-{% endblock %}
+  <div class="row justify-content-center">
+    <div class="col col-md-8 col-lg-6">
+      <dl class="row">
+        <dt class="col-sm-3">Откуда</dt>
+        <dd class="col-sm-9">{{ supply.source.name }}<br>
+          <span class="text-muted">{{ supply.source.city }}</dd>
+
+        <dt class="col-sm-3">Куда</dt>
+        <dd class="col-sm-9">{{ supply.dest }}</dd>
+        <dt class="col-sm-3">Отправлено</dt>
+        <dd class="col-sm-9">{% if supply.sent_at %}{{ supply.sent_at }}{% else %}<span class="text-muted">Дата не
+            указана</span>{% endif %}</dd>
+        <dt class="col-sm-3">Получено</dt>
+        <dd class="col-sm-9">{{ supply.received_at }}</dd>
+
+
+        <dt class="col-sm-3">Общее количество</dt>
+        <dd class="col-sm-9">{{ supply.num }}</dd>
+
+        <dt class="col-sm-3">Состав</dt>
+        <dd class="col-sm-9">
+          <table class="table table-sm">
+            <tr>
+              <th>Тип</th>
+              <th>Штамм</th>
+            </tr>
+            {% for item in supply.supplycontent_set.all %}
+            <tr>
+              <td>{{ item.bacteria_type }}</td>
+              <td>{{ item.strain }}</td>
+            <tr>
+              {% endfor %}
+          </table>
+        </dd>
+
+        <dt class="col-sm-3 text-muted">Добалено</dt>
+        <dd class="col-sm-9 text-muted">{{ supply.inserted_at }}</dd>
+
+        <dt class="col-sm-3 text-muted">Добавил пользователь</dt>
+        <dd class="col-sm-9 text-muted">{{ supply.inserted_by }}</dd>
+
+      </dl>
+    </div>
+  </div>
+
+  {% endblock %}
