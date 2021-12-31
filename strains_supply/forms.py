@@ -136,12 +136,9 @@ class SupplyContentForm(forms.ModelForm):
         fields = '__all__'
 
 
-SupplyContentFormSet = formset_factory(SupplyContentForm, extra=0,
-    can_delete=True, can_delete_extra=True)
-
-
-SupplyContentEditFormSet  = modelformset_factory(SupplyContent,
-    fields=('id', 'supply', 'bacteria_type', 'strain',), extra=0,
+SupplyContentFormSet  = modelformset_factory(SupplyContent,
+    fields=('id', 'supply', 'bacteria_type', 'strain',),
+    extra=5,
     can_delete=True, can_delete_extra=True,
     widgets={'supply': forms.HiddenInput()})
 

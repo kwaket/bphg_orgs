@@ -1,3 +1,5 @@
+from django.db.models.fields import IPAddressField
+from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from django.core.exceptions import PermissionDenied
 
@@ -5,8 +7,8 @@ from strains_supply import services, utils
 from strains_supply.models import SupplyContent
 
 from .forms import (
-    DetailForm, ReceiveForm, RemarkForm, SourceForm, DestForm, SupplyContentFormSet,
-    SupplyContentEditFormSet, SupplyForm
+    DetailForm, ReceiveForm, RemarkForm, SourceForm, DestForm,
+    SupplyContentFormSet, SupplyForm
 )
 
 
@@ -129,13 +131,14 @@ def supply_edit(request, pk, step=1):
         elif step == 2:
             supply = services.get_supply(pk=pk)
             if request.method == "POST":
-                formset = SupplyContentEditFormSet(request.POST)
+                formset = SupplyContentFormSet(request.POST)
                 if formset.is_valid():
                     services.update_supplycontent(supply, formset)
                     return redirect('supply_edit', pk=supply.pk, step=step + 1)
             else:
                 queryset = SupplyContent.objects.filter(supply=supply).all()
-                formset = SupplyContentEditFormSet(queryset=queryset)
+                formset = SupplyContentFormSet(queryset=queryset)
+                formset.extra = 0
             return render(request, 'strains_supply/receive_supply.html', {
                 'supply': supply,
                 'formset': formset,
@@ -165,6 +168,7 @@ def supply_detail(request, pk):
     return render(request, 'strains_supply/supply_detail.html',
         {'supply': supply})
 
+
 def receive_supply(request, pk, step):
     supply = services.get_supply(pk=pk)
     if step == 1:
@@ -186,11 +190,14 @@ def receive_supply(request, pk, step):
         if request.method == "POST":
             formset = SupplyContentFormSet(request.POST)
             if formset.is_valid():
-                supply = services.unpack_supply(formset.cleaned_data)
+                services.update_supplycontent(supply, formset)
                 return redirect('receive_supply', pk=supply.pk, step=step + 1)
         else:
+            extra = SupplyContentFormSet.extra
+            queryset = SupplyContent.objects.filter(supply=supply).all()
             formset = SupplyContentFormSet(
-                initial=[{'supply': supply} for _ in range(3)])
+                queryset=queryset,
+                initial=[{'supply': supply} for _ in range(extra)])
         return render(request, 'strains_supply/receive_supply.html', {
             'supply': supply,
             'formset': formset,
