@@ -1,5 +1,3 @@
-from django.db.models.fields import IPAddressField
-from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from django.core.exceptions import PermissionDenied
 
