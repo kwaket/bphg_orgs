@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.contrib.auth.models import User
 from django import forms
 
@@ -57,3 +58,10 @@ def get_source(source_id: int) -> Source:
 
 def get_dest(dest_id: int) -> CompanyBranch:
     return crud.get_dest(dest_id=dest_id)
+
+
+def get_supply(supply_id: int) -> Supply:
+    supply = crud.get_supply(supply_id)
+    if supply:
+        return supply
+    raise Http404

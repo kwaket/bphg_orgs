@@ -181,7 +181,7 @@ def supply_new(request):
 
 
 def supply_edit(request, pk, step=1):
-    supply = services.get_supply_or_404(pk=pk)
+    supply = services.get_supply(supply_id=pk)
     if services.is_supply_moderator(request.user):
         if request.method == "POST":
             form = SupplyForm(request.POST, instance=supply)
@@ -251,7 +251,7 @@ def supply_edit(request, pk, step=1):
 
 
 def supply_detail(request, pk):
-    supply = services.get_supply_or_404(pk=pk)
+    supply = services.get_supply(supply_id=pk)
     return render(request, "strains_supply/supply_detail.html", {"supply": supply})
 
 

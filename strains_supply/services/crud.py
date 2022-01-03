@@ -1,3 +1,5 @@
+from typing import Union
+
 from django import forms
 from django.contrib.auth.models import User
 from django.db.models import Model
@@ -70,6 +72,10 @@ def get_or_create_dest(
     if dest_id:
         return get_dest(dest_id)
     return create_dest(name, inserted_by)
+
+
+def get_supply(supply_id: int) -> Union[Supply, None]:
+    return Supply.objects.filter(pk=supply_id).first()
 
 
 def create_supply(model_form: forms.ModelForm, inserted_by: User):
