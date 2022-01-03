@@ -93,6 +93,10 @@ class DetailForm(forms.Form):
                              widget=NumberInput, required=False)
 
 
+class SuggestingDataForm(DetailForm):
+    pass
+
+
 class SupplyForm(forms.ModelForm):
 
     class Meta:
