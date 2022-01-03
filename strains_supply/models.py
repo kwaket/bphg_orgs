@@ -81,6 +81,18 @@ class Supply(UpdatingMixin):
                                        verbose_name='Дата приема')
     received_remark = models.CharField(max_length=500, null=True, blank=True,
                                        verbose_name='Примичание при приеме')
+    deleted_at = models.DateField(null=True, blank=True, verbose_name="Дата удаления")
+    deleted_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name="Удалил",
+        related_name="deleted_by",
+    )
+    deleted_remark = models.CharField(
+        max_length=500, verbose_name="Причина удаления", null=True, blank=True
+    )
 
 
 class Strain(models.Model):  # TODO: delete model
