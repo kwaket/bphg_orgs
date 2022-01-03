@@ -91,7 +91,7 @@ def get_or_create_dest(
 
 
 def get_supply(supply_id: int) -> Union[Supply, None]:
-    return Supply.objects.filter(pk=supply_id).first()
+    return Supply.objects.filter(pk=supply_id, deleted_at=None).first()
 
 
 def create_supply(model_form: forms.ModelForm, inserted_by: User) -> Supply:
@@ -108,6 +108,14 @@ def update_supply(
     supply = _fill_meta_fields(
         supply, supply.inserted_by, updated_by=updated_by, updated_at=updated_at
     )
+    supply.save()
+    return supply
+
+
+def delete_supply(model_form: forms.ModelForm, deleted_by: User) -> Supply:
+    supply = model_form.save()
+    supply.deleted_by = deleted_by
+    supply.deleted_at = dt.datetime.now()
     supply.save()
     return supply
 

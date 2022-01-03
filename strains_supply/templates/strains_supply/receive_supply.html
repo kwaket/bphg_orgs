@@ -5,11 +5,20 @@
 {% block content %}
 
 <div class="row justify-content-center">
-  <div class="col col-md-10 col-lg-8">
+  <div class="col col-md-12 col-lg-10">
     {% if mode != "edit" %}
     <h1>Прием поставки №{{ supply.pk }}</h1>
     {% else %}
-    <h1>Редактирование поставки №{{ supply.pk }}</h1>
+    <div class="header-group">
+      <h1>Редактирование поставки №{{ supply.pk }}</h1>
+      <a class="btn btn-outline-danger btn-sm"
+         href="{% url 'supply_delete' pk=supply.pk %}">
+        <span class="bi bi-trash"><span>
+            Удалить
+      </a>
+    </div>
+
+
     {% endif %}
 
     {% include 'strains_supply/snippets/supply_details_card.html' with supply=supply %}

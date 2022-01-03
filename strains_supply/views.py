@@ -2,6 +2,7 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import redirect, render
 from django.core.exceptions import PermissionDenied
+from django.contrib import messages
 
 from strains_supply import utils
 from strains_supply.models import SupplyContent
@@ -19,6 +20,7 @@ from .forms import (
     SuggestingDataForm,
     SupplyContentFormSet,
     SupplyForm,
+    DeleteSupplyForm,
 )
 
 
@@ -231,7 +233,7 @@ def supply_edit(request, pk, step=1):
             return render(
                 request,
                 "strains_supply/receive_supply.html",
-                {"supply": supply, "form": form, "step": step, "mode":"edit"},
+                {"supply": supply, "form": form, "step": step, "mode": "edit"},
             )
         elif step == 2:
             supply = services.get_supply(supply_id=pk)
@@ -252,7 +254,7 @@ def supply_edit(request, pk, step=1):
                     "formset": formset,
                     "step": step,
                     "edit": True,
-                    "mode": "edit"
+                    "mode": "edit",
                 },
             )
         elif step == 3:
@@ -260,7 +262,7 @@ def supply_edit(request, pk, step=1):
             if request.method == "POST":
                 form = RemarkForm(request.POST, instance=supply)
                 if form.is_valid():
-                    services.add_supply_remark(model_form=form)
+                    services.add_supply_remark(model_form=form, updated_by=request.user)
                     return redirect("supply_main")
             else:
                 form = RemarkForm()
@@ -323,7 +325,7 @@ def receive_supply(request, pk, step):
         if request.method == "POST":
             form = RemarkForm(request.POST, instance=supply)
             if form.is_valid():
-                services.add_supply_remark(model_form=form)
+                services.add_supply_remark(model_form=form, updated_by=request.user)
                 return redirect("supply_main")
         else:
             form = RemarkForm()
@@ -332,3 +334,20 @@ def receive_supply(request, pk, step):
             "strains_supply/receive_supply.html",
             {"supply": supply, "form": form, "step": step},
         )
+
+
+def supply_delete(request, pk):
+    supply = services.get_supply(supply_id=pk)
+    if request.method == "POST":
+        form = DeleteSupplyForm(request.POST, instance=supply)
+        if form.is_valid():
+            services.delete_supply(model_form=form, deleted_by=request.user)
+            messages.add_message(
+                request, messages.INFO, f"Поставка {supply.pk} успешно удалена."
+            )
+            return redirect("supply_main")
+    else:
+        form = DeleteSupplyForm(instance=supply)
+    return render(
+        request, "strains_supply/supply_delete.html", {"form": form, "supply": supply}
+    )

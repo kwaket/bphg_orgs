@@ -168,3 +168,24 @@ class RemarkForm(forms.ModelForm):
     class Meta:
         model = Supply
         fields = ["received_remark"]
+
+
+class DeleteSupplyForm(forms.ModelForm):
+
+    confirm_supply_id = forms.IntegerField(
+        label="Введите номер поставки чтобы подтвердить удление", widget=NumberInput
+    )
+
+    class Meta:
+        model = Supply
+        fields = ["deleted_remark"]
+        widgets = {"deleted_remark": Textarea}
+
+    def clean(self):
+        confirm_supply_id = self.cleaned_data["confirm_supply_id"]
+        if not isinstance(confirm_supply_id, int) and not confirm_supply_id.isdigit():
+            self.add_error("confirm_supply_id", "Указанное значение должно быть числом")
+        if self.instance.pk != int(confirm_supply_id):
+            self.add_error(
+                "confirm_supply_id", "Указанное значение не совпадает с номеном заявки"
+            )

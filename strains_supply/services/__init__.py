@@ -21,13 +21,14 @@ def get_newest_supply_for_user(user: User, limit: int = 10):
     """
     company_branch = permissions.get_user_companybranch(user)
     is_moderator = permissions.is_moderator(user)
+    queryset = Supply.objects.filter(deleted_at=None)
     if is_moderator:
-        supply_list = Supply.objects.order_by(
+        supply_list = queryset.order_by(
             "-received_at", "-sent_at", "-suggested_sent_date", "-received_at"
         )[:limit]
         return supply_list
     if company_branch:
-        supply_list = Supply.objects.filter(dest=company_branch).order_by(
+        supply_list = queryset.filter(dest=company_branch).order_by(
             "-received_at", "-sent_at", "-suggested_sent_date", "-received_at"
         )[:limit]
         return supply_list
@@ -91,4 +92,8 @@ def edit_supply_content(
 
 def add_supply_remark(model_form: forms.ModelForm) -> Supply:
     supply = model_form.save()
+
+
+def delete_supply(model_form: forms.ModelForm, deleted_by: User) -> Supply:
+    supply = crud.delete_supply(model_form=model_form, deleted_by=deleted_by)
     return supply
