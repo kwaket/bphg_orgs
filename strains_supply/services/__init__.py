@@ -90,8 +90,9 @@ def edit_supply_content(
     return supply
 
 
-def add_supply_remark(model_form: forms.ModelForm) -> Supply:
-    supply = model_form.save()
+def add_supply_remark(model_form: forms.ModelForm, updated_by: User) -> Supply:
+    supply = model_form.save()  # TODO: move to crud (update_supply with updated_by)
+    return supply
 
 
 def delete_supply(model_form: forms.ModelForm, deleted_by: User) -> Supply:
