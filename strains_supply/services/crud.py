@@ -83,6 +83,10 @@ def get_or_create_dest(
 ) -> CompanyBranch:
     if dest_id:
         return get_dest(dest_id)
+    alias = utils.get_alias(name)
+    dest = CompanyBranch.objects.filter(alias=alias).first()
+    if dest:
+        return dest
     return create_dest(name, inserted_by)
 
 
