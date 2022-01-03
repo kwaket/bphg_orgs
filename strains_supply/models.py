@@ -8,22 +8,24 @@ from strains_supply import utils
 
 
 class InsertingMixin(models.Model):
-    inserted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE, verbose_name='Добавил')
-    inserted_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Добавлено')
+    inserted_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Добавил"
+    )
+    inserted_at = models.DateTimeField(default=timezone.now, verbose_name="Добавлено")
 
     class Meta:
         abstract = True
 
 
 class UpdatingMixin(InsertingMixin):
-    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-            on_delete=models.CASCADE, verbose_name='Обновил',
-            related_name="%(app_label)s_%(class)s_related")
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Обновил",
+        related_name="%(app_label)s_%(class)s_related",
+    )
 
-    updated_at = models.DateTimeField(default=timezone.now,
-        verbose_name='Обновлено')
+    updated_at = models.DateTimeField(default=timezone.now, verbose_name="Обновлено")
 
     class Meta:
         abstract = True
@@ -40,47 +42,54 @@ class AliasMixin(models.Model):
 
 class City(UpdatingMixin, AliasMixin):
     alias = models.CharField(max_length=500, unique=True)
-    name = models.CharField(max_length=500, verbose_name='Название')
+    name = models.CharField(max_length=500, verbose_name="Название")
 
     def __str__(self) -> str:
         return self.name
 
 
 class Source(models.Model):
-    name = models.CharField(max_length=1000, verbose_name='Название')
+    name = models.CharField(max_length=1000, verbose_name="Название")
     city = models.ForeignKey(City, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return f'{self.city.name}, {self.name}'
+        return f"{self.city.name}, {self.name}"
 
     class Meta:
-        unique_together = ('name', 'city')
+        unique_together = ("name", "city")
 
 
 class CompanyBranch(UpdatingMixin, AliasMixin):
     alias = models.CharField(max_length=500, unique=True)
-    name = models.CharField(max_length=500, verbose_name='Название')
+    name = models.CharField(max_length=500, verbose_name="Название")
 
     def __str__(self) -> str:
         return self.name
 
 
 class Supply(UpdatingMixin):
-    source = models.ForeignKey(Source, verbose_name='Лечебное учреждение',
-                               on_delete=models.PROTECT)
-    dest = models.ForeignKey(CompanyBranch, verbose_name='Филиал',
-                             on_delete=models.PROTECT)
-    suggested_sent_date = models.DateField(null=True, blank=True,
-                                   verbose_name='Предполагаемая дата отправки')
-    suggested_num = models.IntegerField(null=True, blank=True,
-                               verbose_name='Предполагаемое количество')
-    sent_at = models.DateField(null=True, blank=True,
-                               verbose_name='Фактическа дата отправки')
-    num = models.IntegerField(null=True, blank=True, verbose_name='Количество')
-    received_at = models.DateTimeField(null=True, blank=True,
-                                       verbose_name='Дата приема')
-    received_remark = models.CharField(max_length=500, null=True, blank=True,
-                                       verbose_name='Примичание при приеме')
+    source = models.ForeignKey(
+        Source, verbose_name="Лечебное учреждение", on_delete=models.PROTECT
+    )
+    dest = models.ForeignKey(
+        CompanyBranch, verbose_name="Филиал", on_delete=models.PROTECT
+    )
+    suggested_sent_date = models.DateField(
+        null=True, blank=True, verbose_name="Предполагаемая дата отправки"
+    )
+    suggested_num = models.IntegerField(
+        null=True, blank=True, verbose_name="Предполагаемое количество"
+    )
+    sent_at = models.DateField(
+        null=True, blank=True, verbose_name="Фактическа дата отправки"
+    )
+    num = models.IntegerField(null=True, blank=True, verbose_name="Количество")
+    received_at = models.DateTimeField(
+        null=True, blank=True, verbose_name="Дата приема"
+    )
+    received_remark = models.CharField(
+        max_length=500, null=True, blank=True, verbose_name="Примичание при приеме"
+    )
     deleted_at = models.DateField(null=True, blank=True, verbose_name="Дата удаления")
     deleted_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -103,15 +112,15 @@ class Strain(models.Model):  # TODO: delete model
 
 
 class BacteriaCode(models.Model):
-    name = CharField(max_length=50, unique=True, verbose_name='Название кода')
+    name = CharField(max_length=50, unique=True, verbose_name="Название кода")
 
     def __str__(self) -> str:
         return self.name
 
 
 class BacteriaType(models.Model):
-    name = CharField(max_length=500, unique=True, verbose_name='Название')
-    code = ForeignKey(BacteriaCode, verbose_name='Код', on_delete=models.PROTECT)
+    name = CharField(max_length=500, unique=True, verbose_name="Название")
+    code = ForeignKey(BacteriaCode, verbose_name="Код", on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -119,7 +128,9 @@ class BacteriaType(models.Model):
 
 class SupplyContent(models.Model):
     supply = ForeignKey(Supply, on_delete=models.PROTECT)
-    bacteria_type = ForeignKey(BacteriaType, on_delete=models.PROTECT,
-        verbose_name='Наименование пробы')
-    strain = models.CharField(max_length=500, null=True, blank=True,
-        verbose_name='Штамм')
+    bacteria_type = ForeignKey(
+        BacteriaType, on_delete=models.PROTECT, verbose_name="Наименование пробы"
+    )
+    strain = models.CharField(
+        max_length=500, null=True, blank=True, verbose_name="Штамм"
+    )
