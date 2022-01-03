@@ -68,7 +68,6 @@ class DestForm(forms.Form):
 
     dest_id = forms.ChoiceField(
         label="Филиал назначения",
-        required=False,
         widget=forms.Select(attrs={"data-choose-item": "exists"}),
     )
     name = forms.CharField(
