@@ -22,6 +22,10 @@ from .forms import (
 )
 
 
+def _redirect_back(request):
+    return 'back' in request.POST
+
+
 def supply_main(request):
     supply_list = services.get_newest_supply_for_user(request.user, limit=10)
     return render(
@@ -38,14 +42,15 @@ def choose_sourse(request):
             source = services.choose_supply_source(
                 inserted_by=request.user, **form.cleaned_data
             )
-            request.session["source"] = source.id
-            return HttpResponseRedirect(reverse("choose_dest"))
+            request.session["source_id"] = source.id
+            return redirect(reverse("choose_dest"))
     else:
-        initial = utils.extract_from_session(request.session, ["source"])
+        initial = utils.extract_from_session(request.session, ["source_id"])
+        print(initial)
         form = SourceForm(initial=initial)
-        return render(
-            request, "strains_supply/supply_new.html", {"form": form, "step": 1}
-        )
+    return render(
+        request, "strains_supply/supply_new.html", {"form": form, "step": 1}
+    )
 
 
 def choose_dest(request):
@@ -55,10 +60,13 @@ def choose_dest(request):
             dest = services.choose_supply_dest(
                 inserted_by=request.user, **form.cleaned_data
             )
-            request.session["dest"] = dest.id
-            return HttpResponseRedirect(reverse("add_suggesting_data"))
+            request.session["dest_id"] = dest.id
+            if not _redirect_back(request):
+                return redirect(reverse("add_suggesting_data"))
+        if _redirect_back(request):
+            return redirect('choose_source')
     else:
-        initial = utils.extract_from_session(request.session, ["dest"])
+        initial = utils.extract_from_session(request.session, ["dest_id"])
         form = DestForm(initial=initial)
         return render(
             request, "strains_supply/supply_new.html", {"form": form, "step": 2}
@@ -74,7 +82,10 @@ def add_suggesting_data(request):
                 suggested_sent_date = suggested_sent_date.isoformat()
             request.session["suggested_sent_date"] = suggested_sent_date
             request.session["suggested_num"] = form.cleaned_data["suggested_num"]
-        return redirect("confirm_supply_creating")
+            if not _redirect_back(request):
+                return redirect("confirm_supply_creating")
+        if _redirect_back(request):
+            return redirect('choose_dest')
     else:
         initial = utils.extract_from_session(
             request.session, ["suggested_sent_date", "suggested_num"]
@@ -90,7 +101,11 @@ def confirm_supply_creating(request):
         form = SupplyForm(request.POST)
         if form.is_valid():
             services.add_supply(model_form=form, inserted_by=request.user)
-        return redirect("supply_main")
+
+            if not _redirect_back(request):
+                return redirect("supply_main")
+        if _redirect_back(request):
+            return redirect('add_suggesting_data')
     else:
         initial = utils.extract_from_session(
             request.session, ["source", "dest", "suggested_sent_date", "suggested_num"]
