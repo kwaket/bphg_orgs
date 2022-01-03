@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 from django.http import request
 
@@ -22,3 +23,12 @@ def extract_get_param(request: request) -> dict:
             val = None
         result[key] = val
     return result
+
+
+def extract_from_session(session, params: List[str]) -> dict:
+    res = {}
+    for key in params:
+        if key not in session.keys():
+            continue
+        res[key] = session[key]
+    return res
