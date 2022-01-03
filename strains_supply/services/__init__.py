@@ -1,6 +1,8 @@
+import datetime as dt
 from django.http import Http404
 from django.contrib.auth.models import User
 from django import forms
+from django.forms import modelformset_factory
 
 from strains_supply.models import CompanyBranch, Source, Supply
 
@@ -47,11 +49,6 @@ def choose_supply_dest(
     return crud.get_or_create_dest(dest_id=dest_id, name=name, inserted_by=inserted_by)
 
 
-def add_supply(model_form: forms.ModelForm, inserted_by: User) -> Supply:
-    supply = crud.create_supply(model_form, inserted_by)
-    return supply
-
-
 def get_source(source_id: int) -> Source:
     return crud.get_source(source_id=source_id)
 
@@ -65,3 +62,26 @@ def get_supply(supply_id: int) -> Supply:
     if supply:
         return supply
     raise Http404
+
+
+def add_supply(model_form: forms.ModelForm, inserted_by: User) -> Supply:
+    supply = crud.create_supply(model_form, inserted_by)
+    return supply
+
+
+def receive_supply(model_form: forms.ModelForm, received_by: User) -> Supply:
+    now = dt.datetime.now()
+    supply = crud.update_supply(
+        model_form=model_form, updated_by=received_by, updated_at=now
+    )
+    return supply
+
+
+def unpack_supply(supply: Supply, content_formset: modelformset_factory) -> Supply:
+    supply = crud.update_supplycontent(supply=supply, content_formset=content_formset)
+    return supply
+
+
+def add_supply_remark(model_form: forms.ModelForm) -> Supply:
+    supply = model_form.save()
+    return supply

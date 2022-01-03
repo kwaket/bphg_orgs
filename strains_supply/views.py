@@ -212,7 +212,7 @@ def supply_edit(request, pk, step=1):
                 {"supply": supply, "form": form, "step": step},
             )
         elif step == 2:
-            supply = services.get_supply(pk=pk)
+            supply = services.get_supply(supply_id=pk)
             if request.method == "POST":
                 formset = SupplyContentFormSet(request.POST)
                 if formset.is_valid():
@@ -233,11 +233,11 @@ def supply_edit(request, pk, step=1):
                 },
             )
         elif step == 3:
-            supply = services.get_supply(pk=pk)
+            supply = services.get_supply(supply_id=pk)
             if request.method == "POST":
-                form = RemarkForm(request.POST)
+                form = RemarkForm(request.POST, instance=supply)
                 if form.is_valid():
-                    supply = services.add_remark_to_supply(supply, form.cleaned_data)
+                    services.add_supply_remark(model_form=form)
                     return redirect("supply_main")
             else:
                 form = RemarkForm()
@@ -256,13 +256,13 @@ def supply_detail(request, pk):
 
 
 def receive_supply(request, pk, step):
-    supply = services.get_supply(pk=pk)
+    supply = services.get_supply(supply_id=pk)
     if step == 1:
         if request.method == "POST":
-            form = ReceiveForm(request.POST)
+            form = ReceiveForm(request.POST, instance=supply)
             if form.is_valid():
                 supply = services.receive_supply(
-                    supply=supply, user=request.user, **form.cleaned_data
+                    model_form=form, received_by=request.user
                 )
                 return redirect("receive_supply", pk=supply.pk, step=step + 1)
         else:
@@ -273,11 +273,12 @@ def receive_supply(request, pk, step):
             {"supply": supply, "form": form, "step": step},
         )
     elif step == 2:
-        supply = services.get_supply(pk=pk)
+        supply = services.get_supply(supply_id=pk)
         if request.method == "POST":
             formset = SupplyContentFormSet(request.POST)
             if formset.is_valid():
-                services.update_supplycontent(supply, formset)
+                # services.update_supplycontent(supply, formset)
+                services.unpack_supply(supply, formset)
                 return redirect("receive_supply", pk=supply.pk, step=step + 1)
         else:
             extra = SupplyContentFormSet.extra
@@ -295,11 +296,11 @@ def receive_supply(request, pk, step):
             },
         )
     elif step == 3:
-        supply = services.get_supply(pk=pk)
+        supply = services.get_supply(supply_id=pk)
         if request.method == "POST":
-            form = RemarkForm(request.POST)
+            form = RemarkForm(request.POST, instance=supply)
             if form.is_valid():
-                supply = services.add_remark_to_supply(supply, form.cleaned_data)
+                services.add_supply_remark(model_form=form)
                 return redirect("supply_main")
         else:
             form = RemarkForm()

@@ -1,17 +1,26 @@
-from typing import Union
+from typing import Union, List
 
 from django import forms
 from django.contrib.auth.models import User
 from django.db.models import Model
 
-from strains_supply.models import CompanyBranch, Source, City, Supply
+import datetime as dt
+
+from strains_supply.models import CompanyBranch, Source, City, Supply, SupplyContent
 
 from .. import utils
 
 
-def _fill_meta_fields(model: Model, inserted_by: User, updated_by: User = None):
+def _fill_meta_fields(
+    model: Model,
+    inserted_by: User,
+    updated_by: User = None,
+    updated_at: dt.datetime = None,
+):
     model.inserted_by = inserted_by
     model.updated_by = updated_by or inserted_by
+    if updated_at:
+        model.updated_at = updated_at
     return model
 
 
@@ -78,8 +87,34 @@ def get_supply(supply_id: int) -> Union[Supply, None]:
     return Supply.objects.filter(pk=supply_id).first()
 
 
-def create_supply(model_form: forms.ModelForm, inserted_by: User):
+def create_supply(model_form: forms.ModelForm, inserted_by: User) -> Supply:
     supply = model_form.save(commit=False)
     supply = _fill_meta_fields(supply, inserted_by=inserted_by)
+    supply.save()
+    return supply
+
+
+def update_supply(
+    model_form: forms.ModelForm, updated_by: User = None, updated_at: dt.datetime = None
+) -> Supply:
+    supply = model_form.save()
+    supply = _fill_meta_fields(
+        supply, supply.inserted_by, updated_by=updated_by, updated_at=updated_at
+    )
+    supply.save()
+    return supply
+
+
+def get_supplycontent_itmes(supply: Supply) -> List[SupplyContent]:
+    return SupplyContent.objects.filter(supply=supply).all()
+
+
+def count_supplycontent_itmes(supply: Supply) -> List[SupplyContent]:
+    return get_supplycontent_itmes(supply).count()
+
+
+def update_supplycontent(supply: Supply, content_formset) -> Supply:
+    content_formset.save()
+    supply.num = count_supplycontent_itmes(supply)
     supply.save()
     return supply

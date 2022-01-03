@@ -1,8 +1,8 @@
 import datetime as dt
 
 from django import forms
-from django.forms import widgets, modelformset_factory
-from django.forms.models import formset_factory
+from django.db.models import fields
+from django.forms import modelformset_factory
 from django.forms.widgets import Textarea
 
 from .models import BacteriaType, Source, Supply, CompanyBranch, SupplyContent
@@ -147,6 +147,10 @@ SupplyContentFormSet  = modelformset_factory(SupplyContent,
     widgets={'supply': forms.HiddenInput()})
 
 
-class RemarkForm(forms.Form):
-    remark = forms.CharField(label='Комментарий', widget=Textarea,
+class RemarkForm(forms.ModelForm):
+    received_remark = forms.CharField(label='Примечание', widget=Textarea,
                              required=False)
+
+    class Meta:
+        model = Supply
+        fields = ['received_remark']
