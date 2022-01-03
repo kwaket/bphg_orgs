@@ -6,13 +6,10 @@ from django.contrib import messages
 
 from strains_supply import utils
 from strains_supply.models import SupplyContent
-from strains_supply.services import services as services_crud
-
 from strains_supply import services
 from strains_supply import utils
 
 from .forms import (
-    DetailForm,
     ReceiveForm,
     RemarkForm,
     SourceForm,

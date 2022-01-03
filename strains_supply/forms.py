@@ -92,7 +92,7 @@ class DestForm(forms.Form):
         self.fields["dest_id"].choices = dests
 
 
-class DetailForm(forms.Form):
+class SuggestingDataForm(forms.Form):
 
     suggested_sent_date = forms.DateField(
         label="Предполагаемая дата отправки", widget=DateInput, required=False
@@ -100,10 +100,6 @@ class DetailForm(forms.Form):
     suggested_num = forms.IntegerField(
         label="Предполагаемое количество", widget=NumberInput, required=False
     )
-
-
-class SuggestingDataForm(DetailForm):
-    pass
 
 
 class SupplyForm(forms.ModelForm):
