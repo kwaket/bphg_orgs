@@ -231,7 +231,7 @@ def supply_edit(request, pk, step=1):
             return render(
                 request,
                 "strains_supply/receive_supply.html",
-                {"supply": supply, "form": form, "step": step},
+                {"supply": supply, "form": form, "step": step, "mode":"edit"},
             )
         elif step == 2:
             supply = services.get_supply(supply_id=pk)
@@ -252,6 +252,7 @@ def supply_edit(request, pk, step=1):
                     "formset": formset,
                     "step": step,
                     "edit": True,
+                    "mode": "edit"
                 },
             )
         elif step == 3:

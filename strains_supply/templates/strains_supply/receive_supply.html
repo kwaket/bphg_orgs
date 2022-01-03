@@ -6,7 +6,11 @@
 
 <div class="row justify-content-center">
   <div class="col col-md-10 col-lg-8">
+    {% if mode != "edit" %}
     <h1>Прием поставки №{{ supply.pk }}</h1>
+    {% else %}
+    <h1>Редактирование поставки №{{ supply.pk }}</h1>
+    {% endif %}
 
     {% include 'strains_supply/snippets/supply_details_card.html' with supply=supply %}
 
@@ -27,7 +31,7 @@
         </div>
         <span class="step-description">Коментарий</li>
     </ol>
-    {% if step == 2 and not edit %}
+    {% if step == 2 and mode != "edit" %}
       {% include 'strains_supply/snippets/form_supplycontent.html' with formset=formset %}
     {% elif step == 2 %}
       {% include 'strains_supply/snippets/form_supplycontent.html' with formset=formset mode='edit' %}
