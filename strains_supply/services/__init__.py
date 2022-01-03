@@ -98,3 +98,13 @@ def add_supply_remark(model_form: forms.ModelForm, updated_by: User) -> Supply:
 def delete_supply(model_form: forms.ModelForm, deleted_by: User) -> Supply:
     supply = crud.delete_supply(model_form=model_form, deleted_by=deleted_by)
     return supply
+
+
+def count_unreceived_supply(user: User) -> int:
+    company_branch = permissions.get_user_companybranch(user)
+    if company_branch:
+        return crud.get_supply_list().filter(dest=company_branch, num=None).all().count()
+    if permissions.is_moderator(user):
+        return crud.get_supply_list().filter(num=None).all().count()
+    return 0
+

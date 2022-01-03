@@ -6,6 +6,8 @@ from django.db.models import Model
 
 import datetime as dt
 
+from django.db.models.query import QuerySet
+
 from strains_supply.models import CompanyBranch, Source, City, Supply, SupplyContent
 
 from .. import utils
@@ -133,3 +135,7 @@ def update_supplycontent(supply: Supply, content_formset) -> Supply:
     supply.num = count_supplycontent_itmes(supply)
     supply.save()
     return supply
+
+
+def get_supply_list() -> QuerySet:
+    return Supply.objects.filter(deleted_at=None)
