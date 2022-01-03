@@ -24,11 +24,10 @@ from .forms import (
 
 def supply_main(request):
     supply_list = services.get_newest_supply_for_user(request.user, limit=10)
-    is_moderator = services.is_supply_moderator(request.user)
     return render(
         request,
         "strains_supply/supply_main.html",
-        {"supply_list": supply_list, "is_supply_moderator": is_moderator},
+        {"supply_list": supply_list},
     )
 
 
@@ -86,11 +85,11 @@ def confirm_supply_creating(request):
             services.add_supply(model_form=form, inserted_by=request.user)
         return redirect("supply_main")
     else:
-        initial = utils.extract_from_session(request.session,
-            ["source", "dest", "suggested_sent_date", "suggested_num"]
+        initial = utils.extract_from_session(
+            request.session, ["source", "dest", "suggested_sent_date", "suggested_num"]
         )
-        initial["source"] = services.get_source(source_id=initial['source'])
-        initial["dest"] = services.get_dest(dest_id=initial['dest'])
+        initial["source"] = services.get_source(source_id=initial["source"])
+        initial["dest"] = services.get_dest(dest_id=initial["dest"])
         form = SupplyForm(initial=initial)
         return render(request, "strains_supply/supply_new.html", {"form": form})
 
