@@ -58,7 +58,7 @@ def get_dest(dest_id: int) -> CompanyBranch:
 
 
 def create_dest(name: str, inserted_by: User) -> CompanyBranch:
-    dest = CompanyBranch.objects.create(name=name)
+    dest = CompanyBranch(name=name)
     dest = _fill_meta_fields(dest, inserted_by)
     dest.save()
     return dest

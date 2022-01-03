@@ -34,6 +34,7 @@ def get_newest_supply_for_user(user: User, limit: int = 10):
 def choose_supply_source(
     source_id: int = None, name: str = None, city: str = None, inserted_by: User = None
 ) -> Source:
+    city = crud.get_or_create_city(name=city, inserted_by=inserted_by)
     return crud.get_or_create_source(
         source_id=source_id, name=name, city=city, inserted_by=inserted_by
     )
@@ -42,9 +43,7 @@ def choose_supply_source(
 def choose_supply_dest(
     dest_id: int = None, name: str = None, city: str = None, inserted_by: User = None
 ) -> CompanyBranch:
-    if dest_id:
-        return crud.get_dest(dest_id)
-    return crud.get_or_create_dest(name, inserted_by)
+    return crud.get_or_create_dest(dest_id=dest_id, name=name, inserted_by=inserted_by)
 
 
 def add_supply(model_form: forms.ModelForm, inserted_by: User) -> Supply:
