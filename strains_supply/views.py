@@ -94,90 +94,90 @@ def confirm_supply_creating(request):
         return render(request, "strains_supply/supply_new.html", {"form": form})
 
 
-def supply_new(request):
-    services.test_fu()
-    step = int(request.GET.get("step", "1"))
-    prev = None
-    if request.method == "POST":
-        if step == 1:
-            form = SourceForm(request.POST)
-            if form.is_valid():
-                source = services_crud.get_or_create_source(
-                    inserted_by=request.user, **form.cleaned_data
-                )
-                return redirect(
-                    f"/strains_supply/new?step={step + 1}&source={source.id}"
-                )
-        elif step == 2:
-            source_id = request.GET.get("source")
-            form = DestForm(request.POST)
-            if form.is_valid():
-                dest = services.get_or_create_dest(
-                    inserted_by=request.user, **form.cleaned_data
-                )
-                return redirect(
-                    f"/strains_supply/new?step={step + 1}&source={source_id}&dest={dest.id}"
-                )
-        elif step == 3:
-            params = utils.extract_get_param(request)
-            source_id = params["source"]
-            dest_id = params["dest"]
-            form = DetailForm(request.POST)
-            if form.is_valid():
-                sent_date = form.cleaned_data["suggested_sent_date"]
-                num = form.cleaned_data["suggested_num"]
-                return redirect(
-                    f"/strains_supply/new?step={step + 1}&source={source_id}&dest={dest_id}&suggested_num={num}&suggested_sent_date={sent_date}"
-                )
+# def supply_new(request):
+#     services.test_fu()
+#     step = int(request.GET.get("step", "1"))
+#     prev = None
+#     if request.method == "POST":
+#         if step == 1:
+#             form = SourceForm(request.POST)
+#             if form.is_valid():
+#                 source = services_crud.get_or_create_source(
+#                     inserted_by=request.user, **form.cleaned_data
+#                 )
+#                 return redirect(
+#                     f"/strains_supply/new?step={step + 1}&source={source.id}"
+#                 )
+#         elif step == 2:
+#             source_id = request.GET.get("source")
+#             form = DestForm(request.POST)
+#             if form.is_valid():
+#                 dest = services.get_or_create_dest(
+#                     inserted_by=request.user, **form.cleaned_data
+#                 )
+#                 return redirect(
+#                     f"/strains_supply/new?step={step + 1}&source={source_id}&dest={dest.id}"
+#                 )
+#         elif step == 3:
+#             params = utils.extract_get_param(request)
+#             source_id = params["source"]
+#             dest_id = params["dest"]
+#             form = DetailForm(request.POST)
+#             if form.is_valid():
+#                 sent_date = form.cleaned_data["suggested_sent_date"]
+#                 num = form.cleaned_data["suggested_num"]
+#                 return redirect(
+#                     f"/strains_supply/new?step={step + 1}&source={source_id}&dest={dest_id}&suggested_num={num}&suggested_sent_date={sent_date}"
+#                 )
 
-        else:
-            form = SupplyForm(request.POST)
-            if form.is_valid():
-                services.create_supply(
-                    source=form.cleaned_data["source"],
-                    dest=form.cleaned_data["dest"],
-                    suggested_sent_date=form.cleaned_data["suggested_sent_date"],
-                    suggested_num=form.cleaned_data["suggested_num"],
-                    inserted_by=request.user,
-                )
-                return redirect("/strains_supply/")
-    else:
-        if step == 1:
-            fields = {}
-            source = request.GET.get("source")
-            if source:
-                fields["source_id"] = int(source)
-            form = SourceForm(initial=fields)
-        elif step == 2:
-            fields = {}
-            source = request.GET.get("source")
-            dest = request.GET.get("dest")
-            if dest:
-                fields["dest_id"] = int(dest)
-            form = DestForm(initial=fields)
-            prev = f"/strains_supply/new?step={step - 1}&source={source}"  # TODO: generate url with function
-        elif step == 3:
-            source = request.GET.get("source")
-            dest = request.GET.get("dest")
-            prev = f"/strains_supply/new?step={step - 1}&source={source}&dest={dest}"  # TODO: generate url with function
-            fields = utils.extract_get_param(request)
-            form = DetailForm(initial=fields)
-        else:
-            step = 4
-            fields = utils.extract_get_param(request)
+#         else:
+#             form = SupplyForm(request.POST)
+#             if form.is_valid():
+#                 services.create_supply(
+#                     source=form.cleaned_data["source"],
+#                     dest=form.cleaned_data["dest"],
+#                     suggested_sent_date=form.cleaned_data["suggested_sent_date"],
+#                     suggested_num=form.cleaned_data["suggested_num"],
+#                     inserted_by=request.user,
+#                 )
+#                 return redirect("/strains_supply/")
+#     else:
+#         if step == 1:
+#             fields = {}
+#             source = request.GET.get("source")
+#             if source:
+#                 fields["source_id"] = int(source)
+#             form = SourceForm(initial=fields)
+#         elif step == 2:
+#             fields = {}
+#             source = request.GET.get("source")
+#             dest = request.GET.get("dest")
+#             if dest:
+#                 fields["dest_id"] = int(dest)
+#             form = DestForm(initial=fields)
+#             prev = f"/strains_supply/new?step={step - 1}&source={source}"  # TODO: generate url with function
+#         elif step == 3:
+#             source = request.GET.get("source")
+#             dest = request.GET.get("dest")
+#             prev = f"/strains_supply/new?step={step - 1}&source={source}&dest={dest}"  # TODO: generate url with function
+#             fields = utils.extract_get_param(request)
+#             form = DetailForm(initial=fields)
+#         else:
+#             step = 4
+#             fields = utils.extract_get_param(request)
 
-            source = fields["source"]
-            dest = fields["dest"]
-            num = fields["suggested_num"]
-            sent_date = fields["suggested_sent_date"]
-            prev = f"/strains_supply/new?step={step - 1}&source={source}&dest={dest}&suggested_num={num}&suggested_sent_date={sent_date}"  # TODO: generate url with function
-            form = SupplyForm(initial=fields)
+#             source = fields["source"]
+#             dest = fields["dest"]
+#             num = fields["suggested_num"]
+#             sent_date = fields["suggested_sent_date"]
+#             prev = f"/strains_supply/new?step={step - 1}&source={source}&dest={dest}&suggested_num={num}&suggested_sent_date={sent_date}"  # TODO: generate url with function
+#             form = SupplyForm(initial=fields)
 
-    return render(
-        request,
-        "strains_supply/supply_add.html",
-        {"form": form, "step": step, "prev": prev},
-    )
+#     return render(
+#         request,
+#         "strains_supply/supply_add.html",
+#         {"form": form, "step": step, "prev": prev},
+#     )
 
 
 def supply_edit(request, pk, step=1):
