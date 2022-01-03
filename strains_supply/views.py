@@ -182,7 +182,7 @@ def supply_new(request):
 
 def supply_edit(request, pk, step=1):
     supply = services.get_supply(supply_id=pk)
-    if services.is_supply_moderator(request.user):
+    if services.permissions.is_moderator(request.user):
         if request.method == "POST":
             form = SupplyForm(request.POST, instance=supply)
             if form.is_valid():
@@ -195,7 +195,7 @@ def supply_edit(request, pk, step=1):
                 "strains_supply/supply_edit.html",
                 {"supply": supply, "form": form},
             )
-    if services.can_edit_supply_receiving(supply, request.user):
+    if services.permissions.can_edit_supply_receiving(supply, request.user):
         if step == 1:
             if request.method == "POST":
                 form = ReceiveForm(request.POST)

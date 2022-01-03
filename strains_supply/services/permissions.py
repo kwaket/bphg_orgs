@@ -2,7 +2,7 @@ from typing import Union
 
 from django.contrib.auth.models import User
 
-from strains_supply.models import CompanyBranch
+from strains_supply.models import CompanyBranch, Supply
 
 
 def is_moderator(user: User) -> bool:
@@ -19,3 +19,5 @@ def get_user_companybranch(user: User) -> Union[CompanyBranch, None]:
     return user.profile.company_branch
 
 
+def can_edit_supply_receiving(supply: Supply, user: User) -> bool:
+    return user.profile.company_branch == supply.dest
