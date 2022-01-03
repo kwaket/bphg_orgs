@@ -19,7 +19,7 @@ def get_city(city_id: int) -> City:
 
 def create_city(name: str, inserted_by: User) -> City:
     alias = utils.get_alias(name)
-    city = City.objects.create(name=name, alias=alias)
+    city = City(name=name, alias=alias)
     city = _fill_meta_fields(city, inserted_by)
     city.save()
     return city
