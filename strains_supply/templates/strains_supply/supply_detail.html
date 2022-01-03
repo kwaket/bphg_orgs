@@ -5,9 +5,9 @@
 {% block content %}
 
 <div class="row justify-content-center">
-  <div class="col col-md-8 col-lg-6">
+  <div class="col col-md-12 col-lg-8">
     <div class="header-group">
-      <h1>Поставка № {{ supply.pk }}</h1>
+      <h1>Поставка №{{ supply.pk }}</h1>
       <a class="btn btn-outline-primary btn-sm"
          href="{% url 'supply_edit' pk=supply.pk  step=1%}">
         <span class="bi bi-pencil-fill"><span>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="col col-md-8 col-lg-6">
+    <div class="col col-md-12 col-lg-8">
       <dl class="row">
         <dt class="col-sm-3">Откуда</dt>
         <dd class="col-sm-9">{{ supply.source.name }}<br>
