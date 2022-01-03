@@ -69,9 +69,10 @@ def add_suggesting_data(request):
     if request.method == "POST":
         form = SuggestingDataForm(request.POST)
         if form.is_valid():
-            request.session["suggested_sent_date"] = form.cleaned_data[
-                "suggested_sent_date"
-            ].isoformat()
+            suggested_sent_date = form.cleaned_data["suggested_sent_date"]
+            if suggested_sent_date:
+                suggested_sent_date = suggested_sent_date.isoformat()
+            request.session["suggested_sent_date"] = suggested_sent_date
             request.session["suggested_num"] = form.cleaned_data["suggested_num"]
         return redirect("confirm_supply_creating")
     else:
