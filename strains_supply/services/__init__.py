@@ -82,6 +82,13 @@ def unpack_supply(supply: Supply, content_formset: modelformset_factory) -> Supp
     return supply
 
 
+def edit_supply_content(
+    supply: Supply, content_formset: modelformset_factory
+) -> Supply:
+    supply = crud.update_supplycontent(supply=supply, content_formset=content_formset)
+    return supply
+
+
 def add_supply_remark(model_form: forms.ModelForm) -> Supply:
     supply = model_form.save()
     return supply

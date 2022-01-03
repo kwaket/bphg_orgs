@@ -222,10 +222,10 @@ def supply_edit(request, pk, step=1):
     if services.permissions.can_edit_supply_receiving(supply, request.user):
         if step == 1:
             if request.method == "POST":
-                form = ReceiveForm(request.POST)
+                form = ReceiveForm(request.POST, instance=supply)
                 if form.is_valid():
                     supply = services.receive_supply(
-                        supply=supply, user=request.user, **form.cleaned_data
+                        model_form=form, received_by=request.user
                     )
                     return redirect("supply_edit", pk=supply.pk, step=step + 1)
             else:
@@ -240,7 +240,7 @@ def supply_edit(request, pk, step=1):
             if request.method == "POST":
                 formset = SupplyContentFormSet(request.POST)
                 if formset.is_valid():
-                    services.update_supplycontent(supply, formset)
+                    services.edit_supply_content(supply, formset)
                     return redirect("supply_edit", pk=supply.pk, step=step + 1)
             else:
                 queryset = SupplyContent.objects.filter(supply=supply).all()
