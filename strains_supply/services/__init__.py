@@ -21,16 +21,19 @@ def get_newest_supply_for_user(user: User, limit: int = 10):
     """
     company_branch = permissions.get_user_companybranch(user)
     is_moderator = permissions.is_moderator(user)
-    queryset = Supply.objects.filter(deleted_at=None)
     if is_moderator:
-        supply_list = queryset.order_by(
+        supply_list = crud.get_supply_list().order_by(
             "-received_at", "-sent_at", "-suggested_sent_date", "-received_at"
         )[:limit]
         return supply_list
     if company_branch:
-        supply_list = queryset.filter(dest=company_branch).order_by(
-            "-received_at", "-sent_at", "-suggested_sent_date", "-received_at"
-        )[:limit]
+        supply_list = (
+            crud.get_supply_list()
+            .filter(dest=company_branch)
+            .order_by(
+                "-received_at", "-sent_at", "-suggested_sent_date", "-received_at"
+            )[:limit]
+        )
         return supply_list
     return Supply.objects.none()
 
@@ -103,8 +106,9 @@ def delete_supply(model_form: forms.ModelForm, deleted_by: User) -> Supply:
 def count_unreceived_supply(user: User) -> int:
     company_branch = permissions.get_user_companybranch(user)
     if company_branch:
-        return crud.get_supply_list().filter(dest=company_branch, num=None).all().count()
+        return (
+            crud.get_supply_list().filter(dest=company_branch, num=None).all().count()
+        )
     if permissions.is_moderator(user):
         return crud.get_supply_list().filter(num=None).all().count()
     return 0
-
