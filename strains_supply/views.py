@@ -43,7 +43,9 @@ def choose_sourse(request):
     else:
         initial = utils.extract_from_session(request.session, ["source"])
         form = SourceForm(initial=initial)
-        return render(request, "strains_supply/supply_new.html", {"form": form})
+        return render(
+            request, "strains_supply/supply_new.html", {"form": form, "step": 1}
+        )
 
 
 def choose_dest(request):
@@ -58,7 +60,9 @@ def choose_dest(request):
     else:
         initial = utils.extract_from_session(request.session, ["dest"])
         form = DestForm(initial=initial)
-        return render(request, "strains_supply/supply_new.html", {"form": form})
+        return render(
+            request, "strains_supply/supply_new.html", {"form": form, "step": 2}
+        )
 
 
 def add_suggesting_data(request):
@@ -75,7 +79,9 @@ def add_suggesting_data(request):
             request.session, ["suggested_sent_date", "suggested_num"]
         )
         form = SuggestingDataForm(initial=initial)
-        return render(request, "strains_supply/supply_new.html", {"form": form})
+        return render(
+            request, "strains_supply/supply_new.html", {"form": form, "step": 3}
+        )
 
 
 def confirm_supply_creating(request):
@@ -91,7 +97,9 @@ def confirm_supply_creating(request):
         initial["source"] = services.get_source(source_id=initial["source"])
         initial["dest"] = services.get_dest(dest_id=initial["dest"])
         form = SupplyForm(initial=initial)
-        return render(request, "strains_supply/supply_new.html", {"form": form})
+        return render(
+            request, "strains_supply/supply_new.html", {"form": form, "step": 4}
+        )
 
 
 # def supply_new(request):
