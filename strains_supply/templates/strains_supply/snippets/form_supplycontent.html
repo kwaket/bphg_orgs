@@ -5,9 +5,9 @@
 {{ formset.management_form }}
 
 <div class="row">
-  <div class="col col-md-5">Вид</div>
+  <div class="col col-md-6">Вид</div>
   <div class="col col-md-5">Штамм</div>
-  <div class="col col-md-2"></div>
+  <div class="col col-md-1"></div>
 </div>
 <hr>
 {% for form in formset %}
@@ -17,13 +17,13 @@
   {% endif %}
   {% bootstrap_field form.supply %}
   <div class="row">
-    <div class="col col-md-5">
+    <div class="col col-md-6">
       {% bootstrap_field form.bacteria_type show_label=False size='sm' %}
     </div>
     <div class="col col-md-5">
       {% bootstrap_field form.strain show_label=False size='sm' %}
     </div>
-    <div class="col col-md-2">
+    <div class="col col-md-1">
       {% bootstrap_field form.DELETE %}
     </div>
   </div>
@@ -54,9 +54,7 @@
     let supplyContentForms = document.querySelectorAll('.sample-form')
     let container = document.querySelector("#form-container")
     let addButtonsBlock = document.querySelector(".add-item-block")
-    console.log(addButtonsBlock)
     let addButton = addButtonsBlock.querySelector("#add-item-btn")
-    console.log(container)
     let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
 
     let formNum = supplyContentForms.length - 1
@@ -68,6 +66,7 @@
       let formRegex = RegExp(`form-(\\d){1}-`, 'g')
       formNum++
       newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+      newForm.style.display = 'block'
       hiddenFields = newForm.querySelectorAll('input[type="hidden"]');
       hiddenFields.forEach(input => {
         if (input.name.endsWith('-id')) {
@@ -76,59 +75,47 @@
       container.insertBefore(newForm, addButtonsBlock)
       totalForms.setAttribute('value', `${formNum+1}`)
     }
-{% comment %}
-    function isDeleteButton(elem) {
-      if (elem.tagName.toLowerCase() == 'span') {
-        btn = elem.closest('button')
-      } else if (elem.tagName.toLowerCase() == 'button') {
-        btn = elem
-      } else {
-        return false
-      }
-      if (btn.classList.contains('btn-delete-item')) {
-        return btn
-      }
+
+    function delForm(form) {
+      const checkbox = form.querySelector('input[type="checkbox"]')
+      checkbox.checked = true
+      form.style.display = 'none';
     }
 
-    container.addEventListener('click', event => {
-      delBtn = isDeleteButton(event.target);
-      if (delBtn) {
-        event.preventDefault()
-        let itemForm = delBtn.closest('.sample-form')
-        toDel = itemForm.querySelector('input[type="checkbox"]')
-        if (!toDel.checked) {
-          toDel.click()
+    container.addEventListener('click', function(e){
+      if (e.target) {
+        btn = e.target.closest('.btn')
+        if(btn.classList.contains('del-form-btn')) {
+            e.preventDefault()
+            form = btn.closest('.sample-form')
+            delForm(form)
         }
-        itemForm.style.display = 'none'
       }
-    })
- {% endcomment %}
-  })();
+    });
 
+    const createDelBtn = () => {
+      let delBtn = document.createElement('button');
+      let span = document.createElement('span');
+      delBtn.classList.add('btn');
+      delBtn.classList.add('btn-outline-danger');
+      delBtn.classList.add('del-form-btn');
+      delBtn.classList.add('btn-lnk');
+      delBtn.classList.add('btn-sm');
+      span.classList.add('bi');
+      span.classList.add('bi-trash');
+      delBtn.append(span)
+      return delBtn
+    }
+
+    checkboxs = document.querySelectorAll('input[type="checkbox"]')
+    for (ch of checkboxs) {
+      formCheck = ch.closest('.form-check');
+      for (elem of formCheck.children) {
+        elem.style.display = 'none'
+      }
+      delBtn = createDelBtn()
+      formCheck.append(delBtn);
+    }
+ })();
 </script>
-
 </form>
-
-{% comment %}
-<div class="sample-form">
-  {% bootstrap_field form.supply %}
-  <div class="row">
-    <div class="col col-md-6">
-      {% bootstrap_field form.bacteria_type show_label=False size='sm' %}
-    </div>
-    <div class="col col-md-5">
-      {% bootstrap_field form.strain show_label=False size='sm' %}
-    </div>
-    <div class="col col-md-1">
-      {% if not forloop.first %}
-      <button class="btn btn-danger btn-sm btn-delete-item">
-        <span class="bi bi-trash"></span>
-      </button>
-      <div style="display: none">
-        {% bootstrap_field form.DELETE %}
-      </div>
-      {% endif %}
-    </div>
-  </div>
-</div>
-{% endcomment %}
