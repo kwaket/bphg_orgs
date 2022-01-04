@@ -36,7 +36,6 @@
     <form method="POST" class="post-form">
       {% csrf_token %}
       {% bootstrap_form form %}
-
       <hr>
       <div class="d-grid gap-2 d-md-flex {% if step == 1 %} justify-content-end {% else %} justify-content-between {% endif %}">
         {% if step > 1 %}
@@ -45,7 +44,6 @@
           Назад
         </button>
         {% endif %}
-
 
         {% if step == 4 %}
         <button type="submit" class="btn btn-success">
@@ -57,16 +55,8 @@
         </button>
         {% endif %}
       </div>
-
     </form>
-    {% comment %} {% if step %}
-    <form method="POST" class="post-form">{% csrf_token %}
-      {% bootstrap_form form %}
-   </form>
-    {% endif %}
-  </div> {% endcomment %}
 </div>
-
 
 {% endblock %}
 
@@ -78,8 +68,8 @@
   select = document.getElementsByTagName('select')[0];
 
   const hideAltFields = (form) => {
-    alternative_fields  = form.querySelectorAll("input[data-choose-item]")
-    alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]")
+    alternative_fields  = form.querySelectorAll("input[data-choose-item]");
+    alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]");
     alternative_fields.forEach((input) => {
       input.closest('div').style.display = 'none';
       input.setAttribute('type', 'hidden');
@@ -87,26 +77,26 @@
   }
 
   const showAltFields = (form) => {
-    alternative_fields  = form.querySelectorAll("input[data-choose-item]")
-    alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]")
+    alternative_fields  = form.querySelectorAll("input[data-choose-item]");
+    alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]");
     alternative_fields.forEach((input) => {
       input.closest('div').style.display = 'block';
       input.setAttribute('type', 'text');
     })
   }
   if (select.value) {
-    let form = select.closest('form')
-    hideAltFields(form)
+    let form = select.closest('form');
+    hideAltFields(form);
   }
   select.onchange = (event) => {
     target = event.target;
     form = target.closest('form');
-    alternative_fields  = form.querySelectorAll("input[data-choose-item]")
-    alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]")
+    alternative_fields  = form.querySelectorAll("input[data-choose-item]");
+    alternative_fields_labels  = form.querySelectorAll("input[data-choose-item]");
     if (event.target.value) {
-      hideAltFields(form)
+      hideAltFields(form);
     } else {
-      showAltFields(form)
+      showAltFields(form);
     }
   }
 })();
