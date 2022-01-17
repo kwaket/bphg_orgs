@@ -105,10 +105,10 @@ def confirm_supply_creating(request):
             return redirect("add_suggesting_data")
     else:
         initial = utils.extract_from_session(
-            request.session, ["source", "dest", "suggested_sent_date", "suggested_num"]
+            request.session, ["source_id", "dest_id", "suggested_sent_date", "suggested_num"]
         )
-        initial["source"] = services.get_source(source_id=initial["source"])
-        initial["dest"] = services.get_dest(dest_id=initial["dest"])
+        initial["source"] = services.get_source(source_id=initial["source_id"])
+        initial["dest"] = services.get_dest(dest_id=initial["dest_id"])
         form = SupplyForm(initial=initial)
         return render(
             request, "strains_supply/supply_new.html", {"form": form, "step": 4}
