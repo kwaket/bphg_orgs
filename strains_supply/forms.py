@@ -68,6 +68,7 @@ class DestForm(forms.Form):
 
     dest_id = forms.ChoiceField(
         label="Филиал назначения",
+        required=False,
         widget=forms.Select(attrs={"data-choose-item": "exists"}),
     )
     name = forms.CharField(
@@ -79,7 +80,7 @@ class DestForm(forms.Form):
     def clean(self):
         dest_id = self.cleaned_data["dest_id"]
         name = self.cleaned_data["name"]
-        if dest_id == 0 and not name:
+        if not dest_id and not name:
             self.add_error("name", "Заполните название филиала")
         if dest_id:
             self.cleaned_data["dest_id"] = int(dest_id)
