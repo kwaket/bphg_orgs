@@ -65,7 +65,7 @@ def choose_dest(request):
     else:
         initial = utils.extract_from_session(request.session, ["dest_id"])
         form = DestForm(initial=initial)
-        return render(
+    return render(
             request, "strains_supply/supply_new.html", {"form": form, "step": 2}
         )
 
