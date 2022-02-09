@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-np*nq6pstmacrbx%gp$y=_wfd^k6fymep32i91db&&dd18%jkn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_ENV') != 'PROD'
+# DEBUG = os.getenv('DJANGO_ENV') != 'PROD'
 
-ALLOWED_HOSTS = ['127.0.0.1', os.environ.get('APP_HOST')]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', os.environ.get('APP_HOST')]
 
 
 # Application definition
@@ -96,7 +99,8 @@ DATABASES = {
         'NAME': 'bacteriophage_organizations',
         'USER': 'bacteriophage_organizations',
         'PASSWORD': 'bacteriophage_organizations',
-        'HOST': '127.0.0.1',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

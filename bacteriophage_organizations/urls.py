@@ -40,7 +40,12 @@ urlpatterns = [
 
 # Serving the media files in development mode
 if settings.DEBUG:
+    import debug_toolbar
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+    urlpatterns += [
+        path(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
+
 else:
     urlpatterns += staticfiles_urlpatterns()
