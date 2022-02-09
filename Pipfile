@@ -18,6 +18,11 @@ requests = "*"
 bumpversion = "*"
 django-colorfield = "*"
 django = ">=3,<4"
+whitenoise = "*"
+django-environ = "*"
+django-debug-toolbar = "*"
+django-extensions = "*"
+uvicorn = "*"
 
 [dev-packages]
 pylint = "*"
