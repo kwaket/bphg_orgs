@@ -7,7 +7,9 @@ docker-compose -f local.yml build
 docker-compose -f local.yml up
 ```
 
-## Локально
+### Локально
+1. `$ pipenv shell && pipenv sync`
+2. Укажите параметры базы данных в файле .envrc и экспортируйте их
 1. `$ python manage.py migrate`
 2. `$ python manage.py collectstatic`
 3. `$ python manange.py runserver`
