@@ -1,0 +1,10 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=brc
+POSTGRES_USER=QQgPWfRQnhWRTJgESrtTYETZdOPhWYrj
+POSTGRES_PASSWORD=sdXlRVhN1NkGTww42nx8WBeHFXC3BsMJIgIihBXspjRByQEyInTN28m8sroGTutz
+
+
+export DATABASE_URL="postgres://QQgPWfRQnhWRTJgESrtTYETZdOPhWYrj:sdXlRVhN1NkGTww42nx8WBeHFXC3BsMJIgIihBXspjRByQEyInTN28m8sroGTutz@postgres:5432/brc"
