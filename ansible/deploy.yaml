@@ -9,12 +9,6 @@
     - external_vars.yaml
 
   tasks:
-    - name: Set up environment variable for db
-      lineinfile:
-        dest: /etc/environment
-        line: "SAVPY_DB_PASSWORD={{ db_password }}"
-        state: present
-
     - name: Set up environment variable django app
       lineinfile:
         dest: /etc/environment
@@ -24,7 +18,7 @@
     - name: Set up environment variable django app (mode)
       lineinfile:
         dest: /etc/environment
-        line: "DJANGO_ENV=PROD"
+        line: "ENV_NAME=Production"
         state: present
 
     - name: Set up environment variable django app
@@ -39,7 +33,7 @@
         state: present
 
     - name: Update apt cache
-      apt: 
+      apt:
         update_cache: yes
         upgrade: yes
 
