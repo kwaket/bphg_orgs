@@ -1,4 +1,7 @@
+import os
+
 from .base import *  # noqa
+
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -39,6 +42,7 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TEMPLATE_CONTEXT": True,
 }
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
+
 INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
 if env("USE_DOCKER") == "yes":
     import socket
@@ -48,6 +52,21 @@ if env("USE_DOCKER") == "yes":
 
     DATABASES = {"default": env.db("DATABASE_URL")}
     DATABASES["default"]["ATOMIC_REQUESTS"] = True
+else:
+    # Database
+    # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_NAME'),
+            'USER': os.getenv('POSTGRES_USER'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+            'HOST': os.getenv('POSTGRES_HOST'),
+            'PORT': os.getenv('POSTGRES_PORT'),
+        }
+    }
+
 
 # django-extensions
 # ------------------------------------------------------------------------------
